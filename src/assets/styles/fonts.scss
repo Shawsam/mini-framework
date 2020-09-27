@@ -1,0 +1,21 @@
+@font-face {
+  font-family: 'greasepencil';
+/*   src: url('https:///static.timhortons.com.cn/static/font/greasepencil.otf') format('opentype'); */
+  src: url('https://demo.micvs.com/GreasePencil.otf') format('opentype'); 
+  font-weight: normal;
+  font-style: normal;
+}
+
+.hero {
+  font-family: greasepencil, Helvetica, Arial, sans-serif;
+  color: #c8102e;
+  line-height: 90%;
+  transform-origin: center bottom;
+  transform: rotate(-5deg);
+  margin: 0 0 16px;
+}
+
+.pencil {
+  font-family: greasepencil, Helvetica, Arial, sans-serif;
+  line-height: 90%;
+}

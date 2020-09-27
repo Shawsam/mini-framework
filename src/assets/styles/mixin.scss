@@ -1,0 +1,83 @@
+@import "./var";
+
+/* 优惠券基础样式 */
+@mixin coupon-card(
+  $height: 200px,
+  $rightWidth: 200px,
+  $dot-width: 40px,
+  $dot-color: $white,
+  $center: false
+) {
+  height: $height;
+  display: flex;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+
+  .left {
+    flex: 1;
+    position: relative;
+    padding: 34px 40px;
+    font-size: 24px;
+    @if ($center) {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+    }
+  }
+
+  .right {
+    width: $rightWidth;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 2px dashed rgba(200, 16, 46, 0.3);
+
+    &::before, &::after {
+      content: '';
+      width: $dot-width;
+      height: $dot-width;
+      border-radius: $dot-width / 2;
+      background-color: $dot-color;
+      position: absolute;
+      left: -$dot-width / 2;
+    }
+
+    &::before {
+      top: -$dot-width / 2;
+    }
+
+    &::after {
+      bottom: -$dot-width / 2;
+    }
+  }
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-y {
+  flex-direction: column;
+}
+
+.flex-x {
+  flex-direction: row;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.justify-content-between {
+  justify-content: space-between;
+}
+
+.justify-content-end {
+  justify-content: flex-end;
+}
+
+.align-items-center {
+  align-items: center;
+}

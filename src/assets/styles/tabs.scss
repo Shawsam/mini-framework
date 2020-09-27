@@ -1,0 +1,23 @@
+@import './var';
+@import '~taro-ui/dist/style/components/tabs';
+
+.at-tabs {
+  &__item {
+    opacity: 0.3;
+
+    &-underline {
+      $width: 88px;
+      left: 50%;
+      bottom: 16px;
+      width: $width;
+      height: 5px;
+      border-radius: 5px;
+      margin-left: -($width / 2);
+    }
+
+    &--active {
+      color: inherit;
+      opacity: 1;
+    }
+  }
+}

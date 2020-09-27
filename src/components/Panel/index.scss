@@ -1,0 +1,8 @@
+.panel{ position:fixed; display:block; z-index:1000; width:100%; height:100%; top:0; left:0; }
+.panel .shadow{ position:absolute; display:block; width:100%; height:100%; background:rgba(0,0,0,0.6); top:0; left:0; z-index:999; }
+.panel .panelContent{ z-index:1000; position:absolute; padding:30px 40px; width:536px;  box-sizing:border-box; left:50%; top:50%; transform:translate(-50%,-50%); color:#333; text-align:center; background:#fff; border-radius:20px; overflow:hidden; }
+.panel .panelContent .title{ font-size:38px; font-weight:bold; }
+.panel .panelContent .content{ text-align:center; font-size:24px; color:#999; padding:15px 0 60px 0;  }
+.panel .panelContent .bottom{ padding:0 10px; display:flex; justify-content:center; }
+.panel .panelContent .bottom .btn{ flex:1; border:2px solid #C8102E; font-size:28px; color:#C8102E; border-radius:40px; line-height:80px; height:80px; margin:0 10px; }
+.panel .panelContent .bottom .btnCancel{ border:2px solid #999; color:#999;  }

@@ -1,0 +1,9 @@
+@import "../../app";
+.panel .panelContent .content {background: #fff;}
+.panelRegister .panelContent{ overflow:hidden;background:rgba(0,0,0,0); }
+.panelRegister .panelContent .content .protocol{  font-size:24px;vertical-align:middle; color:#969AA1; }
+.panelRegister .panelContent .content .protocol .yes{ height:26px; width:26px; display:inline-block; margin-right:12px; margin-top:-4px; vertical-align:middle; }
+.panelRegister .panelContent .content .protocol .link{ color:#C8102E; }
+.panelRegister .panelContent .content .authorizeBtn{ margin:30px 0 40px 0; line-height:100px; height:100px; width:100%; border-radius:50px; color:#fff; font-weight:bold; font-size:32px;  border:none!important; }
+.panelRegister .panelContent .content .authorizeBtn .wx{ height:30px; width:36px; display:inline-block; margin-right:16px; vertical-align:middle;  }
+.panelRegister .panelContent .content .phoneRegister{ font-size:28px; color:#999; }
