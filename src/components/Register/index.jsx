@@ -3,9 +3,9 @@ import classNames from 'classnames';
 import {Text, View, Swiper, SwiperItem, Image, ScrollView } from '@tarojs/components';
 import Taro, { Component } from '@tarojs/taro';
 import { inject, observer } from '@tarojs/mobx';
+import Api from '../../common/api'
 
 const Env = Taro.getEnv();
-
 @inject('userStore')
 @observer
 export default class Register extends Component {
@@ -14,17 +14,20 @@ export default class Register extends Component {
       registerSuccess:Function
   }
 
-  this.state = { 
-      panelTipShow:false,
-      panelYzmShow:false,
-      counter:60,
-      codeInput:'',
-      phoneInput:'',
-      yzmInput:'',
-      agree:true
-  };
+  constructor(props) {
+    super(props)
+    this.state = { 
+        panelTipShow:false,
+        panelYzmShow:false,
+        counter:60,
+        codeInput:'',
+        phoneInput:'',
+        yzmInput:'',
+        agree:true
+    }
+  }
 
-  cancelAuthorize(){
+  cancelPhoneAuthorize(){
       this.props.userStore.setRegisterShow(false);
   }
   
@@ -49,7 +52,8 @@ export default class Register extends Component {
       Api.fetchUserInfoByMobile(mobile).then((res)=>{
           Api.userLogin(mobile).then(res=>{
               console.log('=====登录成功=====');
-              this.setState({panelRegisterShow:false,panelYzmShow:false})
+              this.setState({panelYzmShow:false})
+              this.props.uerStore.setRegisterShow(false);
               this.props.registerSuccess();
           }).catch(err=>{
               return Promise.reject(err);
@@ -66,7 +70,8 @@ export default class Register extends Component {
               const shopId = Taro.getStorageSync('shopId');
               Api.userRegister({mobile,gender,birth,shopId}).then(res=>{
                   console.log('=====注册成功=====');
-                  this.setState({panelRegisterShow:false,panelYzmShow:false})
+                  this.setState({panelYzmShow:false})
+                  this.props.uerStore.setRegisterShow(false);
                   this.props.registerSuccess();
               }).catch(err=>{
                   console.log(err)
@@ -100,7 +105,6 @@ export default class Register extends Component {
       codeInput = codeInput.replace(/[^a-zA-Z0-9]/g,'').substr(0,4);
       this.setState({ codeInput })
       return { value:codeInput };
-
   }
 
   yzmInput(e){
@@ -130,7 +134,7 @@ export default class Register extends Component {
       Api.sendCode(mobile, codeInput).then(res => {
           Taro.showToast({title:'短信发送成功',icon:'none'})
           this.setState({sendSuccess:true})
-          counterInterval = setInterval(()=>{
+          let counterInterval = setInterval(()=>{
               let counter = this.state.counter
               if(counter==0){
                   this.getCaptcha()
@@ -141,7 +145,8 @@ export default class Register extends Component {
               }
          },1000)
       }).catch(err=>{
-          Taro.showToast({title:err.msg,icon:'none'})
+          console.log(err);
+          Taro.showToast({title:err.msg||'内部错误',icon:'none'})
           this.getCaptcha()
       })
   }
@@ -177,13 +182,12 @@ export default class Register extends Component {
   }
 
   closePanel(){
-      this.setState({panelTipShow:false, panelWelcomeShow:false, panelQrcodeShow:false, panelRegisterShow:false})
+      this.setState({panelTipShow:false, panelWelcomeShow:false, panelQrcodeShow:false})
   }
 
   render() {
     const { showCancel } = this.props;
     const { userStore:{ registerShow } } = this.props;
-    console.log(registerShow)
     const { panelTipShow, tipMsg, panelYzmShow, agree, codeImg, codeInput, phoneInput, sendSuccess, counter } = this.state;
     return (
         Env !== 'WEB' && registerShow &&
@@ -191,11 +195,11 @@ export default class Register extends Component {
             <View className="panel panelRegister">
                 <View className="shadow"></View>
                 <View className="panelContent" catchTouchMove="ture">
-                    <Image className="closeBtn" onClick={ this.closePanel } src={require('../../assets/user/close.png')} />
-                    <Image mode="widthFix" className="centerImg" src="http://cnshacc1oss01.oss-cn-shanghai.aliyuncs.com/tims15907416499790e3f0a0434298b50cd0b231c7cce0d7.png" />
+                    <Image className="closeBtn" onClick={ this.cancelPhoneAuthorize } src={require('./images/close.png')} />
+                    <Image className="usercenimg" src="http://cnshacc1oss01.oss-cn-shanghai.aliyuncs.com/tims15907416499790e3f0a0434298b50cd0b231c7cce0d7.png" />
                     <View className="content">
-                        <View className="protocol" onClick={this.checkAgree.bind(this)}>{agree ? <Image className="yes" src={require('../../assets/user/yes2.png')} /> : <Image className="yes" src={require('../../assets/user/select.png')} />}我已阅读并同意<Text onClick={this.openProtocol.bind(this)} className="link">《用户协议》</Text></View>
-                        { Env == 'WEAPP' && <Button className="btn authorizeBtn" openType="getPhoneNumber" onGetPhoneNumber={this.phoneAuthorized.bind(this)}><Image className="wx" src={require('../../assets/user/wx2.png')} />授权手机号码</Button> }
+                        <View className="protocol" onClick={this.checkAgree.bind(this)}>{agree ? <Image className="yes" src={require('./images/yes2.png')} /> : <Image className="yes" src={require('./images/select.png')} />}我已阅读并同意<Text onClick={this.openProtocol.bind(this)} className="link">《用户协议》</Text></View>
+                        { Env == 'WEAPP' && <Button className="btn authorizeBtn" openType="getPhoneNumber" onGetPhoneNumber={this.phoneAuthorized.bind(this)}><Image className="wx" src={require('./images/wx2.png')} />授权手机号码</Button> }
                         { Env == 'ALIPAY' && <Button className="btn authorizeBtn" openType="getAuthorize" scope='phoneNumber'  onGetAuthorize={ this.phoneAuthorized.bind(this) }>授权手机号码</Button> }
                         <View onClick={this.openYzmRegister.bind(this)} className="phoneRegister">使用手机号注册 ></View>
                     </View>
@@ -207,18 +211,18 @@ export default class Register extends Component {
                 <View className="panel panelYzm">
                     <View className="shadow"></View>
                     <View className="panelContent" catchTouchMove="ture">
-                        <Image className="closeBtn" onClick={this.closeYzmPanel.bind(this)} src={require('../../assets/user/close.png')} />
+                        <Image className="closeBtn" onClick={this.closeYzmPanel.bind(this)} src={require('./images/close.png')} />
                         <View className="content">
                             <View className="title">请绑定手机号</View>
                             <View className="tit">欢迎加入Tims会员俱乐部</View>
                             <View className="fmGroup hasBtn">
-                                <Input type="text" maxlength="11" onInput={this.phoneInput.bind(this)} value={phoneInput} placeholder="请输入手机号" enableNative={true} controlled={true} />
+                                <Input className="input" type="text" maxlength="11" onInput={this.phoneInput.bind(this)} value={phoneInput} placeholder="请输入手机号" enableNative={true} controlled={true} />
                             </View>
                             <View className="fmGroup hasBtn">
-                                <Input type="text" maxlength="4" onInput={this.codeInput.bind(this)} value={codeInput} placeholder="请输入图形验证码" enableNative={true} controlled={true} />
+                                <Input className="input" type="text" maxlength="4" onInput={this.codeInput.bind(this)} value={codeInput} placeholder="请输入图形验证码" enableNative={true} controlled={true} />
                                 <Image className="captcha" src={codeImg} onClick={this.getCaptcha} /></View>
                             <View className="fmGroup hasBtn">
-                                <Input type="text" maxlength="6" onInput={this.yzmInput.bind(this)} value={yzmInput} placeholder="请输入短信验证码" enableNative={true} controlled={true} />
+                                <Input className="input" type="text" maxlength="6" onInput={this.yzmInput.bind(this)} value={yzmInput} placeholder="请输入短信验证码" enableNative={true} controlled={true} />
                                 <View className={`sendBtn ${phoneInput.length == 11 ? 'active' : ''}`} onClick={this.sendCode}>{sendSuccess ? counter + '秒后重试' : '获取验证码'}</View>
                             </View>
                             <View className="confirmbtn" onClick={this.subimitFun}>确定</View>

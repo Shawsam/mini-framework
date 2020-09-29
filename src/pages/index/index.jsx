@@ -14,7 +14,11 @@ import Register from '../../components/Register';
 const Env = Taro.getEnv();
 let isFirstShow = true;
 
-@frameWork(false)
+const frameOptions = {
+  userInfoCached:false,
+  loadToAuthorize:false
+}
+@frameWork(frameOptions)
 export default class Index extends Component {
     config ={
         navigationBarTitleText:'首页',

@@ -1,9 +1,100 @@
 @import "../../app";
-.panel .panelContent .content {background: #fff;}
-.panelRegister .panelContent{ overflow:hidden;background:rgba(0,0,0,0); }
-.panelRegister .panelContent .content .protocol{  font-size:24px;vertical-align:middle; color:#969AA1; }
-.panelRegister .panelContent .content .protocol .yes{ height:26px; width:26px; display:inline-block; margin-right:12px; margin-top:-4px; vertical-align:middle; }
-.panelRegister .panelContent .content .protocol .link{ color:#C8102E; }
-.panelRegister .panelContent .content .authorizeBtn{ margin:30px 0 40px 0; line-height:100px; height:100px; width:100%; border-radius:50px; color:#fff; font-weight:bold; font-size:32px;  border:none!important; }
-.panelRegister .panelContent .content .authorizeBtn .wx{ height:30px; width:36px; display:inline-block; margin-right:16px; vertical-align:middle;  }
-.panelRegister .panelContent .content .phoneRegister{ font-size:28px; color:#999; }
+.panelRegister .panelContent{ overflow:hidden;background:rgba(0,0,0,0);
+	.content{ background: #fff;
+		.protocol{  font-size:24px;vertical-align:middle; color:#969AA1; 
+			.yes{ height:26px; width:26px; display:inline-block; margin-right:12px; margin-top:-4px; vertical-align:middle; }
+			.link{ color:#C8102E; }
+		}
+		.authorizeBtn{ margin:30px 0 40px 0; line-height:100px; height:100px; width:100%; border-radius:50px; color:#fff; font-weight:bold; font-size:32px;  border:none!important;
+            .wx{ height:30px; width:36px; display:inline-block; margin-right:16px; vertical-align:middle;  }
+		 }
+		.phoneRegister{ font-size:28px; color:#999; }
+	}
+}
+
+
+
+.panelYzm .panelContent{
+	.title {
+	  text-align: center;
+	  font-size: 40px;
+	  padding: 0;
+	  font-weight: normal;
+	  color: #342c2a;
+	  margin-bottom: 10px;
+	}
+	.tit {
+	  color: #bab6b6;
+	  font-size: 24px;
+	  margin-bottom: 50px;
+	}
+	.confirmbtn {
+	  background: #c8102e;
+	  color: #fff;
+	  height: 100px;
+	  line-height: 100px;
+	  margin-top: 40px;
+	  border-radius: 50px;
+	  font-size: 35px;
+	}
+	.fmGroup {
+		padding: 30px 10px 30px 45px;
+		background: #f6f6f6;
+		position: relative;
+		margin-bottom: 30px;
+		border-radius: 50px;
+		&.hasBtn {
+	      padding-right: 210px;
+	    }
+		.input {
+		  text-align: left;
+		  font-size: 26px;
+		  width: 100%;
+		}
+	  	.captcha {
+		  display: inline-block;
+		  width: 180px;
+		  height: 64px;
+		  border-radius: 32px;
+		  position: absolute;
+		  right: 30px;
+		  top: 50%;
+		  margin-top: -32px;
+		}
+		.btn {
+		  display: inline-block;
+		  width: 180px;
+		  height: 64px;
+		  line-height: 64px;
+		  border-radius: 32px;
+		  text-align: center;
+		  position: absolute;
+		  font-size: 26px;
+		  box-sizing: border-box;
+		  right: 30px;
+		  top: 50%;
+		  margin-top: -32px;
+		}
+		.sendBtn {
+		  color: #d8d8d8;
+		  border: 1px solid #d8d8d8;
+		  display: inline-block;
+		  width: 180px;
+		  height: 64px;
+		  line-height: 64px;
+		  border-radius: 32px;
+		  text-align: center;
+		  position: absolute;
+		  font-size: 26px;
+		  box-sizing: border-box;
+		  right: 30px;
+		  top: 50%;
+		  margin-top: -32px;
+		}
+		.sendBtn.active {
+		  border: 1px solid #666;
+		  color: #666;
+		}
+	}
+	
+}

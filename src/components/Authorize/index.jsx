@@ -36,7 +36,7 @@ export default class Authorize extends Component {
           Taro.setStorageSync('authInfo', userInfo);    //设置缓存
           this.props.userStore.setUserInfo(userInfo);   //设置userInfo
           this.props.userStore.setAuthorizeShow(false); //关闭授权
-          this.props.authorizeSuccess();              //执行页面回调
+          this.props.authorizeSuccess();                //执行页面回调
       }
   }
 

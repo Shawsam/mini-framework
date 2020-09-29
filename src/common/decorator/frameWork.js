@@ -5,7 +5,7 @@ const errMap = [100124, 1001241, 100130];
 let isIndex;
 
 //userInfoCached 是否从缓存中读取会员信息
-const frameWork = (userInfoCached=true) => (Component) =>
+const frameWork = ({userInfoCached=true,loadToAuthorize=false}) => (Component) =>
     @inject('userStore')
     @observer 
     class frameWorkComponent extends Component {
@@ -15,23 +15,22 @@ const frameWork = (userInfoCached=true) => (Component) =>
             console.log('====执行函数componentDidMount====');
             isIndex = Taro.getCurrentPages().length == 1;
             let openId = Taro.getStorageSync('openId');
+            let authInfo = Taro.getStorageSync('authInfo');
             if(openId){
-                console.error('缓存中有openId');
-                this.openIdReady();
-                let authInfo = Taro.getStorageSync('authInfo');
+                super.openIdReady && super.openIdReady();                      //无需授权的接口数据渲染
                 if(authInfo){
-                    console.error('缓存中有授权信息');
-                    this.props.userStore.setUserInfo(authInfo);                //同步数据
+                    this.props.userStore.setUserInfo(authInfo);                //同步用户数据
                     if(isIndex){
-                        console.error('获取用户信息后渲染页面')
+                        console.error('当前页面为入口页-获取用户信息后渲染页面')
                         this.fetchUserInfoById();
                     }else{
-                        console.error('直接渲染页面')
-                        this.pageRender();
+                        console.error('当前页面非入口页-直接渲染页面')
+                        this.userInfoReady();
                     }
                 }else{
-                    console.error('缓存中无授权信息,需要授权');
-                    this.setState({isLoading:false});
+                    console.error('用户未授权');
+                    this.setState({isLoading:false}); 
+                    loadToAuthorize && this.props.userStore.setAuthorizeShow(true);                         
                 }
             }else{
                 console.error('缓存中无openId');
@@ -47,11 +46,13 @@ const frameWork = (userInfoCached=true) => (Component) =>
                 })
             }
         }
+
         //注入函数 fetchUserInfoById
         fetchUserInfoById(){
             let userInfo = Taro.getStorageSync('userInfo');
             if(userInfo && userInfoCached){
-                this.userInfoReady(userInfo);
+                this.props.userStore.setUserInfo(userInfo);              //同步用户数据
+                this.userInfoReady();                                       //渲染页面
             }else{
                 User.fetchUserInfoById().then(userInfo=>{
                     let { pic, name } = userInfo;
@@ -60,7 +61,8 @@ const frameWork = (userInfoCached=true) => (Component) =>
                     userInfo.nickName = name?name:nickName;
                     Taro.setStorageSync('userInfo', userInfo);
                     Taro.setStorageSync('cardNo', userInfo.cardNo);
-                    this.userInfoReady(userInfo);                  
+                    this.props.userStore.setUserInfo(userInfo);         //同步用户数据
+                    this.userInfoReady();                                  //渲染页面                 
                 }).catch(err=>{
                     if(errMap.includes(err.errcode)){
                         this.userInfoUnReady(err);                      //未注册-未登录-禁用
@@ -77,48 +79,25 @@ const frameWork = (userInfoCached=true) => (Component) =>
             }
         }
 
-        //openId已获取(请求页面只需openId的接口)
-        openIdReady(){
-            console.log('====执行函数openIdReady====');
-            if(super.openIdReady){
-                super.openIdReady();
-            }else{
-                console.warn('页面未定义方法处理openId已获取--openIdReady');
-            }
-        }
-
-        //已获取到会员信息(缓存中，或请求用户信息完毕)
-        userInfoReady(userInfo){
-            console.log('====执行函数userInfoReady====');
-            this.props.userStore.setUserInfo(userInfo);         //同步数据
-            if(super.userInfoReady){
-                super.userInfoReady(userInfo);
-            }else{
-                console.log('页面未定义方法处理已获取到会员信息--userInfoReady');
-                console.log('默认调用pageRender方法')
-                this.pageRender();
-            }
-        }
-
-        //未获取到会员信息（请求用户信息完毕）
+        //未获取到会员信息（请求用户信息完毕，用户未注册-未登录-禁用）
         userInfoUnReady(){
-            this.setState({isLoading:false});
             console.log('====执行函数userInfoUnReady====');
             if(super.userInfoUnReady){
                 super.userInfoUnReady();
             }else{
                 console.warn('页面未定义方法处理未获取到会员信息--userInfoUnReady');
+                this.setState({isLoading:false});
             }
         }
 
-        //页面渲染
-        pageRender(){
-            console.log('====执行函数pageRender====');
+        //用户信息页面渲染
+        userInfoReady(){
+            console.log('====执行函数userInfoReady====');
             User.updateToken().then(res=>{
-                if(super.pageRender){
-                    super.pageRender();
+                if(super.userInfoReady){
+                    super.userInfoReady();
                 }else{
-                    console.warn('页面未定义方法-pageRender');
+                    console.warn('页面未定义方法-userInfoReady');
                     this.setState({isLoading:false});
                 }            
             }).catch(err=>{
@@ -157,6 +136,7 @@ const frameWork = (userInfoCached=true) => (Component) =>
             try{
                 return new Promise((resolve,reject)=>{
                     let isAuthorized = this.props.userStore.isAuthorized;
+                    console.log(isAuthorized)
                     if(isAuthorized){
                         resolve();
                     }else{

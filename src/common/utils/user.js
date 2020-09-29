@@ -16,22 +16,22 @@ export const LoginAndGetPid = ()=>{
                   if (res) {
                       //请求服务器，获取openId, unionId
                       Api.jsCode2Openid(res.code).then(res => {
-                          console.error('jsCode2Openid--获取openId成功');
+                          console.log('jsCode2Openid--获取openId成功');
                           let { openId, unionid } = res.data;
                           Taro.setStorageSync('openId', openId);
                           Taro.setStorageSync('unionId', unionid);
                           resolve(res);
                       }).catch(err=>{
-                          console.error('jsCode2Openid--获取openId失败,'+JSON.stringify(err));
+                          console.log('jsCode2Openid--获取openId失败,'+JSON.stringify(err));
                           reject(err)
                       })
                   } else {
-                      console.error('wx.login--微信登陆失败',JSON.stringify(err));
+                      console.log('wx.login--微信登陆失败',JSON.stringify(err));
                       reject({msg:'调用微信登录接口失败，请重试'})
                   }
                 },
                 fail:(err) => { 
-                    console.error('wx.login--微信登陆超时,'+JSON.stringify(err));
+                    console.log('wx.login--微信登陆超时,'+JSON.stringify(err));
                     reject({msg:'调用微信登录接口超时，请重试'})
                 }
             })
@@ -48,9 +48,9 @@ export const  getAuthorizeState = ()=>{
         }else if(Env === 'ALIPAY'){
             my.getSetting({
               success: res => {
-                console.error(res.authSetting);
+                console.log(res.authSetting);
                 if (res.authSetting['userInfo']) {
-                    console.error('getSetting--用户已授权');
+                    console.log('getSetting--用户已授权');
                     my.getOpenUserInfo({
                       success: (res) => {
                           let userInfo = JSON.parse(res.response).response;
@@ -58,17 +58,17 @@ export const  getAuthorizeState = ()=>{
                           resolve(userInfo)
                       },
                       fail: (err) => {
-                          console.error(err);
+                          console.log(err);
                           reject({msg:err})
                       }
                     });
                 }else{
-                    console.error('getSetting--用户未授权');
+                    console.log('getSetting--用户未授权');
                     resolve(null)
                 }
               },
               fail: err=>{
-                  console.error('getSetting--获取授权状态失败');
+                  console.log('getSetting--获取授权状态失败');
                   reject({msg:'获取授权状态失败，请重试'})
               }
             })
@@ -76,28 +76,28 @@ export const  getAuthorizeState = ()=>{
             wx.getSetting({
                 success: res => {
                     if (res.authSetting['scope.userInfo']) {
-                        console.error('wx.getSetting--用户已授权');
+                        console.log('wx.getSetting--用户已授权');
                         wx.getUserInfo({
                           success: (res) => {
                               let { encryptedData, iv, userInfo } = res;
                               Taro.setStorageSync('encryptedData', encryptedData);
                               Taro.setStorageSync('iv', iv);
                               Taro.setStorageSync('$userInfo', userInfo);
-                              console.error('wx.getSetting--获取授权数据成功');
+                              console.log('wx.getSetting--获取授权数据成功');
                               resolve(userInfo);
                           },
                           fail: (err) => {
-                              console.error('wx.getSetting--获取授权数据失败');
+                              console.log('wx.getSetting--获取授权数据失败');
                               reject({msg:err})
                           }
                         });
                     }else{
-                        console.error('wx.getUserInfo--用户未授权');
+                        console.log('wx.getUserInfo--用户未授权');
                         resolve(null)
                     }
                 },
                 fail: err=>{
-                    console.error('wx.getSetting-获取授权状态失败');
+                    console.log('wx.getSetting-获取授权状态失败');
                     reject({msg:'获取授权状态失败，请重试'})
                 }
             })
@@ -115,10 +115,10 @@ export const updateToken = ()=>{
             if(token){
                 //校验token是否过期
                 Api.judgeToken().then(res=>{
-                    console.error('judgeToken--token有效');
+                    console.log('judgeToken--token有效');
                     resolve(res)
                 }).catch(err=>{
-                    console.error('judgeToken--token无效');
+                    console.log('judgeToken--token无效');
                     getToken().then(res=>{
                         resolve(res)
                     }).catch(err=>{
@@ -127,7 +127,7 @@ export const updateToken = ()=>{
        
                 })
             }else{
-                console.error('token不存在')
+                console.log('token不存在')
                 getToken().then(res=>{
                     resolve(res)
                 }).catch(err=>{
@@ -154,12 +154,12 @@ export const getToken = ()=>{
                           reject(err);
                       });
                   }else{
-                      console.error('请求成功，授权失败');
+                      console.log('请求成功，授权失败');
                       reject({msg:'授权失败，请重试'});
                   }  
                 },
                 fail: err=>{
-                    console.error('授权请求失败');
+                    console.log('授权请求失败');
                     if(err.authErrorScope){
                         reject({msg:err.authErrorScope.scope});
                     }else{
@@ -174,16 +174,16 @@ export const getToken = ()=>{
               let userId = userInfo.userId;
               if(userId){
                   Api.getToken({openid:openId, unionId, userId}).then(res=>{
-                      console.error('getToken--生成token成功');
+                      console.log('getToken--生成token成功');
                       let { openId, token, unionid } = res.data;
                       Taro.setStorageSync('token', token);
                       resolve(res);
                   }).catch(err=>{
-                      console.error('getToken--生成token失败');
+                      console.log('getToken--生成token失败');
                       reject(err);
                   })
               }else{
-                  console.error('本地缓存中无userId');
+                  console.log('本地缓存中无userId');
                   reject({errcode:-1000,msg:'请先获取userId'});
               }
           }
@@ -196,11 +196,11 @@ export const fetchUserInfoById = ()=>{
             let unionId = Taro.getStorageSync('unionId');
             if(unionId){
                 Api.fetchUserInfoById().then(res=>{
-                    console.error('fetchUserInfoById--获取用户信息成功');
+                    console.log('fetchUserInfoById--获取用户信息成功');
                     let userInfo = res.data;
                     resolve(userInfo);
                 }).catch(err=>{
-                    console.error('fetchUserInfoById--获取用户信息失败');
+                    console.log('fetchUserInfoById--获取用户信息失败');
                     resolve(err);
                 })
             }else{
@@ -209,10 +209,10 @@ export const fetchUserInfoById = ()=>{
                 Api.encryptedData(encryptedData,iv).then(res=>{
                     let unionId = res.data.unionId;
                     Taro.setStorageSync('unionId', unionId);
-                    console.error('encryptedData--解密unionId成功');
+                    console.log('encryptedData--解密unionId成功');
                     fetchUserInfoById();
                 }).catch(err=>{
-                    console.error('encryptedData--解密unionId成功');
+                    console.log('encryptedData--解密unionId成功');
                     reject(err);
                 })
             }
@@ -234,18 +234,18 @@ export const cardRegister = (url,mobile)=>{
                                 if(res.result){
                                   let { auth_code, request_id } = res.result;
                                   Api.openCard(auth_code, request_id, mobile).then(res=>{
-                                      console.error('开卡成功');
+                                      console.log('开卡成功');
                                       resolve();
                                   }).catch(err=>{
                                       reject(err);
                                   })
                                 }else{
-                                    console.error(res);
+                                    console.log(res);
                                     reject({msg:'开卡失败，请重试'});
                                 }
                             },
                             fail: (err) => {
-                                console.error(err);
+                                console.log(err);
                                 reject({msg:'开卡失败，请重试'});
                             },
                         });
@@ -253,12 +253,12 @@ export const cardRegister = (url,mobile)=>{
                         reject(err)
                     });
                 }else{
-                    console.error('请求成功，授权失败')
+                    console.log('请求成功，授权失败')
                     reject({msg:'授权失败，请重试'})
                 }  
               },
               fail: err=>{
-                  console.error('授权请求失败')
+                  console.log('授权请求失败')
                   if(err.authErrorScope){
                       reject({msg:err.authErrorScope.scope})
                   }else{
@@ -279,10 +279,10 @@ export const getPidAndToken = () =>{
             if(userSecret){
                 //校验token是否过期
                 Api.judgeToken().then(res=>{
-                    console.error('judgeToken--token有效')
+                    console.log('judgeToken--token有效')
                     resolve(res)
                 }).catch(err=>{
-                    console.error('judgeToken--token无效')
+                    console.log('judgeToken--token无效')
                     getToken().then(res=>{
                         resolve(res)
                     }).catch(err=>{
@@ -291,7 +291,7 @@ export const getPidAndToken = () =>{
        
                 })
             }else{
-                console.error('token不存在')
+                console.log('token不存在')
                 getToken().then(res=>{
                     resolve(res)
                 }).catch(err=>{
