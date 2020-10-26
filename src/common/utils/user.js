@@ -8,7 +8,33 @@ const Env = Taro.getEnv();
 export const LoginAndGetPid = ()=>{
       return new Promise((resolve,reject) =>{
         if(Env === 'ALIPAY'){
-            resolve();
+            my.getAuthCode({
+              scopes: ['auth_base'],
+              success: res => {
+                console.log(res);
+                if(typeof res.authCode === 'string'){
+                    Api.autCodeGetUuid(res.authCode).then(res=>{
+                        let uuid = res.data;
+                        Taro.setStorageSync('Pid', uuid);
+                        resolve(res);
+                    }).catch(err=>{
+                        reject(err)
+                    });
+                }else{
+                    console.warn('请求成功，授权失败')
+                    reject({msg:'授权失败，请重试'})
+                }  
+              },
+              fail: err=>{
+                  console.warn('授权请求失败')
+                  console.log(err)
+                  if(err.authErrorScope){
+                      reject({msg:err.authErrorScope.scope})
+                  }else{
+                      reject({msg:'网络异常，请重试'})
+                  }            
+              }
+            })
         }else if(Env === 'WEAPP'){
             wx.login({
                 timeout:5000,
@@ -18,8 +44,7 @@ export const LoginAndGetPid = ()=>{
                       Api.jsCode2Openid(res.code).then(res => {
                           console.log('jsCode2Openid--获取openId成功');
                           let { openId, unionid } = res.data;
-                          Taro.setStorageSync('openId', openId);
-                          Taro.setStorageSync('unionId', unionid);
+                          Taro.setStorageSync('Pid', openId);
                           resolve(res);
                       }).catch(err=>{
                           console.log('jsCode2Openid--获取openId失败,'+JSON.stringify(err));
@@ -79,9 +104,7 @@ export const  getAuthorizeState = ()=>{
                         console.log('wx.getSetting--用户已授权');
                         wx.getUserInfo({
                           success: (res) => {
-                              let { encryptedData, iv, userInfo } = res;
-                              Taro.setStorageSync('encryptedData', encryptedData);
-                              Taro.setStorageSync('iv', iv);
+                              let { userInfo } = res;
                               Taro.setStorageSync('$userInfo', userInfo);
                               console.log('wx.getSetting--获取授权数据成功');
                               resolve(userInfo);
@@ -147,10 +170,11 @@ export const getToken = ()=>{
                 success: res => {
                   if(typeof res.authCode === 'string'){
                       Api.autCodeGetUuid(res.authCode).then(res=>{
-                          Taro.setStorageSync('userSecret',res.data);
+                          console.log('getToken--生成token成功');
                           Taro.setStorageSync('token', res.data.token);
                           resolve(res);
                       }).catch(err=>{
+                          console.log('getToken--生成token失败');
                           reject(err);
                       });
                   }else{
@@ -168,108 +192,83 @@ export const getToken = ()=>{
                 }
               })
           }else if( Env === 'WEAPP'){
-              let userInfo = Taro.getStorageSync('userInfo');
-              let openId = Taro.getStorageSync('openId');
-              let unionId = Taro.getStorageSync('unionId');
-              let userId = userInfo.userId;
-              if(userId){
-                  Api.getToken({openid:openId, unionId, userId}).then(res=>{
-                      console.log('getToken--生成token成功');
-                      let { openId, token, unionid } = res.data;
-                      Taro.setStorageSync('token', token);
-                      resolve(res);
-                  }).catch(err=>{
-                      console.log('getToken--生成token失败');
-                      reject(err);
-                  })
-              }else{
-                  console.log('本地缓存中无userId');
-                  reject({errcode:-1000,msg:'请先获取userId'});
-              }
+              Api.getToken().then(res=>{
+                  console.log('getToken--生成token成功');
+                  Taro.setStorageSync('token', res.data.token);
+                  resolve(res);
+              }).catch(err=>{
+                  console.log('getToken--生成token失败');
+                  reject(err);
+              })
           }
       })
 }
 
-//获取用户信息
+//获取用户信息(unionId & openid)
 export const fetchUserInfoById = ()=>{
-        return new Promise((resolve, reject) => {
-            let unionId = Taro.getStorageSync('unionId');
-            if(unionId){
-                Api.fetchUserInfoById().then(res=>{
-                    console.log('fetchUserInfoById--获取用户信息成功');
-                    let userInfo = res.data;
-                    resolve(userInfo);
-                }).catch(err=>{
-                    console.log('fetchUserInfoById--获取用户信息失败');
-                    resolve(err);
-                })
-            }else{
-                let encryptedData = Taro.getStorageSync('encryptedData');
-                let iv = Taro.getStorageSync('iv');
-                Api.encryptedData(encryptedData,iv).then(res=>{
-                    let unionId = res.data.unionId;
-                    Taro.setStorageSync('unionId', unionId);
-                    console.log('encryptedData--解密unionId成功');
-                    fetchUserInfoById();
-                }).catch(err=>{
-                    console.log('encryptedData--解密unionId成功');
-                    reject(err);
-                })
-            }
+    return new Promise((resolve, reject) => {
+        Api.fetchUserInfoById().then(res=>{
+            console.log('fetchUserInfoById--获取用户信息成功');
+            let userInfo = res.data;
+            resolve(userInfo);
+        }).catch(err=>{
+            console.log('fetchUserInfoById--获取用户信息失败');
+            reject(err);
         })
-    }
+    })
+}
 
-    //领卡
+//领卡
 export const cardRegister = (url,mobile)=>{
-        return new Promise((resolve, reject) => {
-            my.getAuthCode({
-              scopes: ['auth_user'],
-              success: res => {
-                if(typeof res.authCode === 'string'){
-                    Api.autCodeGetUuid(res.authCode).then(res=>{
-                        Taro.setStorageSync('userSecret', res.data);
-                        my.addCardAuth({
-                            url:url,
-                            success: (res) => {
-                                if(res.result){
-                                  let { auth_code, request_id } = res.result;
-                                  Api.openCard(auth_code, request_id, mobile).then(res=>{
-                                      console.log('开卡成功');
-                                      resolve();
-                                  }).catch(err=>{
-                                      reject(err);
-                                  })
-                                }else{
-                                    console.log(res);
-                                    reject({msg:'开卡失败，请重试'});
-                                }
-                            },
-                            fail: (err) => {
-                                console.log(err);
+    return new Promise((resolve, reject) => {
+        my.getAuthCode({
+          scopes: ['auth_user'],
+          success: res => {
+            if(typeof res.authCode === 'string'){
+                Api.autCodeGetUuid(res.authCode).then(res=>{
+                    Taro.setStorageSync('userSecret', res.data);
+                    my.addCardAuth({
+                        url:url,
+                        success: (res) => {
+                            if(res.result){
+                              let { auth_code, request_id } = res.result;
+                              Api.openCard(auth_code, request_id, mobile).then(res=>{
+                                  console.log('开卡成功');
+                                  resolve();
+                              }).catch(err=>{
+                                  reject(err);
+                              })
+                            }else{
+                                console.log(res);
                                 reject({msg:'开卡失败，请重试'});
-                            },
-                        });
-                    }).catch(err=>{
-                        reject(err)
+                            }
+                        },
+                        fail: (err) => {
+                            console.log(err);
+                            reject({msg:'开卡失败，请重试'});
+                        },
                     });
-                }else{
-                    console.log('请求成功，授权失败')
-                    reject({msg:'授权失败，请重试'})
-                }  
-              },
-              fail: err=>{
-                  console.log('授权请求失败')
-                  if(err.authErrorScope){
-                      reject({msg:err.authErrorScope.scope})
-                  }else{
-                      reject({msg:'网络异常，请重试'})
-                  }            
-              }
-            })
+                }).catch(err=>{
+                    reject(err)
+                });
+            }else{
+                console.log('请求成功，授权失败')
+                reject({msg:'授权失败，请重试'})
+            }  
+          },
+          fail: err=>{
+              console.log('授权请求失败')
+              if(err.authErrorScope){
+                  reject({msg:err.authErrorScope.scope})
+              }else{
+                  reject({msg:'网络异常，请重试'})
+              }            
+          }
         })
-    }
+    })
+}
 
-    //获取第三方Id及token
+//获取第三方Id及token  token升级后废弃
 export const getPidAndToken = () =>{
     return new Promise((resolve, reject) => {
         if(Env === 'WEB'){

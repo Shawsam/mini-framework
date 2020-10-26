@@ -3,9 +3,9 @@ import classNames from 'classnames';
 import {Text, View, Swiper, SwiperItem, Image, ScrollView } from '@tarojs/components';
 import Taro, { Component } from '@tarojs/taro';
 import { inject, observer } from '@tarojs/mobx';
+import Api from '../../common/api'
 
 const Env = Taro.getEnv();
-
 @inject('userStore')
 @observer
 export default class Authorize extends Component {
@@ -21,27 +21,41 @@ export default class Authorize extends Component {
   confirmAuthrize(res){
       if(Env==='ALIPAY'){
           my.getOpenUserInfo({
-            fail: (res) => {
-              console.log(res);
-            },
-            success: (res) => {
-              let userInfo = JSON.parse(res.response).response;
-              this.props.authorizeSuccess(userInfo);
-            }
+              fail: (res) => {
+                  console.log(res);
+                  this.cancelAuthorize();  
+              },
+              success: (res) => {
+                  let userInfo = JSON.parse(res.response).response;
+                  let { avatar, avatarUrl } = userInfo;
+                  userInfo.avatarUrl = avatar || avatarUrl;
+                  Taro.setStorageSync('authInfo', userInfo);        //设置缓存
+                  this.props.userStore.setUserInfo(userInfo);       //设置userInfo
+                  this.props.authorizeSuccess();
+                  this.cancelAuthorize();
+              }
           });
       }else if(Env==='WEAPP'){
-          const { encryptedData, iv, userInfo } = res.detail;
-          encryptedData && Taro.setStorageSync('encryptedData', encryptedData);
-          iv && Taro.setStorageSync('iv', iv);
-          Taro.setStorageSync('authInfo', userInfo);    //设置缓存
-          this.props.userStore.setUserInfo(userInfo);   //设置userInfo
-          this.props.userStore.setAuthorizeShow(false); //关闭授权
-          this.props.authorizeSuccess();                //执行页面回调
+          const { encryptedData, iv, userInfo, errMsg } = res.detail;
+          if(errMsg=='getUserInfo:ok'){                                          
+              Taro.setStorageSync('authInfo', userInfo);        //设置缓存
+              this.props.userStore.setUserInfo(userInfo);       //设置userInfo
+              Api.encryptedData(encryptedData,iv).then(res=>{   //解密unionId
+                  let unionId = res.data.unionId;
+                  Taro.setStorageSync('unionId', unionId);
+                  this.props.authorizeSuccess();                //执行页面回调
+              }).catch(err=>{
+                  console.log('解密unionId失败');
+              })
+          }else{
+              console.log('用户未允许授权'+errMsg);              
+          }
+          this.cancelAuthorize();                               //关闭授权
       }
   }
 
   cancelAuthorize(){
-      this.props.userStore.setAuthorizeShow(false);    //关闭授权
+      this.props.userStore.setAuthorizeShow(false);           
   }
 
   render() {
@@ -50,10 +64,10 @@ export default class Authorize extends Component {
     return (
         <View>
             { Env != 'WEB' && authorizeShow?
-            <View className="panel">
+            <View className="panel authorizePanel">
                 <View className="shadow"></View>
                 <View className="panelContent" catchTouchMove="ture">
-                    { showCancel && <Image className="closeBtn" onClick={ this.cancelAuthorize.bind(this) } src={require('./images/close.png')} /> }
+                    { showCancel && <View className="closeBtn"><Image className="innerImg" onClick={ this.cancelAuthorize.bind(this) } src={require('./images/close.png')} /></View> }
                     <Image mode="widthFix" className="centerImg" src={require('./images/authorize.jpg')} />
                     <View class="content">
                         <View class="title">{Env == 'WEAPP'?'微信':'支付宝'}授权</View>

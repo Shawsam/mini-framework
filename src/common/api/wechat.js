@@ -3,22 +3,24 @@ import { base } from '../../config'
 import { httpPromise } from '../utils/httpPromise';
 import log from '../utils/log';
 
+const merId = 31;
 const ENV = Taro.getEnv();
 const preUrl = base.micvsDomain+'tim-weixin/wechat'; 
-const merId = 31;
+const activityCode = base.activityCode;
 const _param = { version:base.version };
-let openid,token,unionid,userInfo,userId,nickName,cardNo,mobile,avatarUrl,point;
+let openid,token,unionid,authInfo,userInfo,userId,nickName,cardNo,mobile,avatarUrl,point;
 
 function getStorage(){
   unionid = Taro.getStorageSync('unionId');
-  openid = Taro.getStorageSync('openId');
+  openid = Taro.getStorageSync('Pid');
   token = Taro.getStorageSync('token');
   userInfo = Taro.getStorageSync('userInfo');
+  authInfo = Taro.getStorageSync('authInfo');
   userId = userInfo.userId;
   cardNo =  userInfo.cardNo;
   mobile = userInfo.mobile;
-  nickName = userInfo.nickName||'';
-  avatarUrl = userInfo.avatarUrl||'';
+  nickName = userInfo.nickName||authInfo.nickName;
+  avatarUrl = userInfo.avatarUrl||authInfo.nickName;
   point = userInfo.point||0;
 }
 
@@ -26,14 +28,15 @@ function getStorage(){
 //jsCode换取openid
 export const jsCode2Openid = (code)=>{
     const url = preUrl + '/jsCode2Openid';
-    const param = { ..._param, ..._param, jscode:code };
+    const param = { ..._param, jscode:code };
     return httpPromise.get(url, param);
 }
 
 //token生成
-export const getToken = ({openid, unionId, userId})=>{
+export const getToken = ()=>{
+    getStorage();
     const url = preUrl + '/getToken';
-    const param = { ..._param, ..._param, openid, unionId, userId };
+    const param = { ..._param, openid, unionId:unionid, userId };
     return httpPromise.get(url, param);
 }
 
@@ -50,7 +53,14 @@ export const encryptedData = (encrypt,iv)=>{
     getStorage();
     const url = preUrl + '/encryptedData';
     let param = { ..._param, encryptedData:encrypt, iv, openid };
-    return httpPromise.get(url, param);
+    if(param.openid){
+        return httpPromise.get(url, param);
+    }else{
+        log.error('解密时未获取到openId');
+        return Global.LoginAndGetPid().then(res => {
+            return encryptedData(encrypt,iv);
+        })
+    }   
 }
 
 //unionId获取用户信息
@@ -178,6 +188,13 @@ export const fetchBannerState = (posId) => {
     return httpPromise.get(url, param);
 }
 
+export const fetchAdBanner = (posId) => {
+    getStorage();
+    const url = preUrl + '/popup/popup';
+    const param = { ..._param, merId, posId, openid, token, userId };
+    return httpPromise.get(url, param);
+}
+
 export const fetchBannerList = (posId) => {
     getStorage();
     const url = preUrl + '/banner/bannerList';
@@ -188,14 +205,14 @@ export const fetchBannerList = (posId) => {
 export const fetchNoticeMessage = () => {
     getStorage();
     const url = preUrl + '/member/noticeMessage';
-    const param = { ..._param, merId, channel:1, openid, token, userId };
+    const param = { ..._param, merId, channel:1, openid, token, userId, cardNo };
     return httpPromise.get(url, param);
 }
 
-export const editUserInfo = ({ gender, name, birth, pic }) => {
+export const editUserInfo = ({ gender, name, birth, pic, taskId }) => {
     getStorage();
     const url = preUrl + '/member/editUser';
-    const param = { ..._param, userId, gender, name, birth, pic, openid, token };
+    const param = { ..._param, userId, gender, name, birth, pic, openid, token, taskId, cardNo, unionId:unionid, };
     !pic && delete param.pic;
     !birth && delete param.birth;
     return httpPromise.post(url, param, true);
@@ -464,6 +481,13 @@ export const getTransLog= ({ pageNo, pageSize=10 }) => {
     return httpPromise.get(url, param);
 }
 
+export const getHisOrders= ({ pageNo, pageSize=10 }) => {
+    getStorage();
+    const url = preUrl + '/pt/hisOrders';
+    const param = { ..._param, userId, openid, token, pageNo, pageSize };
+    return httpPromise.get(url, param);
+}
+
 export const getTempList= (category) => {
     getStorage();
     const url = preUrl + '/templateMessage/getTempList';
@@ -574,3 +598,117 @@ export const fetchPointList = ({ status, startDate, endDate, pageNo, pageSize=10
     const param = { ..._param, originTransCode, userId, openid, token, startDate, endDate, pageNo, pageSize };
     return httpPromise.get(url, param);
 }
+
+export const fetchTaskList = () => {
+    getStorage();
+    const url = preUrl + '/task/list';
+    const param = { ..._param, userId, openid, token };
+    return httpPromise.get(url, param);
+}
+
+export const receiveTask = ({taskId}) => {
+    getStorage();
+    const url = preUrl + '/task/receive';
+    const param = { ..._param, userId, openid, token, unionId:unionid, cardNo, taskId };
+    return httpPromise.post(url, param, true);
+}
+
+export const fetchTaskLog = ({status, pageNo, pageSize=10 }) => {
+    getStorage();
+    const url = preUrl + '/task/record';
+    const param = { ..._param, userId, openid, token, status, pageNo, pageSize };
+    return httpPromise.get(url, param);
+}
+
+export const getNewTaskStatus = ({ lastDate }) => {
+    getStorage();
+    const url = preUrl + '/task/hasNew';
+    const param = { ..._param, userId, openid, token, lastDate };
+    return httpPromise.get(url, param);
+}
+
+export const taskFinish = ({ taskId }) => {
+    getStorage();
+    const url = preUrl + '/task/finish';
+    const param = { ..._param, userId, openid, unionId:unionid, token, cardNo, taskId };
+    return httpPromise.post(url, param);
+}
+
+
+//下单的引导文案@米修
+export const noticeForOc= () => {
+    getStorage();
+    const url = preUrl + '/task/noticeForOc';
+    const param = { ..._param, userId, openid, token };
+    return httpPromise.get(url, param);
+}
+
+export const userVisit = ({equipment,path,lat,lng}) =>{
+    getStorage();
+    const url = preUrl + '/visit';
+    const param = { ..._param, userId, openid, token, unionId:unionid, equipment, path, lng, lat };
+    return httpPromise.post(url, param);
+}
+
+//新版裂变接口
+export const getFissileList = ({queryTimes, pageNo=1, pageSize=10}) =>{
+    getStorage();
+    const url = preUrl + '/fp/main/detail/get';
+    const param = { ..._param, userId, openid, token, merId, activityCode, queryTimes, pageNo, pageSize };
+    return httpPromise.get(url, param);
+}
+
+
+export const shareTypeAdd = () =>{
+    getStorage();
+    const url = preUrl + '/fp/main/log/add';
+    const param = { ..._param, userId, openid, token, merId, activityCode, cardNo, userName:nickName, userUrl:avatarUrl };
+    return httpPromise.post(url, param, true);
+}
+
+export const shareTypeUpdate = ({fpLogId,shareType}) =>{
+    getStorage();
+    const url = preUrl + '/fp/main/log/shareType/update';
+    const param = { ..._param, userId, openid, token, fpLogId, shareType };
+    return httpPromise.post(url, param, true);
+}
+
+export const shareDetail = ({activityCode,fissionCode}) =>{
+    getStorage();
+    const url = preUrl + '/fp/share/detail/get';
+    const param = { ..._param, merId, activityCode, fissionCode };
+    return httpPromise.get(url, param);
+}
+
+
+export const addFissileLog = ({fissionCode}) =>{
+    getStorage();
+    const url = preUrl + '/fp/aider/item/add';
+    const param = { ..._param, userId, openid, token, merId, cardNo, fissionCode, userName:nickName, userUrl:avatarUrl };
+    return httpPromise.post(url, param);
+}
+
+export const awardList = () =>{
+    getStorage();
+    const url = preUrl + '/fp/main/award/list';
+    const param = { ..._param, userId, openid, token, merId, activityCode, cardNo };
+    return httpPromise.post(url, param);
+}
+
+//拼团入口注册
+export const  recordSource = ({teamId}) =>{
+  getStorage();
+  const url = preUrl + '/pt/recordSource';
+  const param = { ..._param, openid, token, userId, teamId}
+  return httpPromise.get(url,param);
+}
+
+
+//拼团开票
+export const getGroupInvoiceUrl = ({ billId, businessDay })=>{
+    getStorage();
+    const url = preUrl+'/pt/getInvoiceUrl';
+    const param =  {  ..._param, billId, businessDay, openid, token, userId };
+    return httpPromise.get(url, param, true);  
+}
+

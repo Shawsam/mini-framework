@@ -13,7 +13,7 @@ export const base =  {
    *  接口域名
    */
   //micvsDomain:'https://member.timhortons.com.cn/',
-  micvsDomain:'https://uatwechat.timhortons.com.cn/',
-  //micvsDomain: 'https://demo.micvs.com/',
+  //micvsDomain:'https://uatwechat.timhortons.com.cn/',
+  micvsDomain: 'https://demo.micvs.com/',
 
 }

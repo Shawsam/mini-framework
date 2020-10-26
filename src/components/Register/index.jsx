@@ -182,7 +182,7 @@ export default class Register extends Component {
   }
 
   closePanel(){
-      this.setState({panelTipShow:false, panelWelcomeShow:false, panelQrcodeShow:false})
+      this.setState({panelTipShow:false, panelWelcomeShow:false })
   }
 
   render() {
