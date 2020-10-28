@@ -1,13 +1,14 @@
 .authorizePanel{ 
-	position:fixed; display:block; z-index:1000; width:100%; height:100%; top:0; left:0;
+	position:fixed; display:block; z-index:1000; width:100%; height:100%; top:0; left:0;  box-sizing:border-box;
     .shadow{ position:absolute; display:block; width:100%; height:100%; background:rgba(0,0,0,0.6); top:0; left:0; z-index:999; }
-    .panelContent{ z-index:1000; font-size:0; position:absolute; width:100%; height:100%;  box-sizing:border-box;  color:#333; text-align:center; background:#fff;  }
-    .panelContent .closeBtn{ position:absolute; top:10px; right:10px; width:40px; height:40px; padding:20px; } 
+    .panelContent{ z-index:1000; font-size:0; position:absolute; width:100%; height:100%;  box-sizing:border-box;  color:#333; text-align:center; background:#fff; padding-top:100px; }
+    .panelContent .closeBtn{ position:absolute; top:200px; right:10px; width:60px; height:60px; padding:20px; } 
     .panelContent .closeBtn .innerImg{ height:100%; width:100%; }
     .panelContent .centerImg{ width:100%; }
     .panelContent .content{ padding:50px 50px 70px 50px; }
     .panelContent .content .title{ font-size:44px; font-weight:bold; color:#342C2A; }
     .panelContent .content .tit{  font-size:24px; color:#B9BABB; margin-top:10px; }
-    .panelContent .content .btn{ background:#C8102E; color:#fff; line-height:100px; border-radius:50px; margin-top:50px; }
+    .panelContent .content .btn{ background:#fff; color:#911414; border:2px solid #911414; line-height:100px; border-radius:50px; margin-top:50px; }
     .panelContent .content .btn .wx{ height:30px; width:36px; display:inline-block; margin-right:16px; vertical-align:middle;  }
+    .panelContent .content .btn.authorizeBtn{ background:#911414; color:#fff; }
  }

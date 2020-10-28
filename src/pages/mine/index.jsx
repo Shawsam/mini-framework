@@ -8,7 +8,6 @@ import to from "../../assets/images/to.png";
 export default class storeList extends Component {
   config = {
     navigationBarTitleText: '我的',
-
     disableScroll: true
   }
 

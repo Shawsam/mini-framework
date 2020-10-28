@@ -39,7 +39,7 @@ export default class Index extends Component {
             <View className=''>
               <Image src={require('../../assets/images/zzbac.png')} mode='aspectFill' className='zzbacPhoto'></Image>
               <View className='forwardContent'>
-                <Image src={require('../../assets/images/avaphoto.png')} mode='aspectFill' className='avaPhoto'></Image>
+                <Image src={require('../../assets/images/avatar.png')} mode='aspectFill' className='avaPhoto'></Image>
                 <Text className='forwardText'>胡文辉 <Text className='forwardTextsong'>送你一张优惠券</Text></Text>
 
                 <View className='couponit' onClick={this.tocouponListDetail}>

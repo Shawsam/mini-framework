@@ -44,9 +44,18 @@ export default class Index extends Component {
       })
   } 
 
-  openPage(){
-      Taro.navigateTo({url:'/pages/webview/index'})
+
+
+  openPage(url,e){
+      e.stopPropagation();
+      this.interceptShowAuthorize().then(()=>{
+          Taro.navigateTo({url})
+      }).catch(err=>{
+          console.log(err);
+      })
   }
+
+
    
 
   render() {
@@ -61,12 +70,12 @@ export default class Index extends Component {
                 this.state.showQrPanel ? (
                   <View className='qrAll'>
                     <View className='qrUserInfo'>
-                      <Image src={require('../../assets/images/avaphoto.png')} mode='aspectFill' className='avaphotoPhotoQR'></Image>
+                      <Image src={userInfo.avatarUrl} mode='aspectFill' className='avaphotoPhotoQR'></Image>
                       <Image src={require('../../assets/images/qrqr.png')} mode='aspectFill' className='qrqrPhoto'></Image>
                       <Text className='qrmiao'>二维码30秒自动刷新</Text>
                     </View>
                     <View className='closeAll'>
-                      <Text className='closeText'>门店消费时请出示给店员进行扫码， 获取您的积分权益。</Text>
+                      <View className='closeText'>门店消费时请出示给店员进行扫码， 获取您的积分权益。</View>
                       <Image src={require('../../assets/images/closetc.png')} mode='aspectFill' onClick={this.showQrPanel} className='closetcPhoto'></Image>
                     </View>
                   </View>
@@ -137,13 +146,13 @@ export default class Index extends Component {
 
                 <View className='mhList'>
                   <View className='mhqMH'>
-                    <View className='myCouponPhoto' onClick={this.couponList}>
+                    <View className='myCouponPhoto' onClick={this.openPage.bind(this,'/pages/coupon/index')}>
                       <Text className='couponTextsp'>{couponCount}</Text>
                     </View>
                     {/* <Image src={require('../../assets/images/myCouponnull.png')} mode='aspectFill' className='myCouponPhoto'></Image> */}
                     <Image src={require('../../assets/images/haowu.png')} mode='aspectFill' className='haowuPhoto'></Image>
                   </View>
-                  <View className='mhqJL' onClick={this.openPage.bind(this)}>
+                  <View className='mhqJL' onClick={this.openPage.bind(this,'/pages/webview/index')}>
                     <Image src={require('../../assets/images/quanli.png')} mode='aspectFill' className='quanliPhoto'></Image>
                   </View>
                 </View>
@@ -173,8 +182,8 @@ export default class Index extends Component {
             <TabBar selected={0} />
           </View>
         }
-        <Authorize showCancel="true" authorizeSuccess={this.fetchUserInfoById.bind(this)} />
-        <Register registerSuccess={this.fetchUserInfoById.bind(this)} />
+        <Authorize showCancel="false" authorizeSuccess={this.fetchUserInfoById.bind(this)} />
+        <Register showCancel="false" registerSuccess={this.fetchUserInfoById.bind(this)} />
       </View>
     )
   }

@@ -4,7 +4,7 @@ import log from './log';
 const Env = Taro.getEnv();
 
 
-//获取第三方Id
+/*//获取第三方Id
 export const LoginAndGetPid = ()=>{
       return new Promise((resolve,reject) =>{
         if(Env === 'ALIPAY'){
@@ -43,8 +43,10 @@ export const LoginAndGetPid = ()=>{
                       //请求服务器，获取openId, unionId
                       Api.jsCode2Openid(res.code).then(res => {
                           console.log('jsCode2Openid--获取openId成功');
-                          let { openId, unionid } = res.data;
+                          let { openId, unionid, token } = res.data;
                           Taro.setStorageSync('Pid', openId);
+                          Taro.setStorageSync('unionId', unionid);
+                          Taro.setStorageSync('token', token);
                           resolve(res);
                       }).catch(err=>{
                           console.log('jsCode2Openid--获取openId失败,'+JSON.stringify(err));
@@ -62,7 +64,50 @@ export const LoginAndGetPid = ()=>{
             })
         }
       })
-    }
+}*/
+
+// //生成token
+// export const getToken = ()=>{
+//       return new Promise((resolve, reject) => {
+//           if(Env === 'ALIPAY'){
+//               my.getAuthCode({
+//                 scopes: ['auth_base'],
+//                 success: res => {
+//                   if(typeof res.authCode === 'string'){
+//                       Api.autCodeGetUuid(res.authCode).then(res=>{
+//                           console.log('getToken--生成token成功');
+//                           Taro.setStorageSync('token', res.data.token);
+//                           resolve(res);
+//                       }).catch(err=>{
+//                           console.log('getToken--生成token失败');
+//                           reject(err);
+//                       });
+//                   }else{
+//                       console.log('请求成功，授权失败');
+//                       reject({msg:'授权失败，请重试'});
+//                   }  
+//                 },
+//                 fail: err=>{
+//                     console.log('授权请求失败');
+//                     if(err.authErrorScope){
+//                         reject({msg:err.authErrorScope.scope});
+//                     }else{
+//                         reject({msg:'网络异常，请重试'});
+//                     }            
+//                 }
+//               })
+//           }else if( Env === 'WEAPP'){
+//               Api.getToken().then(res=>{
+//                   console.log('getToken--生成token成功');
+//                   Taro.setStorageSync('token', res.data.token);
+//                   resolve(res);
+//               }).catch(err=>{
+//                   console.log('getToken--生成token失败');
+//                   reject(err);
+//               })
+//           }
+//       })
+// }
 
 //获取授权状态
 export const  getAuthorizeState = ()=>{
@@ -161,48 +206,6 @@ export const updateToken = ()=>{
     })
 }
 
-//生成token
-export const getToken = ()=>{
-      return new Promise((resolve, reject) => {
-          if(Env === 'ALIPAY'){
-              my.getAuthCode({
-                scopes: ['auth_base'],
-                success: res => {
-                  if(typeof res.authCode === 'string'){
-                      Api.autCodeGetUuid(res.authCode).then(res=>{
-                          console.log('getToken--生成token成功');
-                          Taro.setStorageSync('token', res.data.token);
-                          resolve(res);
-                      }).catch(err=>{
-                          console.log('getToken--生成token失败');
-                          reject(err);
-                      });
-                  }else{
-                      console.log('请求成功，授权失败');
-                      reject({msg:'授权失败，请重试'});
-                  }  
-                },
-                fail: err=>{
-                    console.log('授权请求失败');
-                    if(err.authErrorScope){
-                        reject({msg:err.authErrorScope.scope});
-                    }else{
-                        reject({msg:'网络异常，请重试'});
-                    }            
-                }
-              })
-          }else if( Env === 'WEAPP'){
-              Api.getToken().then(res=>{
-                  console.log('getToken--生成token成功');
-                  Taro.setStorageSync('token', res.data.token);
-                  resolve(res);
-              }).catch(err=>{
-                  console.log('getToken--生成token失败');
-                  reject(err);
-              })
-          }
-      })
-}
 
 //获取用户信息(unionId & openid)
 export const fetchUserInfoById = ()=>{
@@ -268,35 +271,66 @@ export const cardRegister = (url,mobile)=>{
     })
 }
 
+
+
 //获取第三方Id及token  token升级后废弃
-export const getPidAndToken = () =>{
-    return new Promise((resolve, reject) => {
-        if(Env === 'WEB'){
-            resolve({data:{userOpenId:123456}})
-        }else{
-            let userSecret = Taro.getStorageSync('userSecret');
-            if(userSecret){
-                //校验token是否过期
-                Api.judgeToken().then(res=>{
-                    console.log('judgeToken--token有效')
-                    resolve(res)
-                }).catch(err=>{
-                    console.log('judgeToken--token无效')
-                    LoginAndGetPid().then(res=>{
-                        resolve(res)
+export const getToken = ()=>{
+      return new Promise((resolve,reject) =>{
+        if(Env === 'ALIPAY'){
+            my.getAuthCode({
+              scopes: ['auth_base'],
+              success: res => {
+                console.log(res);
+                if(typeof res.authCode === 'string'){
+                    Api.autCodeGetUuid(res.authCode).then(res=>{
+                        let uuid = res.data;
+                        Taro.setStorageSync('Pid', uuid);
+                        resolve(res);
                     }).catch(err=>{
                         reject(err)
                     });
-       
-                })
-            }else{
-                console.log('token不存在')
-                LoginAndGetPid().then(res=>{
-                    resolve(res)
-                }).catch(err=>{
-                    reject(err)
-                });
-            }
+                }else{
+                    console.warn('请求成功，授权失败')
+                    reject({msg:'授权失败，请重试'})
+                }  
+              },
+              fail: err=>{
+                  console.warn('授权请求失败')
+                  console.log(err)
+                  if(err.authErrorScope){
+                      reject({msg:err.authErrorScope.scope})
+                  }else{
+                      reject({msg:'网络异常，请重试'})
+                  }            
+              }
+            })
+        }else if(Env === 'WEAPP'){
+            wx.login({
+                timeout:5000,
+                success:(res) => {
+                  if (res) {
+                      //请求服务器，获取openId, unionId
+                      Api.jsCode2Openid(res.code).then(res => {
+                          console.log('jsCode2Openid--获取openId成功');
+                          let { openId, unionid, token } = res.data;
+                          Taro.setStorageSync('Pid', openId);
+                          Taro.setStorageSync('unionId', unionid);
+                          Taro.setStorageSync('token', token);
+                          resolve(res);
+                      }).catch(err=>{
+                          console.log('jsCode2Openid--获取openId失败,'+JSON.stringify(err));
+                          reject(err)
+                      })
+                  } else {
+                      console.log('wx.login--微信登陆失败',JSON.stringify(err));
+                      reject({msg:'调用微信登录接口失败，请重试'})
+                  }
+                },
+                fail:(err) => { 
+                    console.log('wx.login--微信登陆超时,'+JSON.stringify(err));
+                    reject({msg:'调用微信登录接口超时，请重试'})
+                }
+            })
         }
-    })
+      })
 }

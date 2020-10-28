@@ -6,7 +6,7 @@ import orderimg from "../../assets/images/orderimg.png";
 
 export default class storeList extends Component {
   config = {
-
+    navigationBarTitleText: '订单',
     disableScroll: true
   }
 

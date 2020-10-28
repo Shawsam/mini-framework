@@ -53,7 +53,7 @@ export default class Register extends Component {
           Api.userLogin(mobile).then(res=>{
               console.log('=====登录成功=====');
               this.setState({panelYzmShow:false})
-              this.props.uerStore.setRegisterShow(false);
+              this.props.userStore.setRegisterShow(false);
               this.props.registerSuccess();
           }).catch(err=>{
               return Promise.reject(err);
@@ -71,7 +71,7 @@ export default class Register extends Component {
               Api.userRegister({mobile,gender,birth,shopId}).then(res=>{
                   console.log('=====注册成功=====');
                   this.setState({panelYzmShow:false})
-                  this.props.uerStore.setRegisterShow(false);
+                  this.props.userStore.setRegisterShow(false);
                   this.props.registerSuccess();
               }).catch(err=>{
                   console.log(err)
@@ -192,16 +192,16 @@ export default class Register extends Component {
     return (
         Env !== 'WEB' && registerShow &&
         <View>
-            <View className="panel panelRegister">
+            <View className="panel registerPanel">
                 <View className="shadow"></View>
                 <View className="panelContent" catchTouchMove="ture">
-                    <Image className="closeBtn" onClick={ this.cancelPhoneAuthorize } src={require('./images/close.png')} />
-                    <Image className="usercenimg" src="http://cnshacc1oss01.oss-cn-shanghai.aliyuncs.com/tims15907416499790e3f0a0434298b50cd0b231c7cce0d7.png" />
+                    { showCancel && <Image className="closeBtn" onClick={ this.cancelPhoneAuthorize } src={require('./images/close.png')} /> }
+                    <Image mode="widthFix" className="centerImg" src={require('./images/authorize.jpg')} />
                     <View className="content">
-                        <View className="protocol" onClick={this.checkAgree.bind(this)}>{agree ? <Image className="yes" src={require('./images/yes2.png')} /> : <Image className="yes" src={require('./images/select.png')} />}我已阅读并同意<Text onClick={this.openProtocol.bind(this)} className="link">《用户协议》</Text></View>
-                        { Env == 'WEAPP' && <Button className="btn authorizeBtn" openType="getPhoneNumber" onGetPhoneNumber={this.phoneAuthorized.bind(this)}><Image className="wx" src={require('./images/wx2.png')} />授权手机号码</Button> }
-                        { Env == 'ALIPAY' && <Button className="btn authorizeBtn" openType="getAuthorize" scope='phoneNumber'  onGetAuthorize={ this.phoneAuthorized.bind(this) }>授权手机号码</Button> }
-                        <View onClick={this.openYzmRegister.bind(this)} className="phoneRegister">使用手机号注册 ></View>
+                        {/*<View className="protocol" onClick={this.checkAgree.bind(this)}>{agree ? <Image className="yes" src={require('./images/yes2.png')} /> : <Image className="yes" src={require('./images/select.png')} />}我已阅读并同意<Text onClick={this.openProtocol.bind(this)} className="link">《用户协议》</Text></View> */}
+                        { Env == 'WEAPP' && <Button className="btn authorizeBtn" openType="getPhoneNumber" onGetPhoneNumber={this.phoneAuthorized.bind(this)}>{/*<Image className="wx" src={require('./images/wx2.png')} />*/}微信快速注册</Button> }
+                        { Env == 'ALIPAY' && <Button className="btn authorizeBtn" openType="getAuthorize" scope='phoneNumber'  onGetAuthorize={ this.phoneAuthorized.bind(this) }>授权手机号注册</Button> }
+                        <Button className="btn" onClick={this.openYzmRegister.bind(this)}>输入手机号注册</Button>
                     </View>
                 </View>
             </View>
@@ -214,7 +214,7 @@ export default class Register extends Component {
                         <Image className="closeBtn" onClick={this.closeYzmPanel.bind(this)} src={require('./images/close.png')} />
                         <View className="content">
                             <View className="title">请绑定手机号</View>
-                            <View className="tit">欢迎加入Tims会员俱乐部</View>
+                            <View className="tit">欢迎注册拳击猫会员</View> */}
                             <View className="fmGroup hasBtn">
                                 <Input className="input" type="text" maxlength="11" onInput={this.phoneInput.bind(this)} value={phoneInput} placeholder="请输入手机号" enableNative={true} controlled={true} />
                             </View>

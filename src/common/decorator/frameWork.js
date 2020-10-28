@@ -34,7 +34,7 @@ const frameWork = ({userInfoCached=true,loadToAuthorize=false}) => (Component) =
                 }
             }else{
                 console.error('缓存中无Pid');
-                User.LoginAndGetPid().then(res=>{
+                User.getToken().then(res=>{
                     this.componentDidMount();      
                 }).catch(err=>{
                     Taro.showModal({  content:err.msg||'内部错误',
