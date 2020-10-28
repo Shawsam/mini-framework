@@ -1,0 +1,122 @@
+
+page{
+    
+background: #F4F5F6;
+}
+
+.userMy{
+    width: 100%;
+    height: auto;
+    background: #05081E;
+}
+.imgscroll{
+    width: 650px;
+    height: 351px;
+    display: inline-block;
+    padding: 0px 15px;
+}
+.imgscrollAll{
+    white-space: nowrap;
+    padding-top: 28px;
+    padding-left: 14px;
+}
+.qyText{
+    
+font-size: 32px;
+
+color: #FFFFFF;
+line-height: 38px;
+}
+.qyTexttwo{
+    
+    font-size: 32px;
+    margin-right: 75px;
+    color: #FFFFFF;
+    line-height: 38px;
+    }
+.qyTextAll{
+    display: flex;
+    padding-left: 31px;
+    padding-top: 32px;
+    justify-content: space-between;
+}
+.quyimg{
+    width: 44px;
+    height: 53px;
+}
+.quyitype{
+    
+font-size: 32px;
+padding-top: 17px;
+color: #FFFFFF; 
+line-height: 38px;
+}
+.quyitypeAll{
+    display: flex;
+    flex-direction: column;
+    padding: 15px 30px;
+    align-items: center;
+}
+.quyiAllLogo{
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 50px;
+    margin-top: 29px;
+    padding-bottom: 92px;
+}
+.youquanimg{
+    background: url('../../assets/images/youquan.png') no-repeat;
+    background-size: 100%;
+    width: 726px;
+    height: 200px;
+}
+.youquanAll{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -72px;
+   
+}
+.yhjdata{
+position: absolute;
+padding-top: 111px;
+    font-size: 53px;
+    padding-left: 86px;
+    color: #911414;
+}
+.qlzdata{
+position: absolute;
+padding-left: 347px;
+font-size: 53px;
+padding-top: 111px;
+color: #911414;
+}
+.quanynumber{
+    color: #FDC741;
+    font-size: 36px;
+}
+.naAll{
+    width: 690px;
+height: 100px;
+background: #FFFFFF;
+box-shadow: 0px 0px 6px 0px rgba(184, 184, 184, 0.2);
+border-radius: 10px;
+margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 34px;
+}
+.naText{
+    
+font-size: 36px;
+margin-right: 353px;
+color: #000000;
+line-height: 43px;
+}
+.naImg{
+    width: 17px;
+    height: 27px;
+}
+.nama{
+    padding-bottom: 45px;
+}

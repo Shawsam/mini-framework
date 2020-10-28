@@ -5,7 +5,7 @@ import log from '../utils/log';
 
 const merId = 31;
 const ENV = Taro.getEnv();
-const preUrl = base.micvsDomain+'tim-weixin/wechat'; 
+const preUrl = base.micvsDomain+'crm-web/wechat'; 
 const activityCode = base.activityCode;
 const _param = { version:base.version };
 let openid,token,unionid,authInfo,userInfo,userId,nickName,cardNo,mobile,avatarUrl,point;
@@ -68,6 +68,7 @@ export const fetchUserInfoById= () => {
     getStorage();
     const url = preUrl + '/member/userInfo';
     const param = { ..._param, openid, unionid, name:nickName };
+    if(!unionid) return  Promise.reject({errCode:-1000,msg:'未获取到unionid'})
     return httpPromise.get(url, param);
 }
 

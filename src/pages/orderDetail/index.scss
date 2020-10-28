@@ -1,0 +1,163 @@
+
+page{
+    
+background: #F4F5F6;
+}
+
+.titleText{
+    
+font-size: 26px;
+
+color: #B8B8B8;
+line-height: 31px;
+}
+.detailAll{
+    width: 690px;
+    height: auto;
+    margin: 0 auto;
+    margin-top: 25px; 
+}
+.detailImg{
+    width: 690px;
+    height: 924px;
+    background: url('../../assets/images/orderDetail.png') no-repeat;
+    background-size: 100%;
+    margin-top: 20px;
+}
+.detailtitleText{
+    
+font-size: 32px;
+
+color: #FFFFFF;
+line-height: 34px;
+}
+.detailtitleTextp{
+    padding-top: 31px;
+    padding-left: 30px;
+}
+.orderdata{
+    
+font-size: 32px;
+padding-left: 30px;
+padding-top: 65px;
+color: #B8B8B8;
+line-height: 34px;
+}
+
+.orderdataYouHui{
+    
+    font-size: 32px;
+    padding-left: 30px;
+    padding-top: 60px;
+    color: #B8B8B8;
+    line-height: 34px;
+}
+.orderdatazhifuall{
+    display: flex;
+    padding-left: 30px;
+    padding-top: 117px;
+}
+.orderdatazhifu{
+    font-size: 32px;
+    
+    color: #B8B8B8;
+    line-height: 34px;
+}
+.orderdataAll{
+    display: flex;
+    
+}
+.orderdataAll {
+    display: flex;
+    padding-left: 30px;
+    padding-top: 32px;
+font-size: 32px;
+
+color: #000000;
+
+}
+.detailone{
+   
+    width: 233px;
+   
+}
+.detailTwo{
+    position: absolute;
+    padding-left: 375px;
+   
+}
+.detailThree{
+    position: absolute;
+    padding-left: 535px;
+  
+}
+
+.detailHeJi{
+    position: absolute;
+    padding-left: 284px;
+  
+}
+
+.detailAllText{
+    margin-top: -6px;
+}
+.detailHeJiMoneydata{
+    color: #911412;
+    font-size: 44px;
+}
+.wechat{
+    width: 48px;
+    height: 45px;
+}
+.wechatText{
+    
+font-size: 32px;
+padding-left: 15px;
+padding-top: 5px;
+color: #000000;
+line-height: 34px;
+}
+.wechatall{
+    display: flex;
+    padding-left: 285px;
+}
+.underText{
+padding-left: 30px;
+padding-top: 25px;    
+font-size: 26px;
+display: flex;
+flex-direction: column;
+color: #B8B8B8;
+line-height: 44px;
+}
+.pinjbig{
+    
+font-size: 44px;
+width: 320px;
+height: 80px;
+color: #FFFFFF;
+line-height: 53px;
+    background: #911414;
+    border-radius: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.kaifap{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 44px;
+    width: 320px;
+    height: 80px;
+    border-radius: 40px;
+    border: 2px solid #911414;
+    color: #911414;
+    line-height: 53px;
+}
+.twobtn{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 60px;
+    padding-bottom: 60px;
+}

@@ -20,10 +20,11 @@ const store = {
 class App extends Component {
   config = {
     pages: [
-      'pages/example/index',
       'pages/index/index',
-      'pages/menu/index',
-      'pages/user/index',
+      'pages/order/index',
+      'pages/mine/index',
+      'pages/webview/index',
+      'pages/example/index',
     ],
     window: {
       backgroundTextStyle:'light',
@@ -42,10 +43,10 @@ class App extends Component {
           "pagePath": "pages/index/index"
         },
         {
-          "pagePath": "pages/menu/index"
+          "pagePath": "pages/order/index"
         },
         {
-          "pagePath": "pages/user/index"
+          "pagePath": "pages/mine/index"
         }
       ]
     },

@@ -45,7 +45,7 @@ export default class Index extends Component {
           <View className='page'>
               {isLoading?<Loading/>:
                   <View className='container'>
-                      {this.config.navigationStyle=='custom' && <NavBar />  }
+                      {this.config.navigationStyle=='custom' && <NavBar title={this.config.navigationBarTitleText} />  }
                       <View className="wrapper">
                           {/* 页面主体内容 */}
                           <View style="text-align:center;padding-top:20rpx;">{this.config.navigationBarTitleText}-页面内容</View>

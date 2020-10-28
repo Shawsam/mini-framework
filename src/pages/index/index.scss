@@ -1,1 +1,259 @@
-@import "../../app";
+.bannerIndex{
+
+}
+
+.bannerPhoto{
+    width: 100%;
+    height: 448px;
+}
+
+//二维码弹窗
+.qrAll{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.qrUserInfo{
+    width: 600px;
+    background: #ffffff;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.qrqrPhoto{
+    width: 476px;
+    height: 476px;
+}
+.closetcPhoto{
+    width: 48px;
+    height: 48px;
+    margin-top: 45px;
+}
+.closeAll{
+    text-align: center;
+    margin-top: 45px;
+}
+.closeText{
+    color: #fff;
+}
+
+
+.avaphotoPhotoQR{
+    width: 124px;
+    height: 124px;
+    margin-top: -45px;
+    border: 14px solid #fff;
+}
+.qrmiao{
+    color: #C0C0C0;
+    font-size: 30px;
+    margin-top: 24px;
+    margin-bottom: 25px;
+}
+
+
+//用户头像区域
+.avaphotoPhoto{
+    width: 124px;
+    height: 124px;
+   
+}
+
+.avaAll{
+    display: flex;
+    margin-left: 12px;
+}
+.avaDJ{
+
+}
+.avaList{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-left: 22px;
+}
+.userName{
+    
+font-size: 34px;
+
+color: #000000;
+line-height: 41px;
+}
+.userQ{
+
+    font-size: 26px;
+    margin-left: 22px;
+    color: #000000;
+    line-height: 31px;
+}
+.userQdata{
+    
+font-size: 26px;
+
+color: #911414;
+line-height: 31px;
+}
+.userD{
+    font-size: 24px;
+    background: #911414;
+    color: #FFFFFF;
+    line-height: 29px;
+    padding: 5px 20px;
+    border-radius: 22px;
+}
+.userDdata{
+    
+font-size: 24px;
+margin-left: 181px;
+color: #B8B8B8;
+line-height: 29px;
+}
+
+.qrdataPhoto{
+    width: 204px;
+    height: 170px;
+}
+
+.qrdata{
+    margin-top: -47px;
+    position: absolute;
+    right: 0;
+}
+
+
+//活动滚动字幕
+
+.gundongPhotoText{
+    // background: url('../../assets/images/gundong.png');
+    // background-size: 100%;
+    // width: 100%;
+    // height: 80px;
+    display: flex;
+}
+
+.lijiPhoto{
+    width: 9px;
+    height: 18px;
+    margin-left: 9px;
+}
+.gundongPhoto{
+    width: 100%;
+    height: 80px;
+}
+.gundongQG{
+    position: absolute;
+    right: 60px;
+    margin-top: -7px;
+}
+.gundongText{
+    
+font-size: 26px;
+
+margin-left: 32px;
+color: #000000;
+line-height: 31px;
+overflow: hidden;
+
+}
+
+.gundongTextQG{
+    
+font-size: 26px;
+
+color: #842C31;
+line-height: 31px;
+}
+
+.gundongTextSwiper{
+    margin-top: -61px;
+    height: 42px;
+}
+
+// 买就要购，优惠卷...
+.gyhqAll{
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+.mhList{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+.mhqJL{
+    margin-top: 19px;
+    line-height: 0px;
+}
+.mhqMH{
+    line-height: 0px;
+    display: flex;
+}
+
+.getGouPhoto{
+    width: 275px;
+    height: 380px;
+}
+.myCouponPhoto{
+    background: url('../../assets/images/myCouponnull.png');
+    width: 188px;
+    height: 179px;
+    background-size: 100%;
+}
+.couponTextsp{
+    position: absolute;
+    margin-top: 111px;
+    font-size: 75px;
+    margin-left: 35px;
+    letter-spacing: 35px;
+}
+.haowuPhoto{
+    width: 188px;
+    height: 179px;
+    margin-left: 19px;
+}
+.quanliPhoto{
+    width: 395px;
+    height: 182px;
+}
+
+
+//蓄力有礼
+.xuLi{
+    line-height: 0px;
+    margin: 0 auto;
+    width: 690px;
+    height: 180px;
+    background: url(../../assets/images/xuLi.png);
+    background-size: 100%;
+    margin-top: 20px;
+    text-align: center;
+}
+.xuLiimgs{
+    margin-left: 176px;
+}
+.beerPhoto{
+    width: 58px;
+    height: 105px;
+    margin-top: 38px;
+    padding-left: 25px;
+}
+
+//促销活动
+.cuxBanner{
+    line-height: 0px;
+    text-align: center;
+    margin-top: 20px;
+    padding-bottom: 54px;
+}
+.cuxbannerPhoto{
+    width: 690px;
+    height: 280px;
+}
+

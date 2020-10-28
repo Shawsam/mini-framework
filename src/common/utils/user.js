@@ -282,7 +282,7 @@ export const getPidAndToken = () =>{
                     resolve(res)
                 }).catch(err=>{
                     console.log('judgeToken--token无效')
-                    getToken().then(res=>{
+                    LoginAndGetPid().then(res=>{
                         resolve(res)
                     }).catch(err=>{
                         reject(err)
@@ -291,7 +291,7 @@ export const getPidAndToken = () =>{
                 })
             }else{
                 console.log('token不存在')
-                getToken().then(res=>{
+                LoginAndGetPid().then(res=>{
                     resolve(res)
                 }).catch(err=>{
                     reject(err)

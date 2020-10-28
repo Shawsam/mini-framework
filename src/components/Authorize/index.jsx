@@ -71,9 +71,9 @@ export default class Authorize extends Component {
                     <Image mode="widthFix" className="centerImg" src={require('./images/authorize.jpg')} />
                     <View class="content">
                         <View class="title">{Env == 'WEAPP'?'微信':'支付宝'}授权</View>
-                        <View class="tit">小程序需要获取您的用户信息</View>
-                        { Env == 'ALIPAY' && <View className="flex-item confirmBtn"><Button className="btn" scope='userInfo' open-type="getAuthorize" onGetAuthorize={ this.confirmAuthrize.bind(this) }>确定</Button></View> }
-                        { Env == 'WEAPP' && <View className="flex-item confirmBtn"><Button className="btn" open-type="getUserInfo" bindgetuserinfo={ this.confirmAuthrize.bind(this) }><Image className="wx" src={require('./images/wx.png')}  />授权登录</Button></View> }
+                        <View class="tit">授权获取您的公开信息（微信昵称头像等），以便更好的为您提供更多服务</View>
+                        { Env == 'ALIPAY' && <View className="flex-item confirmBtn"><Button className="btn" scope='userInfo' open-type="getAuthorize" onGetAuthorize={ this.confirmAuthrize.bind(this) }>立即授权</Button></View> }
+                        { Env == 'WEAPP' && <View className="flex-item confirmBtn"><Button className="btn" open-type="getUserInfo" bindgetuserinfo={ this.confirmAuthrize.bind(this) }>立即授权</Button></View> }
                     </View>
                 </View>
             </View>:null }

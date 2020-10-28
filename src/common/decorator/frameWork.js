@@ -1,7 +1,7 @@
 import Taro, { Component } from '@tarojs/taro';
 import { inject, observer } from '@tarojs/mobx';
 import * as User from '../utils/user';
-const errMap = ['100124', '1001241', '100130'];
+const errMap = ['-1000','-1001','100124', '1001241', '100130'];
 let isIndex;
 
 //userInfoCached 是否从缓存中读取会员信息
@@ -88,10 +88,9 @@ const frameWork = ({userInfoCached=true,loadToAuthorize=false}) => (Component) =
             }else{
                 console.warn('页面未定义方法处理未获取到会员信息--userInfoUnReady');
                 this.setState({isLoading:false}); 
-                if(code==100124){
-                    this.props.userStore.setRegisterShow(true);
-                }else{
-                    
+                switch(true){
+                    case code == -1000:  this.props.userStore.setAuthorizeShow(true); break;
+                    case code == 100124:  this.props.userStore.setRegisterShow(true); break;
                 }
             }
         }
@@ -108,16 +107,12 @@ const frameWork = ({userInfoCached=true,loadToAuthorize=false}) => (Component) =
                 }            
             }).catch(err=>{
                 console.log(err);
-                if(err.errcode==-1000){
-                    this.fetchUserInfoById();
-                }else{
-                    Taro.showModal({  content:err.msg||'内部错误',
-                                      showCancel:false,
-                                      success:()=>{
-                                          this.fetchUserInfoById()
-                                      }
-                                  })
-                }              
+                Taro.showModal({  content:err.msg||'内部错误',
+                                  showCancel:false,
+                                  success:()=>{
+                                      this.fetchUserInfoById()
+                                  }
+                              })       
             })
         }
         
