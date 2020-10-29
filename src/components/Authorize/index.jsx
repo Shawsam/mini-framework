@@ -32,12 +32,12 @@ export default class Authorize extends Component {
                   Taro.setStorageSync('authInfo', userInfo);        //设置缓存
                   this.props.userStore.setUserInfo(userInfo);       //设置userInfo
                   this.props.authorizeSuccess();
-                  this.cancelAuthorize();
               }
           });
       }else if(Env==='WEAPP'){
           const { encryptedData, iv, userInfo, errMsg } = res.detail;
-          if(errMsg=='getUserInfo:ok'){                                          
+          if(errMsg=='getUserInfo:ok'){
+              userInfo.name = userInfo.nickName;                                          
               Taro.setStorageSync('authInfo', userInfo);        //设置缓存
               this.props.userStore.setUserInfo(userInfo);       //设置userInfo
               Api.encryptedData(encryptedData,iv).then(res=>{   //解密unionId
@@ -49,8 +49,7 @@ export default class Authorize extends Component {
               })
           }else{
               console.log('用户未允许授权'+errMsg);              
-          }
-          this.cancelAuthorize();                               //关闭授权
+          }                             //关闭授权
       }
   }
 

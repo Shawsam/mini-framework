@@ -45,20 +45,19 @@ line-height: 46px;
     padding: 8px 25px;
     background: #FDC741;
     border-radius: 27px;
-    margin-right: 60px;
-font-size: 32px;
-
-color: #911414;
-line-height: 38px;
+    font-size: 32px;
+    color: #911414;
+    line-height: 38px;
+    margin:0 30px;
 }
 .ZHyou{
-    
-font-size: 32px;
-padding: 8px 25px;
-color: #FDC741;
-line-height: 38px;
+    font-size: 32px;
+    padding: 8px 25px;
+    color: #FDC741;
+    line-height: 38px;
     border-radius: 27px;
     border: 1px solid #FDC741;
+    margin:0 30px;
 }
 
 .ZHyoustatus{
@@ -72,5 +71,10 @@ line-height: 38px;
     display: flex;
     justify-content: center;
     align-items: center;
-   
+}
+
+.panelShare .panelContent{
+    padding:60px;
+    width:570px;
+    box-sizing:border-box;
 }

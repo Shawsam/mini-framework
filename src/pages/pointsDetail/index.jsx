@@ -28,23 +28,17 @@ export default class storeList extends Component {
   switchs(e) {
     let index = parseInt(e.currentTarget.dataset.item)
     console.log(index)
-
     this.setState({
       current: index,
 
     })
     //this.couponList()
-
   }
+
   toPointMall() {
-    Taro.redirectTo({
-      url: '/pages/pointsMall/index'
-    })
+    Taro.navigateBack();
   }
 
-  Return = () => {
-
-  }
   render() {
 
     return (

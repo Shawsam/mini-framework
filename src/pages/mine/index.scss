@@ -56,40 +56,20 @@ line-height: 38px;
     flex-direction: column;
     padding: 15px 30px;
     align-items: center;
+    flex:1;
 }
 .quyiAllLogo{
     display: flex;
     flex-wrap: wrap;
-    padding-left: 50px;
     margin-top: 29px;
     padding-bottom: 92px;
 }
-.youquanimg{
-    background: url('../../assets/images/youquan.png') no-repeat;
-    background-size: 100%;
-    width: 726px;
-    height: 200px;
-}
-.youquanAll{
-    display: flex;
-    justify-content: flex-end;
-    margin-top: -72px;
-   
-}
-.yhjdata{
-position: absolute;
-padding-top: 111px;
-    font-size: 53px;
-    padding-left: 86px;
-    color: #911414;
-}
-.qlzdata{
-position: absolute;
-padding-left: 347px;
-font-size: 53px;
-padding-top: 111px;
-color: #911414;
-}
+.tabCon{ padding:0 30px; position:relative;  }
+.tabCon .tab{ height:200px; background:#fff; padding:30px 0; box-sizing:border-box; border-radius:10px; }
+.tabCon .tab .txt{ font-size:36px; font-weight:bold; margin-bottom:30px; }
+.tabCon .tab .num{ font-size:54px; color:#911414; font-weight:bold;  }
+.tabCon .cat{ position:absolute; right:0; bottom:0; height:235px; width:215px;  }
+.tabCon .rect{ width:180px; }
 .quanynumber{
     color: #FDC741;
     font-size: 36px;

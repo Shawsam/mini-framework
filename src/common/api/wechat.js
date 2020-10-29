@@ -3,7 +3,7 @@ import { base } from '../../config'
 import { httpPromise } from '../utils/httpPromise';
 import log from '../utils/log';
 
-const merId = 31;
+const merId = 59;
 const ENV = Taro.getEnv();
 const preUrl = base.micvsDomain+'crm-web/wechat'; 
 const activityCode = base.activityCode;
@@ -68,7 +68,7 @@ export const fetchUserInfoById= () => {
     getStorage();
     const url = preUrl + '/member/userInfo';
     const param = { ..._param, openid, unionid, name:nickName };
-    if(!unionid) return  Promise.reject({errCode:-1000,msg:'未获取到unionid'})
+    if(!unionid) return  Promise.reject({errcode:-1000,msg:'未获取到unionid'})
     return httpPromise.get(url, param);
 }
 
@@ -160,6 +160,13 @@ export const getStoryList = () => {
     return httpPromise.get(url, param);
 }
 
+export const getXlAct = () => {
+    getStorage();
+    const url = preUrl + '/xl/getActivity';
+    const param = { ..._param,  merId, userId, openid, token};
+    return httpPromise.get(url, param);
+}
+
 
 export const getPageStyle = () => {
     getStorage();
@@ -196,10 +203,10 @@ export const fetchAdBanner = (posId) => {
     return httpPromise.get(url, param);
 }
 
-export const fetchBannerList = (posId) => {
+export const fetchBannerList = (posIds) => {
     getStorage();
     const url = preUrl + '/banner/bannerList';
-    const param = { ..._param, merId, posId };
+    const param = { ..._param, merId, posIds };
     return httpPromise.get(url, param);
 }
 
@@ -214,12 +221,13 @@ export const editUserInfo = ({ gender, name, birth, pic, taskId }) => {
     getStorage();
     const url = preUrl + '/member/editUser';
     const param = { ..._param, userId, gender, name, birth, pic, openid, token, taskId, cardNo, unionId:unionid, };
+    !taskId && delete param.taskId;
     !pic && delete param.pic;
     !birth && delete param.birth;
     return httpPromise.post(url, param, true);
 }
 
-export const fetchCouponListas = ({ status,kind, pageNo, pageSize=10, isTransfer, checkShop }) => {
+export const fetchCouponListas = ({ status,kind, pageNo, pageSize=10, isTransfer=1, checkShop=0 }) => {
     getStorage();
     const url = preUrl + '/coupon/couponList';
     let param = { ..._param, userId, pageNo,kind,pageSize, status, openid, token, isTransfer, checkShop }; 
@@ -228,7 +236,7 @@ export const fetchCouponListas = ({ status,kind, pageNo, pageSize=10, isTransfer
     }    
     return httpPromise.get(url, param);
 }
-export const fetchCouponList = ({ status, pageNo, pageSize=10, isTransfer, checkShop }) => {
+export const fetchCouponList = ({ status, pageNo, pageSize=10, isTransfer=1, checkShop=0 }) => {
     getStorage();
     const url = preUrl + '/coupon/couponList';
     let param = { ..._param, userId, pageNo, pageSize, status, openid, token, isTransfer, checkShop }; 
@@ -312,7 +320,7 @@ export const checkCode = (mobile, smsCode)=>{
 export const couponAddShare = (couponNo) => {
     getStorage();
     const url = preUrl + '/coupon/couponAddShare';
-    const param = { ..._param, openid, unionId:unionid, token, userId, couponNo, platform:2  };
+    const param = { ..._param, openid, unionid:unionid, token, userId, couponNo, platform:2  };
     return httpPromise.get(url, param);
 }
 
@@ -347,7 +355,7 @@ export const receiveCoupon = (couponNo, uCode) => {
 export const couponCheck = (couponNo) => {
     getStorage();
     const url = preUrl + '/coupon/checkPlatform';
-    const param = { ..._param, openid, token, userId, couponNo, platform:2  };
+    const param = { ..._param, unionId:unionid, openid, token, userId, couponNo, platform:2  };
     return httpPromise.get(url, param);    
 }
 

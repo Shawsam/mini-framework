@@ -1,7 +1,7 @@
 import Taro, { Component } from '@tarojs/taro';
 import { inject, observer } from '@tarojs/mobx';
 import * as User from '../utils/user';
-const errMap = ['-1000','-1001','100124', '1001241', '100130'];
+const errMap = [-1000,-1001,100124,1001241,100130];
 let isIndex;
 
 //userInfoCached 是否从缓存中读取会员信息
@@ -61,6 +61,7 @@ const frameWork = ({userInfoCached=true,loadToAuthorize=false}) => (Component) =
                     userInfo.nickName = name?name:nickName;
                     Taro.setStorageSync('userInfo', userInfo);
                     Taro.setStorageSync('cardNo', userInfo.cardNo);
+                    this.props.userStore.setAuthorizeShow(false);       //关闭用户授权
                     this.props.userStore.setUserInfo(userInfo);         //同步用户数据
                     this.userInfoReady();                               //渲染页面                 
                 }).catch(err=>{
@@ -115,6 +116,16 @@ const frameWork = ({userInfoCached=true,loadToAuthorize=false}) => (Component) =
                               })       
             })
         }
+
+        //打开页面
+        openPage(url,e){
+            e.stopPropagation();
+            this.interceptShowAuthorize().then(()=>{
+              Taro.navigateTo({url})
+            }).catch(err=>{
+              console.log(err);
+            })
+        }
         
         //返回
         Return(){
@@ -137,7 +148,6 @@ const frameWork = ({userInfoCached=true,loadToAuthorize=false}) => (Component) =
             try{
                 return new Promise((resolve,reject)=>{
                     let isAuthorized = this.props.userStore.isAuthorized;
-                    console.log(isAuthorized)
                     if(isAuthorized){
                         resolve();
                     }else{

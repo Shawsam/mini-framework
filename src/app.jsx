@@ -21,12 +21,16 @@ class App extends Component {
   config = {
     pages: [
       'pages/index/index',
-      'pages/order/index',
+      'pages/store/index',
       'pages/mine/index',
+      'pages/order/index',
       'pages/coupon/index',
       'pages/couponDetail/index',
       'pages/couponFetch/index',
-      'pages/couponInvalid/index',
+      'pages/pointsMall/index',
+      'pages/pointsDetail/index',
+      'pages/goBuy/index',
+      'pages/userInfo/index',
       'pages/webview/index',
       'pages/example/index',
     ],
@@ -47,7 +51,7 @@ class App extends Component {
           "pagePath": "pages/index/index"
         },
         {
-          "pagePath": "pages/order/index"
+          "pagePath": "pages/store/index"
         },
         {
           "pagePath": "pages/mine/index"

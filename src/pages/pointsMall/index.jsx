@@ -24,16 +24,10 @@ export default class storeList extends Component {
 
   }
 
-  tomixi() {
-    Taro.redirectTo({
-      url: '/pages/pointsDetail/index'
-    })
+  openPage(url,e){
+      Taro.navigateTo({url})
   }
 
-
-  Return = () => {
-
-  }
   render() {
 
     return (
@@ -50,7 +44,7 @@ export default class storeList extends Component {
                   <View>
                     <Image src={xiaoquanquan} className='xiaoquanquan'></Image>
                     <Text className='pointqlnumber'>1024</Text></View>
-                  <View className='pointtextdh' onClick={this.tomixi}><Text className='pointdh'>明细</Text></View>
+                  <View className='pointtextdh' onClick={this.openPage.bind(this,'/pages/pointsDetail/index')}><Text className='pointdh'>明细</Text></View>
 
                 </View>
               </View>

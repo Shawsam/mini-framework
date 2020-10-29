@@ -5,6 +5,7 @@ const userStore = observable({
     registerShow:false,
     userInfo:{
     	point:'--',
+        levelName:'普通会员',
         avatarUrl:require('../../assets/images/avatar.png')
     },
 	setUserInfo(userInfo){

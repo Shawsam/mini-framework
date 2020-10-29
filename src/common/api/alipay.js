@@ -6,7 +6,7 @@ import log from '../utils/log';
 const ENV = Taro.getEnv();
 const preUrl_ali = base.micvsDomain+'tim-weixin/alipay'; 
 const preUrl = base.micvsDomain+'tim-weixin/wechat'; 
-const merId = 31;
+const merId = 59;
 let userSecret, uuid, openid, token, userInfo, userId, nickName, cardNo, mobile, avatarUrl, point;
 let _param = { version:base.version, channel:7 };
 

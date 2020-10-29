@@ -54,6 +54,7 @@ export default class Index extends Component {
                               <Image style="height:100rpx; width:100rpx; border-radius:100%; margin-top:20rpx;" src={ userInfo.avatarUrl } />
                           </View>
                       </View>
+                      <TabBar selected={0} />
                   </View>
               }
               <Authorize authorizeSuccess={this.fetchUserInfoById.bind(this)} />

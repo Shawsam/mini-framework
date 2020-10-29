@@ -1,14 +1,17 @@
 import './index.scss'
+import TabBar from '../../components/TabBar';
 import Taro, { Component } from '@tarojs/taro'
 import { Image, Swiper, SwiperItem, View, Text, ScrollView } from '@tarojs/components'
 import location from "../../assets/images/loaction.png";
 import storeImg from "../../assets/images/storeimgtwo.png";
 import xcqImg from "../../assets/images/xcq.png";
 export default class storeList extends Component {
-  config = {
-
-    disableScroll: true
+  config ={
+      navigationBarTitleText:'附近的门店',
+      disableScroll:true,
+      navigationStyle:'default'
   }
+  
 
   state = {
     storeNearList: [1, 2],
@@ -100,6 +103,7 @@ export default class storeList extends Component {
             </View>
 
           </View>
+          <TabBar selected={1} />
 
         </View>
 

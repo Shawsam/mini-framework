@@ -1,12 +1,12 @@
-.couponPhoto{
-    width: 660px;
-    height: 200px;
-}
-.couponListImg{
+.list{
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
+}
+.centerImg{
+    width: 660px;
+    height: 200px;
 }
 .couponText{
     font-size: 84px;
@@ -77,4 +77,91 @@ line-height: 24px;
     justify-content: flex-end;
     align-items: center;
     margin: 0 auto;
+}
+
+
+.invalid{
+    .imagesImg{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+    .couponText{
+        font-size: 84px;
+        color:#A6A6A6;
+        line-height: 48px;
+        position: absolute;
+        margin-top: 42px;
+        margin-left: 18px;
+    }
+    .couponTextr{
+        font-size: 40px;
+        
+    }
+    .couponTextxf{
+        font-size: 40px;
+        color:#A6A6A6;
+        line-height: 48px;
+        position: absolute;
+        margin-top: 42px;
+        margin-left: 18px;
+    }
+    .couponTextrxf{
+        font-size: 80px;
+        
+    }
+    .couponDate{
+    font-size: 20px;
+    position: absolute;
+    margin-left: 41px;
+    margin-top: 155px;
+    color: #A6A6A6;
+    line-height: 24px;
+    }
+
+    .couponStatus{
+        font-size: 20px;
+        position: absolute;
+        color: #A6A6A6;
+        right: 60px;
+        margin-top: 16px;
+        line-height: 24px;
+    }
+    .myImagedata{
+        width: 30px;
+        height: 30px;
+        margin-left: 15px;
+    }
+    .mydataAll{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 38px;
+        margin-right: 25px;
+    }
+
+    .couponit{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 37px;
+    }
+    .shixiaoPhoto{
+        width: 660px;
+        height: 100px;
+        background: url('../../assets/images/shixiao.png') no-repeat;
+        background-size: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin: 0 auto;
+    }
+    .mytext{
+       
+        font-size: 28rpx;
+        color: #911414;
+        line-height: 34rpx;
+       
+    }
 }

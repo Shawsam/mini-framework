@@ -19,11 +19,11 @@ export default class TabBar extends Taro.Component {
             "pageName": "首页"
           },
           {
-            "pagePath": "/pages/order/index",
+            "pagePath": "/pages/store/index",
             "iconPath": require("./images/tab2_a.png"),
             "selectedIconPath": require("./images/tab2.png"),
-            "text": "订单",
-            "pageName": "订单页"
+            "text": "门店",
+            "pageName": "门店页"
           },
           {
             "pagePath": "/pages/mine/index",
