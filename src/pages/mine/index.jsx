@@ -17,6 +17,7 @@ const frameOptions = {
   loadToAuthorize:false
 }
 let disableOnshow = false, isFirstShow = true, pageData, shopId;
+let level=[{name:'蝇量级',rightsNum:2},{name:'羽量级',rightsNum:2},{name:'轻量级',rightsNum:3},{name:'中量级',rightsNum:4},{name:'重量级',rightsNum:5}]
 
 @frameWork(frameOptions)
 export default class storeList extends Component {
@@ -26,7 +27,7 @@ export default class storeList extends Component {
   }
 
   state={
-    cardIndex:0,
+    levelIndex:0,
     couponCount:0
   }
 
@@ -49,13 +50,14 @@ export default class storeList extends Component {
   }
 
   swipeChange(e){
-      let cardIndex = e.detail.current;
-      this.setState({cardIndex})
+      let levelIndex = e.detail.current;
+      this.setState({levelIndex})
   }
 
   render() {
-    let { couponCount, cardIndex } = this.state;
+    let { couponCount, levelIndex } = this.state;
     let { userInfo } = this.props.userStore;
+    console.log(level)
     return (
       <View className='page'>
 
@@ -84,7 +86,7 @@ export default class storeList extends Component {
               </View>
 
               <View className='qyTextAll'>
-                <Text className='qyText'>蝇量级会员享<Text className='quanynumber'>{cardIndex+1<2?2:cardIndex+1}项</Text>权益</Text>
+                <Text className='qyText'>{level[levelIndex].name}会员享<Text className='quanynumber'>{level[levelIndex].rightsNum}项</Text>权益</Text>
 {/*                <Text className='qyTexttwo'>收起</Text>*/}
               </View>
 
@@ -98,19 +100,19 @@ export default class storeList extends Component {
                   <Text className='quyitype'>入会礼包</Text>
                 </View>
                 <View className='quyitypeAll'>
-                  { cardIndex>=2?<Image src={require('../../assets/images/right3.png')} className='quyimg'></Image>
+                  { levelIndex>=2?<Image src={require('../../assets/images/right3.png')} className='quyimg'></Image>
                     :<Image src={require('../../assets/images/right3_a.png')} className='quyimg'></Image>
                   }
                   <Text className='quyitype'>升级礼包</Text>
                 </View>
                 <View className='quyitypeAll'>
-                  { cardIndex>=3?<Image src={require('../../assets/images/right4.png')} className='quyimg'></Image>
+                  { levelIndex>=3?<Image src={require('../../assets/images/right4.png')} className='quyimg'></Image>
                     :<Image src={require('../../assets/images/right4_a.png')} className='quyimg'></Image>
                   }
                   <Text className='quyitype'>活动礼遇</Text>
                 </View>
                 <View className='quyitypeAll'>
-                  { cardIndex>=4?<Image src={require('../../assets/images/right5.png')} className='quyimg'></Image>
+                  { levelIndex>=4?<Image src={require('../../assets/images/right5.png')} className='quyimg'></Image>
                     :<Image src={require('../../assets/images/right5_a.png')} className='quyimg'></Image>
                   }
                   <Text className='quyitype'>巡游礼遇</Text>
