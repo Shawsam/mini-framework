@@ -1,15 +1,16 @@
 import './index.scss'
-import TabBar from '../../components/TabBar';
 import Taro, { Component } from '@tarojs/taro'
 import { Image, Swiper, SwiperItem, View, Text, ScrollView } from '@tarojs/components'
 import location from "../../assets/images/loaction.png";
 import storeImg from "../../assets/images/storeimgtwo.png";
 import xcqImg from "../../assets/images/xcq.png";
+import NavBar from '../../components/NavBar';
+import TabBar from '../../components/TabBar';
+
 export default class storeList extends Component {
   config ={
       navigationBarTitleText:'附近的门店',
       disableScroll:true,
-      navigationStyle:'default'
   }
   
 
@@ -36,9 +37,8 @@ export default class storeList extends Component {
 
     return (
       <View className='page'>
-
         <View className='container'>
-
+          <NavBar title="附近的门店" background='#F4F5F6' showBack={false} m_page={true} back={this.Return.bind(this)} />
           <View className="wrapper">
             <View className='storeList'>
               <View className='storeListText'>

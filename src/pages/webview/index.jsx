@@ -11,7 +11,8 @@ class Index extends Component {
     }
   }
   config = {
-    navigationBarTitleText: ""
+    navigationBarTitleText: "",
+    navigationStyle: 'default'
   }
 
   componentWillMount() {

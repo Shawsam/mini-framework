@@ -13,6 +13,14 @@
 
 /* ================================================================================================ */
 /* =========通用样式========= */
+#fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 5;
+}
+
 .text-ellipsis {
   white-space: nowrap;
   overflow: hidden;

@@ -23,7 +23,6 @@ let Timer;
 @frameWork(frameOptions)
 export default class Index extends Component {
   config = {
-    navigationStyle: 'custom',
     disableScroll: true
   }
 
@@ -32,7 +31,7 @@ export default class Index extends Component {
     bannerList:[],
     noticeMessage:[{content:'指定精酿啤酒 限时特惠 买一送一'},{content:'指定精酿啤酒 限时特惠 买一送一'}],
     couponCount:'00',
-    beerNumber: 0,
+    beerNum: 0,
     showQrPanel: false
   }
 
@@ -44,7 +43,7 @@ export default class Index extends Component {
   userInfoReady(){
       // this.fetchNoticeMessage();
       this.fetchCouponCount();
-      // this.getXlAct();
+      this.getXlAct();
       this.cardNoToQrcode();
   }
   
@@ -81,7 +80,7 @@ export default class Index extends Component {
   //蓄力有礼
   getXlAct(){
       Api.getXlAct().then(res=>{
-          this.setState({beerNumber:res.data.currentNumber});
+          this.setState({beerNum:res.data.currentNumber});
       }).catch(err=>{
           console.log(err);
           Taro.showModal({  content:err.msg,
@@ -231,12 +230,13 @@ export default class Index extends Component {
   }
 
   render() {
-    const { isLoading, couponCount, beerNumber, bannerList, noticeMessage, imagePath } = this.state;
+    const { isLoading, couponCount, beerNum, bannerList, noticeMessage, imagePath } = this.state;
     const { userInfo } = this.props.userStore;
     return (
       <View className='page'>
         { isLoading?<Loading/>:
           <View className='container'>
+            <NavBar title="" background='#911414' showBack={false} m_page={true} />
             <View className="wrapper">
               {
                 this.state.showQrPanel &&
@@ -303,7 +303,7 @@ export default class Index extends Component {
 
               {/* 买就要购，优惠卷... */}
               <View className='gyhqAll'>
-                <Image onClick={this.openPage.bind(this,'/pages/goBuy/index')}  src={require('../../assets/images/getGou.png')} mode='aspectFill' className='getGouPhoto'></Image>
+                <Image onClick={this.openPage.bind(this,'/pages/thirdBuy/index')}  src={require('../../assets/images/getGou.png')} mode='aspectFill' className='getGouPhoto'></Image>
 
                 <View className='mhList'>
                   <View className='mhqMH'>
@@ -322,12 +322,12 @@ export default class Index extends Component {
 
 
               {/* 蓄力有礼 */}
-              <View className='xuLi'>
+              <View className='xuLi'  onClick={this.openPage.bind(this,'/pages/actDetail/index')}>
                 <View className='xuLiimgs'>
                   {
                     [1,2,3,4,5].map((item,index) => {
                       return (
-                          index<beerNumber?<Image src={require('../../assets/images/beer.png')} mode='aspectFill' className='beerPhoto' />
+                          index<beerNum?<Image src={require('../../assets/images/beer.png')} mode='aspectFill' className='beerPhoto' />
                           :<Image src={require('../../assets/images/beerhui.png')} mode='aspectFill' className='beerPhoto' />
                       )
                     })
@@ -359,8 +359,8 @@ export default class Index extends Component {
             <TabBar selected={0} />
           </View>
         }
-        <Authorize showCancel="false" authorizeSuccess={this.fetchUserInfoById.bind(this)} />
-        <Register showCancel="false" registerSuccess={this.fetchUserInfoById.bind(this)} />
+        <Authorize authorizeSuccess={this.fetchUserInfoById.bind(this)} />
+        <Register registerSuccess={this.fetchUserInfoById.bind(this)} />
         <Canvas className="canvasImg" canvasId="mycanvas"/>
       </View>
     )

@@ -73,7 +73,7 @@ export default class Authorize extends Component {
                         <View class="tit">授权获取您的公开信息（微信昵称头像等），以便更好的为您提供更多服务</View>
                         { Env == 'ALIPAY' && <View className="flex-item"><Button className="btn authorizeBtn" scope='userInfo' open-type="getAuthorize" onGetAuthorize={ this.confirmAuthrize.bind(this) }>立即授权</Button></View> }
                         { Env == 'WEAPP' && <View className="flex-item"><Button className="btn authorizeBtn" open-type="getUserInfo" bindgetuserinfo={ this.confirmAuthrize.bind(this) }>立即授权</Button></View> }
-                        <View className="flex-item"  onClick={ this.cancelAuthorize.bind(this) }><Button className="btn cancelBtn">取消</Button></View>
+                        { showCancel && <View className="flex-item"  onClick={ this.cancelAuthorize.bind(this) }><Button className="btn cancelBtn">取消</Button></View> }
                     </View>
                 </View>
             </View>:null }

@@ -24,13 +24,16 @@ class App extends Component {
       'pages/store/index',
       'pages/mine/index',
       'pages/order/index',
+      'pages/orderDetail/index',
       'pages/coupon/index',
       'pages/couponDetail/index',
       'pages/couponFetch/index',
       'pages/pointsMall/index',
       'pages/pointsDetail/index',
-      'pages/goBuy/index',
+      'pages/thirdBuy/index',
       'pages/userInfo/index',
+      'pages/actDetail/index',
+      'pages/actSign/index',
       'pages/webview/index',
       'pages/example/index',
     ],
@@ -39,6 +42,7 @@ class App extends Component {
       navigationBarBackgroundColor: '#911414',
       navigationBarTitleText: '拳击猫',
       navigationBarTextStyle: 'white',
+      navigationStyle: 'custom',
     },
     "networkTimeout": {
       "request": 7000,
@@ -62,10 +66,7 @@ class App extends Component {
       "scope.userLocation": {
         "desc": "您的位置信息将用于获取附近的餐厅信息。"
       }
-    },
-    "navigateToMiniProgramAppIdList": [
-      "wxece3a9a4c82f58c9"
-    ],
+    }
   };
 
   componentDidMount() { }

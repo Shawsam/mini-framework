@@ -167,6 +167,7 @@ export default class storeList extends Component {
       <View className='page'>
         { isLoading?<Loading/>:
           <View className='container'>
+              <NavBar title="积分商城" background='#911414'  color="#fff" showBack={true} m_page={true} back={this.Return.bind(this)} />
               <View className='pointmall'>
                 <View className='pointdata'>
                   <Text className='pointql'>拳力值：</Text>

@@ -57,12 +57,10 @@ export default class storeList extends Component {
   render() {
     let { couponCount, levelIndex } = this.state;
     let { userInfo } = this.props.userStore;
-    console.log(level)
     return (
       <View className='page'>
-
         <View className='container'>
-
+          <NavBar title="我的" background='#05081E' color="#fff" showBack={false} m_page={true} back={this.Return.bind(this)} />
           <View className="wrapper">
             <View className='userMy'>
               <View className="card">

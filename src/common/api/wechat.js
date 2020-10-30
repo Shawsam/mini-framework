@@ -160,6 +160,13 @@ export const getXlAct = () => {
     return httpPromise.get(url, param);
 }
 
+export const actSign = (xlId) => {
+    getStorage();
+    const url = preUrl + '/xl/sign';
+    const param = { ..._param,  merId, userId, openid, token, xlId};
+    return httpPromise.post(url, param);
+}
+
 
 export const getPageStyle = () => {
     getStorage();

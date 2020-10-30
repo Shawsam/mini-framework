@@ -48,7 +48,6 @@ class ScrollList extends Component {
   render () {
     const { triggered } = this.state;
     const { emptyImg , emptyStr, hideNoMore, scrollTop, isInit, dataLength, noMore,bgtype } = this.props;
-    console.log(dataLength)
     return (
         <View className='scrollList'>
         {

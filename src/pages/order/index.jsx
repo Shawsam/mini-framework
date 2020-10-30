@@ -116,6 +116,7 @@ export default class storeList extends Component {
       <View className='page'>
         { isLoading?<Loading/>:
           <View className='container'>
+          <NavBar title="我的订单" background='#F4F5F6' showBack={true} m_page={true} back={this.Return.bind(this)} />
   {/*       <View className='orderTextAll'>
                  <Text className='orderTextm'>门店订单</Text>  
                  <Text className='orderText'>商城订单</Text>

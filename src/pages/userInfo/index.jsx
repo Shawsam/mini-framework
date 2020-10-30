@@ -18,8 +18,7 @@ let editSuccess = false;
 export default class Index extends Component {
   config = {
     disableScroll: true,
-    navigationBarTitleText: '个人信息',
-    navigationStyle: 'custom',
+    navigationBarTitleText: '个人信息'
   }
   state = {
     isLoading: false,
@@ -86,8 +85,7 @@ export default class Index extends Component {
       <View className='page'>
         {isLoading ? <Loading /> :
           <View className='container'>
-            <NavBar id="fixed" title="个人资料" background='rgba(0,0,0,0)' color="#fff" showBack={true} m_page={true} back={this.Return.bind(this)} />
-
+            <NavBar id="fixed" title="" background='rgba(0,0,0,0)' color="#fff" showBack={true} m_page={true} back={this.Return.bind(this)} />
             <View className='wrapper'>
               <View className="membg">
                 <View className='name'>

@@ -135,7 +135,7 @@ export default class storeList extends Component {
       <View className='page'>
         { isLoading?<Loading/>:
           <View className='container'>
-            {/* <NavBar logo={true} title={title} showBack={false} color="#000" background="rgba(0,0,0,0)" m_page={true} back={this.Return.bind(this)} /> */}
+            <NavBar title="我的优惠券" background='#F4F5F6' showBack={true} m_page={true} back={this.Return.bind(this)} />
             <View className='shixiaoPhoto'>
               { frameIndex ==0 ?
                 <View className='mydataAll' onClick={this.switchCate.bind(this,1)}>

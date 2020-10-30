@@ -3,6 +3,9 @@ import Taro, { Component } from '@tarojs/taro'
 import { Image, Swiper, SwiperItem, View, Text, ScrollView } from '@tarojs/components'
 import orderDetailImg from "../../assets/images/orderDetail.png";
 import wechatpay from "../../assets/images/wechatpay.png";
+import NavBar from '../../components/NavBar';
+import TabBar from '../../components/TabBar';
+
 export default class storeList extends Component {
   config = {
 
@@ -23,9 +26,6 @@ export default class storeList extends Component {
 
   }
 
-
-
-
   Return = () => {
 
   }
@@ -35,7 +35,7 @@ export default class storeList extends Component {
       <View className='page'>
 
         <View className='container'>
-
+          <NavBar title="订单详情" background='#F4F5F6' showBack={true} m_page={true} back={this.Return.bind(this)} />
           <View className="wrapper">
             <View className='detailAll'>
               <Text className='titleText'>仅显示最近30天内消费记录</Text>
