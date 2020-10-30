@@ -117,6 +117,8 @@ const frameWork = ({userInfoCached=true,loadToAuthorize=false}) => (Component) =
             })
         }
 
+        formatNumber(n){  n = n.toString();  return n[1] ? n : '0' + n  };
+
         //打开页面
         openPage(url,e){
             e.stopPropagation();
@@ -147,9 +149,13 @@ const frameWork = ({userInfoCached=true,loadToAuthorize=false}) => (Component) =
         interceptShowAuthorize(){
             try{
                 return new Promise((resolve,reject)=>{
-                    let isAuthorized = this.props.userStore.isAuthorized;
+                    let { isAuthorized, isRegistered } = this.props.userStore;
                     if(isAuthorized){
-                        resolve();
+                        if(isRegistered){
+                            resolve();
+                        }else{
+                            this.props.userStore.setRegisterShow(true);
+                        }                        
                     }else{
                         this.props.userStore.setAuthorizeShow(true);  
                     }

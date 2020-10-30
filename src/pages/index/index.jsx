@@ -10,13 +10,15 @@ import NavBar from '../../components/NavBar';
 import TabBar from '../../components/TabBar';
 import Authorize from '../../components/Authorize';
 import Register from '../../components/Register';
+import QR from '../../common/lib/qrcode.js'
 
 const Env = Taro.getEnv();
 const frameOptions = {
   userInfoCached:false,
   loadToAuthorize:false
 }
-let disableOnshow = false, isFirstShow = true, userInfoCache = {}, pageData, shopId;
+let disableOnshow = false, isFirstShow = true, pageData, shopId;
+let Timer;
 
 @frameWork(frameOptions)
 export default class Index extends Component {
@@ -35,6 +37,7 @@ export default class Index extends Component {
   }
 
   PidReady(){
+      //this.setState({isLoading:false});
       this.fetchBannerList();
   }
 
@@ -42,6 +45,7 @@ export default class Index extends Component {
       // this.fetchNoticeMessage();
       this.fetchCouponCount();
       // this.getXlAct();
+      this.cardNoToQrcode();
   }
   
   //轮播图
@@ -73,8 +77,6 @@ export default class Index extends Component {
                          })
       });
   }
-
-  formatNumber = n => {n = n.toString();return n[1] ? n : '0' + n};
 
   //蓄力有礼
   getXlAct(){
@@ -123,33 +125,25 @@ export default class Index extends Component {
            return;
       }
       switch(true){
-        case appid && isSelf: if(userInfoCache.isAuthorized){
-                                  if(this.state.isRegister){
-                                      if(page=='/pages/shop/index'||page=='pages/shop/index'){
-                                          Taro.switchTab({  url:'/pages/shop/index',
-                                                            success:()=>{
-                                                                closePanel && setTimeout(()=>this.closePanelAd(),800);
-                                                            } 
-                                          });
-                                      }else if(page=='/pages/mine/index'||page=='pages/mine/index'){
-                                          Taro.switchTab({  url:'/pages/mine/index',
-                                                            success:()=>{
-                                                                closePanel && setTimeout(()=>this.closePanelAd(),800);
-                                                            } 
-                                          });
-                                      }else{
-                                          Taro.navigateTo({ url:'/'+page,
-                                                            success:()=>{
-                                                                closePanel && setTimeout(()=>this.closePanelAd(),800);
-                                                            } 
-                                          });
-                                      }                                    
-                                  }else{
-                                      this.slideDownFun();
-                                  }
+        case appid && isSelf: if(page=='/pages/shop/index'||page=='pages/shop/index'){
+                                  Taro.switchTab({  url:'/pages/shop/index',
+                                                    success:()=>{
+                                                        closePanel && setTimeout(()=>this.closePanelAd(),800);
+                                                    } 
+                                  });
+                              }else if(page=='/pages/mine/index'||page=='pages/mine/index'){
+                                  Taro.switchTab({  url:'/pages/mine/index',
+                                                    success:()=>{
+                                                        closePanel && setTimeout(()=>this.closePanelAd(),800);
+                                                    } 
+                                  });
                               }else{
-                                  this.setState({isAuthorized:false})
-                              }
+                                  Taro.navigateTo({ url:'/'+page,
+                                                    success:()=>{
+                                                        closePanel && setTimeout(()=>this.closePanelAd(),800);
+                                                    } 
+                                  });
+                              }                                    
                               break;
         case appid && !isSelf: Taro.navigateToMiniProgram({appId:appid,path:page})
                                break;
@@ -160,14 +154,84 @@ export default class Index extends Component {
   showQrPanel(e){
       e.stopPropagation();
       this.interceptShowAuthorize().then(()=>{
-          this.setState({showQrPanel:!this.state.showQrPanel})
+          this.setState({showQrPanel:true});
+          Taro.showLoading({title:'正在生成会员码...'})
+          setTimeout(()=>{
+              this.cardNoToQrcode();
+              clearInterval(Timer);
+              Timer = setInterval(()=>{
+                  Taro.showLoading({title:'正在生成会员码...'})
+                  this.cardNoToQrcode()
+              },30000)
+          },300)
       }).catch(err=>{
           console.log(err);
       })
-  }   
+  }  
+
+  closeQrpanel(){
+      clearInterval(Timer);
+      this.setState({showQrPanel:false});
+  } 
+
+  cardNoToQrcode(){
+    Api.getQrcode().then(res=>{
+        let qrCode = res.data.qrCode;
+        let size = this.setCanvasSize(); 
+        this.createQrCode(qrCode,'mycanvas',size.w,size.h);
+    }).catch(err=>{
+        console.log(err);
+    });
+  }
+
+  //绘制二维码图片
+  createQrCode(str,canvasId,cavW,cavH){
+    QR.api.draw(Taro.createCanvasContext,str,canvasId,cavW,cavH,this);
+    setTimeout(() => { 
+      this.canvasToTempImage()
+      Taro.hideLoading()
+    },500);
+  }
+
+  //适配不同屏幕大小的canvas
+  setCanvasSize(){
+    var size={};
+    try {
+        var res = Taro.getSystemInfoSync();
+        var scale = 750/600;  //不同屏幕下canvas的适配比例；设计稿是750宽
+        var width = res.windowWidth/scale;
+        var height = width;   //canvas画布为正方形
+        size.w = width;
+        size.h = height;
+      } catch (e) {
+        console.log("获取设备信息失败"+e);
+      } 
+    return size;
+  }
+
+  //获取临时缓存照片路径，存入data中
+  canvasToTempImage(){
+    var _this = this;
+    Taro.canvasToTempFilePath({
+      canvasId: 'mycanvas',
+      success: function (res) {
+          var tempFilePath = res.tempFilePath;
+          _this.setState({
+              imagePath:tempFilePath
+          });
+      },
+      fail: function (res) {
+          console.log(res);
+      }
+    });
+  }
+
+  openMini(){
+    Taro.navigateToMiniProgram({appId:'wxece3a9a4c82f58c9',path:'pages/container/index?q=https%3A%2F%2Ftb.ele.me%2Fwow%2Fzele-nr%2Fact%2Fqjm%3Fwh_biz%3Dtm'})
+  }
 
   render() {
-    const { isLoading, couponCount, beerNumber, bannerList, noticeMessage } = this.state;
+    const { isLoading, couponCount, beerNumber, bannerList, noticeMessage, imagePath } = this.state;
     const { userInfo } = this.props.userStore;
     return (
       <View className='page'>
@@ -175,19 +239,19 @@ export default class Index extends Component {
           <View className='container'>
             <View className="wrapper">
               {
-                this.state.showQrPanel ? (
+                this.state.showQrPanel &&
                   <View className='qrAll'>
                     <View className='qrUserInfo'>
                       <Image src={userInfo.avatarUrl} mode='aspectFill' className='avaphotoPhotoQR'></Image>
-                      <Image src={require('../../assets/images/qrqr.png')} mode='aspectFill' className='qrqrPhoto'></Image>
+                      <Image src={imagePath} mode='aspectFill' className='qrqrPhoto'></Image>
+                      <Image src={require('../../assets/images/logo.png')}  className='logo'></Image>
                       <Text className='qrmiao'>二维码30秒自动刷新</Text>
                     </View>
                     <View className='closeAll'>
-                      <View className='closeText'>门店消费时请出示给店员进行扫码， 获取您的积分权益。</View>
-                      <Image src={require('../../assets/images/closetc.png')} mode='aspectFill' onClick={this.showQrPanel} className='closetcPhoto'></Image>
+                      <View className='closeText'><View>门店消费时请出示给店员进行扫码，</View><View>获取您的积分权益。</View></View>
+                      <Image src={require('../../assets/images/closetc.png')} mode='aspectFill' onClick={this.closeQrpanel} className='closetcPhoto'></Image>
                     </View>
                   </View>
-                ) : null
               }
 
               <View className='bannerIndex'>
@@ -249,7 +313,7 @@ export default class Index extends Component {
                     {/* <Image src={require('../../assets/images/myCouponnull.png')} mode='aspectFill' className='myCouponPhoto'></Image> */}
                     <Image onClick={this.openPage.bind(this,'/pages/pointsMall/index')}  src={require('../../assets/images/haowu.png')} mode='aspectFill' className='haowuPhoto'></Image>
                   </View>
-                  <View className='mhqJL' onClick={this.openPage.bind(this,'/pages/webview/index')}>
+                  <View className='mhqJL' onClick={this.openMini.bind(this)}>
                     <Image src={require('../../assets/images/quanli.png')} mode='aspectFill' className='quanliPhoto'></Image>
                   </View>
                 </View>
@@ -297,6 +361,7 @@ export default class Index extends Component {
         }
         <Authorize showCancel="false" authorizeSuccess={this.fetchUserInfoById.bind(this)} />
         <Register showCancel="false" registerSuccess={this.fetchUserInfoById.bind(this)} />
+        <Canvas className="canvasImg" canvasId="mycanvas"/>
       </View>
     )
   }

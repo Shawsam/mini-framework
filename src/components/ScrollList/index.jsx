@@ -1,12 +1,12 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, ScrollView } from '@tarojs/components'
-import LoadingView from '../loading-view'
+import LoadingView from '../loadingView'
 import './index.scss'
 
 class ScrollList extends Component {
 
   static defaultProps = {
-    emptyImg:require('../../assets/user/empty.png'),
+    emptyImg:require('./images/empty.png'),
     emptyStr:'暂无数据',
     scrollTop: 0,
     isInit:false,
@@ -48,6 +48,7 @@ class ScrollList extends Component {
   render () {
     const { triggered } = this.state;
     const { emptyImg , emptyStr, hideNoMore, scrollTop, isInit, dataLength, noMore,bgtype } = this.props;
+    console.log(dataLength)
     return (
         <View className='scrollList'>
         {

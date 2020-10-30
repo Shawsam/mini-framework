@@ -1,5 +1,24 @@
+@font-face {
+  font-family: 'qjm';
+  src: url('https://member.zxventurescrm.cn/DMFT1555211323969.ttf') format('opentype'); 
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+.qjm {
+  font-family: qjm, Helvetica, Arial, sans-serif;
+}
+
+
 /* ================================================================================================ */
 /* =========通用样式========= */
+.text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 ::-webkit-scrollbar {
   width: 0;
   height: 0;
@@ -91,6 +110,7 @@
 	display:flex; 
 	flex-direction:column; 
 	font-size:28px; 
+  font-family:'qjm';
 	.wrapper { 
 		  position:relative;
 	    flex:1; 

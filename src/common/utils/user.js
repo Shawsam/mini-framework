@@ -313,9 +313,9 @@ export const getToken = ()=>{
                       Api.jsCode2Openid(res.code).then(res => {
                           console.log('jsCode2Openid--获取openId成功');
                           let { openId, unionid, token } = res.data;
-                          Taro.setStorageSync('Pid', openId);
-                          Taro.setStorageSync('unionId', unionid);
-                          Taro.setStorageSync('token', token);
+                          openId && Taro.setStorageSync('Pid', openId);
+                          unionid && Taro.setStorageSync('unionId', unionid);
+                          token && Taro.setStorageSync('token', token);
                           resolve(res);
                       }).catch(err=>{
                           console.log('jsCode2Openid--获取openId失败,'+JSON.stringify(err));

@@ -62,7 +62,10 @@ class App extends Component {
       "scope.userLocation": {
         "desc": "您的位置信息将用于获取附近的餐厅信息。"
       }
-    }
+    },
+    "navigateToMiniProgramAppIdList": [
+      "wxece3a9a4c82f58c9"
+    ],
   };
 
   componentDidMount() { }

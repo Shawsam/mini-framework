@@ -1,58 +1,125 @@
-import './index.scss'
-import Taro, { Component } from '@tarojs/taro'
-import { Image, Swiper, SwiperItem, View, Text } from '@tarojs/components'
+import './index.scss';
+import classNames from 'classnames';
+import {Text, View, Swiper, SwiperItem, Image, ScrollView } from '@tarojs/components';
+import Taro, { Component } from '@tarojs/taro';
+import { inject, observer } from '@tarojs/mobx';
+import frameWork  from '../../common/decorator/frameWork';
 import Api from '../../common/api';
 import Loading from '../../components/Loading';
-let pageNo = 1, status = 1;
+import NavBar from '../../components/NavBar';
+import TabBar from '../../components/TabBar';
+import Authorize from '../../components/Authorize';
+import Register from '../../components/Register';
+import ScrollList from '../../components/ScrollList';
 
-export default class Index extends Component {
+const Env = Taro.getEnv();
+const frameOptions = {
+  userInfoCached:false,
+  loadToAuthorize:false
+}
+let disableOnshow = false, isFirstShow = true, pageData, shopId;
+let frameIndex, frameArry=[];
+let pageNo =1;
+
+@frameWork(frameOptions)
+export default class storeList extends Component {
   config = {
-    navigationBarTitleText: '我的优惠卷',
+    navigationBarTitleText: '我的优惠券',
     disableScroll: true
   }
 
   state = {
-      status:1,
-      isLoading:false,
-      listData:[]
+    current: 1,
+    isLoading: true,
+    cates:[],
+    listData:[]
   }
 
-  componentDidMount() {
-      status = 1;
+  userInfoReady(){
+      frameIndex = 0;
+      frameArry = [];
+      let cates = [{status:1,categoryName:'拳力值新增'},{status:2,categoryName:'拳力值使用'}];
+      for(let i in cates){
+          const singleItem = cates[i];
+          singleItem.pageNo = 1;
+          singleItem.listData = [];
+          singleItem.noMore = false;
+          frameArry.push(singleItem);
+      }
+      this.setState({cates})
       this.listInit();
   }
 
   listInit(){
       pageNo = 1;
-      this.setState({noMore:false, listIniting:true});
+      frameArry[frameIndex].pageNo = pageNo;
+      this.setState({listInit:true});
+
       let { isLoading } = this.state;
       !isLoading && Taro.showLoading({title:'加载中...',mask:true});
-      
-      Api.fetchCouponList({ pageNo, status }).then(res=>{
-          Taro.hideLoading();
-          let listData = res.data;
-          this.setState({isLoading:false, listIniting:false, listData,noMore:true});
-      }).catch(err=>{
-          console.log(err);
-          Taro.hideLoading();
-          Taro.showModal({  content:err.msg,
 
-                            showCancel:false,
-                            success:()=>{
-                                this.listInit()
-                            }
-                        })
-      });
+      let status = frameArry[frameIndex].status;
+      return new Promise((resolve,reject)=>{
+          Api.fetchCouponList({ status, pageNo }).then(res=>{
+              resolve(res);
+              Taro.hideLoading();
+              let listData = res.data;
+              let noMore = listData.length==0;
+              frameArry[frameIndex].listData = listData; 
+              frameArry[frameIndex].noMore = noMore; 
+              this.setState({isLoading:false, listInit:false, listData, noMore});
+          }).catch(err=>{
+              resolve(err);
+              console.log(err);
+              Taro.hideLoading();
+              Taro.showModal({  content:err.msg,
+                                showCancel:false,
+                                success:()=>{
+                                    this.listInit()
+                                }
+                            })
+          });
+      })
   }
 
-  switchCate(){
-      if(status==1){
-          status = 2;
-          this.setState({status:2});
-      }else if(status==2){
-          status = 1;
-          this.setState({status:1});
-      }
+  loadMoreData(){
+      let { listData } = this.state;
+      pageNo++;
+      frameArry[frameIndex].pageNo = pageNo;
+      
+      let status = frameArry[frameIndex].status;
+      return new Promise((resolve,reject)=>{ 
+          Taro.showLoading({title:'加载中...',mask:true});
+          Api.fetchCouponList({ status, pageNo }).then(res=>{
+              resolve(res);
+              Taro.hideLoading();
+              let resData = res.data;
+              let noMore = resData.length==0;
+              listData = listData.concat(resData)
+              frameArry[frameIndex].listData = listData; 
+              frameArry[frameIndex].noMore = noMore; 
+              this.setState({listData,noMore});
+          }).catch(err=>{
+              resolve(err);
+              Taro.showModal({  content:err.msg,
+                                showCancel:false,
+                                success:()=>{
+                                    this.listInit()
+                                }
+                             })
+          });
+      })
+  }
+
+  switchCate(index){
+      frameIndex = index;
+      this.setState({frameIndex,scrollTop:Math.random()});
+      if(frameArry[frameIndex].listData.length){
+          pageNo = frameArry[frameIndex].pageNo;
+          let { listData, noMore } = frameArry[frameIndex]
+          this.setState({listData,noMore});
+          return;
+      };
       this.listInit();
   }
 
@@ -63,107 +130,94 @@ export default class Index extends Component {
   }
 
   render() {
-    let { isLoading, title, status, listData } = this.state;
+    const { isLoading, cates, listData, scrollTop, listInit, noMore  } = this.state;
     return (
       <View className='page'>
-        {/* { isLoading?<Loading/>: */}
-        <View className='container'>
-          {/* <NavBar logo={true} title={title} showBack={false} color="#000" background="rgba(0,0,0,0)" m_page={true} back={this.Return.bind(this)} /> */}
-          <View className="wrapper">
+        { isLoading?<Loading/>:
+          <View className='container'>
+            {/* <NavBar logo={true} title={title} showBack={false} color="#000" background="rgba(0,0,0,0)" m_page={true} back={this.Return.bind(this)} /> */}
             <View className='shixiaoPhoto'>
-              <View className='mydataAll' onClick={this.switchCate.bind(this)}>
-                <Text className='mytext'>{ status==1?'已失效卡券':'我的优惠券' }</Text>
-                <Image src={require('../../assets/images/toright.png')} mode='aspectFill' className='myImagedata'></Image>
-              </View>
+              { frameIndex ==0 ?
+                <View className='mydataAll' onClick={this.switchCate.bind(this,1)}>
+                  <Text className='mytext'>已失效卡券</Text>
+                  <Image src={require('../../assets/images/toright.png')} mode='aspectFill' className='myImagedata' />
+                </View>:
+                <View className='mydataAll' onClick={this.switchCate.bind(this,0)}>
+                  <Text className='mytext'>我的优惠券</Text>
+                  <Image src={require('../../assets/images/toright.png')} mode='aspectFill' className='myImagedata' />
+                </View>
+              }
             </View>
-            
-            { status == 1 && 
-              <View>
-              { listData.length>0?
-                <View className='list'>
-                {  listData.map((item,index)=>{
-                      return(
-                        <View>
-                        {  item.category==0 &&
-                          <View className='couponit' onClick={this.openDetail.bind(this,item)}>
-                            <Image src={require('../../assets/images/xfcoupon.png')} mode='aspectFill' className='centerImg'></Image>
-                            <Text className='couponTextxf'><Text className='couponTextrxf'>8</Text>折</Text>
-                            <Text className='couponDate'>有效期：2020.8.20-9.30</Text>
-                          </View>                          
-                        }
-                        {  item.category==1 &&
-                          <View className='couponit' onClick={this.openDetail.bind(this,item)}>
-                            <Image src={require('../../assets/images/xjcoupon.png')} mode='aspectFill' className='centerImg'></Image>
-                            <Text className='couponText'><Text className='couponTextr'>￥</Text>20</Text>
-                            <Text className='couponDate'>有效期：2020.8.20-9.30</Text>
-                          </View>
-                        }
-                        {  item.category==2 &&
-                          <View className='couponit' onClick={this.openDetail.bind(this,item)}>
-                            <Image src={require('../../assets/images/zdcoupon.png')} mode='aspectFill' className='centerImg'></Image>
-                            <Text className='couponDate'>有效期：2020.8.20-9.30</Text>
-                          </View>
-                        }
-                        </View>
-                      )
-                   })
-                }
-                </View>
-                :<View className='empty'>
-                    <Image className="image" src={require('../../assets/images/empty.png')} />
-                    <View className="text">没有优惠券</View>
-                </View>
-              }
-              </View>
-            }
-
-            { status == 2 && 
-              <View>
-              { listData.length>0?
-                <View className='list'>
-                {  listData.map((item,index)=>{
-                      return(
-                        <View>
-                        {  item.category==0 &&
-                          <View className='couponit invalid'>
-                            <Image src={require('../../assets/images/xfcouponHui.png')} mode='aspectFill' className='centerImg'></Image>
-                            <Text className='couponTextxf'><Text className='couponTextrxf'>8</Text>折</Text>
-                            <Text className='couponDate'>有效期：2020.8.20-9.30</Text>
-                            <Text className='couponStatus'>已转赠</Text>
-                          </View>
-                        }
-                        {  item.category==1 &&
-                          <View className='couponit invalid' onClick={this.openDetail}>
-                            <Image src={require('../../assets/images/xjcouponHui.png')} mode='aspectFill' className='centerImg'></Image>
-                            <Text className='couponText'><Text className='couponTextr'>￥</Text>20</Text>
-                            <Text className='couponDate'>有效期：2020.8.20-9.30</Text>
-                            <Text className='couponStatus'>已使用</Text>
-                          </View>
-                        }
-                        {  item.category==2 &&
-                           <View className='couponit invalid'>
-                              <Image src={require('../../assets/images/zdcouponHui.png')} mode='aspectFill' className='centerImg'></Image>
-                              <Text className='couponDate'>有效期：2020.8.20-9.30</Text>
-                              <Text className='couponStatus'>已过期</Text>
+            <View className="wrapper">            
+                  <ScrollList emptyImg={require('../../assets/images/empty.png')} 
+                              emptyStr = "暂无优惠券" 
+                              scrollTop = { scrollTop } 
+                              isInit = { listInit }  
+                              dataLength={ listData.length } 
+                              noMore = { noMore }                            
+                              pullToRefresh={this.listInit.bind(this)} 
+                              pullToLoad={this.loadMoreData.bind(this)}>
+                  {
+                      listData.map((item,index)=>{
+                          return(
+                            <View className="list">
+                            { frameIndex == 0 ?
+                                  <View>
+                                    {  item.category==0 &&
+                                      <View className='couponit' onClick={this.openDetail.bind(this,item)}>
+                                        <Image src={require('../../assets/images/xfcoupon.png')} mode='aspectFill' className='centerImg'></Image>
+                                        <Text className='couponTextxf'><Text className='couponTextrxf'>8</Text>折</Text>
+                                        <Text className='couponDate'>有效期：2020.8.20-9.30</Text>
+                                      </View>                          
+                                    }
+                                    {  item.category==1 &&
+                                      <View className='couponit' onClick={this.openDetail.bind(this,item)}>
+                                        <Image src={require('../../assets/images/xjcoupon.png')} mode='aspectFill' className='centerImg'></Image>
+                                        <Text className='couponText'><Text className='couponTextr'>￥</Text>20</Text>
+                                        <Text className='couponDate'>有效期：2020.8.20-9.30</Text>
+                                      </View>
+                                    }
+                                    {  item.category==2 &&
+                                      <View className='couponit' onClick={this.openDetail.bind(this,item)}>
+                                        <Image src={require('../../assets/images/zdcoupon.png')} mode='aspectFill' className='centerImg'></Image>
+                                        <Text className='couponDate'>有效期：2020.8.20-9.30</Text>
+                                      </View>
+                                    }
+                                  </View>
+                                  :<View>
+                                      {  item.category==0 &&
+                                        <View className='couponit invalid'>
+                                          <Image src={require('../../assets/images/xfcouponHui.png')} mode='aspectFill' className='centerImg'></Image>
+                                          <Text className='couponTextxf'><Text className='couponTextrxf'>8</Text>折</Text>
+                                          <Text className='couponDate'>有效期：2020.8.20-9.30</Text>
+                                          <Text className='couponStatus'>已转赠</Text>
+                                        </View>
+                                      }
+                                      {  item.category==1 &&
+                                        <View className='couponit invalid' onClick={this.openDetail}>
+                                          <Image src={require('../../assets/images/xjcouponHui.png')} mode='aspectFill' className='centerImg'></Image>
+                                          <Text className='couponText'><Text className='couponTextr'>￥</Text>20</Text>
+                                          <Text className='couponDate'>有效期：2020.8.20-9.30</Text>
+                                          <Text className='couponStatus'>已使用</Text>
+                                        </View>
+                                      }
+                                      {  item.category==2 &&
+                                         <View className='couponit invalid'>
+                                            <Image src={require('../../assets/images/zdcouponHui.png')} mode='aspectFill' className='centerImg'></Image>
+                                            <Text className='couponDate'>有效期：2020.8.20-9.30</Text>
+                                            <Text className='couponStatus'>已过期</Text>
+                                          </View>
+                                      }
+                                  </View>
+                            }
                             </View>
-                        }
-                        </View>
-                      )
-                   })
-                }
-                </View>
-               :<View className='empty'>
-                    <Image className="image" src={require('../../assets/images/empty.png')} />
-                    <View className="text">没有优惠券</View>
-                </View>
-              }
-              </View>
-            }
-
+                          )
+                      })
+                  }
+                  </ScrollList>   
+            </View>
           </View>
-          {/* <TabBar selected={1} /> */}
-        </View>
-        {/* } */}
+        }
       </View>
     )
   }

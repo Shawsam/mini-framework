@@ -24,7 +24,7 @@ const userStore = observable({
     get isAuthorized(){
     	return !!this.userInfo.nickName;
     },
-    get isRegister(){
+    get isRegistered(){
         return !!this.userInfo.userId;
     }
 })

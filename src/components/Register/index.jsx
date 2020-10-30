@@ -4,6 +4,8 @@ import {Text, View, Swiper, SwiperItem, Image, ScrollView } from '@tarojs/compon
 import Taro, { Component } from '@tarojs/taro';
 import { inject, observer } from '@tarojs/mobx';
 import Api from '../../common/api'
+import * as User from '../../common/utils/user';
+
 
 const Env = Taro.getEnv();
 @inject('userStore')
@@ -61,7 +63,7 @@ export default class Register extends Component {
       }).catch((err)=>{
           console.log(err)
           if(err.errcode==401){
-              Global.updateToken().then(res=>{
+              User.updateToken().then(res=>{
                   this.mobileNext(mobile);
               })
           }else if(err.errcode==100124){

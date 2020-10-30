@@ -53,14 +53,7 @@ export const encryptedData = (encrypt,iv)=>{
     getStorage();
     const url = preUrl + '/encryptedData';
     let param = { ..._param, encryptedData:encrypt, iv, openid };
-    if(param.openid){
-        return httpPromise.get(url, param);
-    }else{
-        log.error('解密时未获取到openId');
-        return Global.LoginAndGetPid().then(res => {
-            return encryptedData(encrypt,iv);
-        })
-    }   
+    return httpPromise.get(url, param);
 }
 
 //unionId获取用户信息
@@ -270,14 +263,14 @@ export const fetchExclusiveCategory = () => {
 export const fetchGoodsList = ({ categoryId, pageNo, pageSize=10 }) => {
     getStorage();
     const url = preUrl + '/goods/goodsList';
-    const param = { ..._param, userId, pageNo, pageSize, categoryId, openid, token };
+    const param = { ..._param, merId, userId, pageNo, pageSize, categoryId, openid, token };
     return httpPromise.get(url, param);
 }
 
 export const goodsExChange = (goodsId, points) => {
     getStorage();
     const url = preUrl + '/goods/exchange';
-    const param = { ..._param, goodsId, points, num:1,  merId, userId, cardNo, openid, token};
+    const param = { ..._param, goodsId, points, num:1,  merId, userId, cardNo, openid, token, mobile};
     return httpPromise.post(url, param, true);
 }
 
@@ -603,8 +596,8 @@ export const fissionAdierAid= (fissionCode) => {
 export const fetchPointList = ({ status, startDate, endDate, pageNo, pageSize=10 }) => {
     getStorage();
     const originTransCode = status==1?'A017':'A036';
-    const url = preUrl + '/member/transLogForPoints';
-    const param = { ..._param, originTransCode, userId, openid, token, startDate, endDate, pageNo, pageSize };
+    const url = preUrl + '/member/transLog';
+    const param = { ..._param, originTransCode, userId, openid, token, pageNo, pageSize };
     return httpPromise.get(url, param);
 }
 

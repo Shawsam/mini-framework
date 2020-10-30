@@ -1,3 +1,5 @@
+.canvasImg{ position:absolute; top:-10000px; height:600px; width:600px; left:50%; margin-left:-250px; }
+
 .bannerIndex{
 
 }
@@ -20,16 +22,27 @@
     flex-direction: column;
 }
 .qrUserInfo{
+    border-radius:20px;
+    padding:60px 0;
     width: 600px;
     background: #ffffff;
     justify-content: center;
     display: flex;
     align-items: center;
     flex-direction: column;
+    position:relative;
+    .logo{
+        position:absolute;
+        left:50%;
+        top:50%;
+        transform:translate(-50%,-50%);
+        height:100px;
+        width:100px;
+    }
 }
 .qrqrPhoto{
-    width: 476px;
-    height: 476px;
+    width: 600px;
+    height: 600px;
 }
 .closetcPhoto{
     width: 48px;
@@ -48,14 +61,19 @@
 .avaphotoPhotoQR{
     width: 124px;
     height: 124px;
-    margin-top: -45px;
     border: 14px solid #fff;
+    position:absolute;
+    top:-62px;
+    left:50%;
+    margin-left:-62px;
 }
 .qrmiao{
     color: #C0C0C0;
     font-size: 30px;
-    margin-top: 24px;
-    margin-bottom: 25px;
+    position:absolute;
+    bottom:50px;
+    left:50%;
+    transform:translateX(-50%)
 }
 
 
@@ -63,7 +81,6 @@
 .avaphotoPhoto{
     width: 124px;
     height: 124px;
-   
 }
 
 .avaAll{
