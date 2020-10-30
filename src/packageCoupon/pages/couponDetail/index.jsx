@@ -3,14 +3,14 @@ import classNames from 'classnames';
 import {Text, View, Swiper, SwiperItem, Image, ScrollView } from '@tarojs/components';
 import Taro, { Component } from '@tarojs/taro';
 import { inject, observer } from '@tarojs/mobx';
-import frameWork  from '../../common/decorator/frameWork';
-import Api from '../../common/api';
-import Loading from '../../components/Loading';
-import NavBar from '../../components/NavBar';
-import TabBar from '../../components/TabBar';
-import Authorize from '../../components/Authorize';
-import Register from '../../components/Register';
-import ScrollList from '../../components/ScrollList';
+import frameWork  from '../../../common/decorator/frameWork';
+import Api from '../../../common/api';
+import Loading from '../../../components/Loading';
+import NavBar from '../../../components/NavBar';
+import TabBar from '../....//components/TabBar';
+import Authorize from '../../../components/Authorize';
+import Register from '../../../components/Register';
+import ScrollList from '../../../components/ScrollList';
 
 const Env = Taro.getEnv();
 const frameOptions = {

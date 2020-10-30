@@ -29,7 +29,7 @@ export default class Index extends Component {
   state = {
     isLoading:false,
     bannerList:[],
-    noticeMessage:[{content:'指定精酿啤酒 限时特惠 买一送一'},{content:'指定精酿啤酒 限时特惠 买一送一'}],
+    noticeMessage:[{content:'指定精酿啤酒 限时特惠 买一送一',hrefUrl:'pages/thirdBuy/index'},{content:'指定精酿啤酒 限时特惠 买一送一',hrefUrl:'pages/thirdBuy/index'}],
     couponCount:'00',
     beerNum: 0,
     showQrPanel: false
@@ -236,7 +236,7 @@ export default class Index extends Component {
       <View className='page'>
         { isLoading?<Loading/>:
           <View className='container'>
-            <NavBar title="" background='#911414' showBack={false} m_page={true} />
+{ /*        <NavBar title="" background='#911414' showBack={false} m_page={true} />*/ }
             <View className="wrapper">
               {
                 this.state.showQrPanel &&
@@ -307,7 +307,7 @@ export default class Index extends Component {
 
                 <View className='mhList'>
                   <View className='mhqMH'>
-                    <View className='myCouponPhoto' onClick={this.openPage.bind(this,'/pages/coupon/index')}>
+                    <View className='myCouponPhoto' onClick={this.openPage.bind(this,'packageCoupon//pages/coupon/index')}>
                       <Text className='couponTextsp'>{couponCount}</Text>
                     </View>
                     {/* <Image src={require('../../assets/images/myCouponnull.png')} mode='aspectFill' className='myCouponPhoto'></Image> */}
@@ -322,7 +322,7 @@ export default class Index extends Component {
 
 
               {/* 蓄力有礼 */}
-              <View className='xuLi'  onClick={this.openPage.bind(this,'/pages/actDetail/index')}>
+              <View className='xuLi'  onClick={this.openPage.bind(this,'/packageAct/pages/actDetail/index')}>
                 <View className='xuLiimgs'>
                   {
                     [1,2,3,4,5].map((item,index) => {

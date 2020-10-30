@@ -3,14 +3,14 @@ import classNames from 'classnames';
 import {Text, View, Swiper, SwiperItem, Image, ScrollView } from '@tarojs/components';
 import Taro, { Component } from '@tarojs/taro';
 import { inject, observer } from '@tarojs/mobx';
-import frameWork  from '../../common/decorator/frameWork';
-import Api from '../../common/api';
-import Loading from '../../components/Loading';
-import NavBar from '../../components/NavBar';
-import TabBar from '../../components/TabBar';
-import Authorize from '../../components/Authorize';
-import Register from '../../components/Register';
-import QR from '../../common/lib/qrcode.js'
+import frameWork  from '../../../common/decorator/frameWork';
+import Api from '../../../common/api';
+import Loading from '../../../components/Loading';
+import NavBar from '../../../components/NavBar';
+import TabBar from '../../../components/TabBar';
+import Authorize from '../../../components/Authorize';
+import Register from '../../../components/Register';
+import QR from '../../../common/lib/qrcode.js'
 
 const Env = Taro.getEnv();
 const frameOptions = {
@@ -121,34 +121,34 @@ export default class Index extends Component {
             <NavBar id="fixed" title="" background='rgba(0,0,0,0)' color="#fff" showBack={true} m_page={true} back={this.Return.bind(this)} />
 
             <View className='wrapper'>
-              <Image className="membg" src={require('../../assets/act/polite.png')}>
+              <Image className="membg" src={require('../../assets/images/polite.png')}>
               </Image>
               <View className='all-img'>
                   {
                     [1,2,3,4,5].map((item,index) => {
                       return (
-                          index<info.currentNumber?<Image className='membg-img img-right' src={require('../../assets/act/polite1.png')}></Image>
-                          :<Image className='membg-img img-right' src={require('../../assets/act/polite2.png')}></Image>
+                          index<info.currentNumber?<Image className='membg-img img-right' src={require('../../assets/images/polite1.png')}></Image>
+                          :<Image className='membg-img img-right' src={require('../../assets/images/polite2.png')}></Image>
                       )
                     })
                   }
               </View>
               <View className='all-content'>
                 <View className='content-title'>
-                  <Image className='title-img' src={require('../../assets/act/round-left.png')}></Image>
+                  <Image className='title-img' src={require('../../assets/images/round-left.png')}></Image>
                   <View className='polite'>蓄力任务</View>
-                  <Image className='title-img' src={require('../../assets/act/round-right.png')}></Image>
+                  <Image className='title-img' src={require('../../assets/images/round-right.png')}></Image>
                 </View>
-                <View className="date"><Image className='icon' src={require('../../assets/act/date.png')} />{info.dateRange}</View>
+                <View className="date"><Image className='icon' src={require('../../assets/images/date.png')} />{info.dateRange}</View>
                 { info.registerMark && 
                 <View className='registered-all'>
                   <View className='registered'>
-                    <Image className='registered-left' src={require('../../assets/act/polite-go.png')}></Image>
+                    <Image className='registered-left' src={require('../../assets/images/polite-go.png')}></Image>
                     <View className='registered-right'>
                       <View className='registered-title'>注册成为拳击猫会员</View>
                       <View className='registered-title-bottom'>
                         注册成功即可得
-                      <Image className='polite-right-img' src={require('../../assets/act/polite-much.png')}></Image>
+                      <Image className='polite-right-img' src={require('../../assets/images/polite-much.png')}></Image>
                         <Text className='add'>+1</Text>
                       </View>
                     </View>
@@ -158,12 +158,12 @@ export default class Index extends Component {
                 }
                 <View className='registered-all'  onClick={this.openSign.bind(this,info.xlId)}>
                   <View className='registered'>
-                    <Image className='registered-left' src={require('../../assets/act/polite-date.png')}></Image>
+                    <Image className='registered-left' src={require('../../assets/images/polite-date.png')}></Image>
                     <View className='registered-right'>
                       <View className='registered-title'>累计签到（{info.currentSignDays}/{info.signDays}）</View>
                       <View className='registered-title-bottom'>
                         累计签到{info.signDays}天即可得
-                      <Image className='polite-right-img' src={require('../../assets/act/polite-much.png')}></Image>
+                      <Image className='polite-right-img' src={require('../../assets/images/polite-much.png')}></Image>
                         <Text className='add'>+1</Text>
                       </View>
                     </View>
@@ -175,12 +175,12 @@ export default class Index extends Component {
                 </View>
                 <View className='registered-all'>
                   <View className='registered'>
-                    <Image className='registered-left' src={require('../../assets/act/polite-buy.png')}></Image>
+                    <Image className='registered-left' src={require('../../assets/images/polite-buy.png')}></Image>
                     <View className='registered-right'>
                       <View className='registered-title'>到店消费</View>
                       <View className='registered-title-bottom'>
                         线下实体店消费一次即可得
-                      <Image className='polite-right-img' src={require('../../assets/act/polite-much.png')}></Image>
+                      <Image className='polite-right-img' src={require('../../assets/images/polite-much.png')}></Image>
                         <Text className='add'>+1</Text>
                       </View>
                     </View>
@@ -211,7 +211,7 @@ export default class Index extends Component {
                         <View className="txt">c. 产生订单，这点明确目前CRM只能获取到门店POS发起的订单，商城/外卖的无法获取</View>
                       </View>
                     </View>
-                    <Image className="closeBtn2" onClick={this.closeRule.bind(this)} src={require('../../assets/act/close.png')} />
+                    <Image className="closeBtn2" onClick={this.closeRule.bind(this)} src={require('../../assets/images/close.png')} />
                   </View>
                 </View>
                 : ''
@@ -222,12 +222,12 @@ export default class Index extends Component {
               <View class="panel panelShare">
               <View className="shadow"></View>
               <View className="panelContent" catchtouchmove="ture">
-                <Image className='cat' src={require('../../assets/act/cat.png')}></Image>
+                <Image className='cat' src={require('../../assets/images/cat.png')}></Image>
                 <View className='content'>
                   <View className="title">恭喜您！已完成蓄力！</View>
                   <View className="title">活动奖励已发放到您的券包</View>
                 </View>
-                <Image className="closeBtn2" onClick={this.closeTips.bind(this)} src={require('../../assets/act/close.png')} />
+                <Image className="closeBtn2" onClick={this.closeTips.bind(this)} src={require('../../assets/images/close.png')} />
               </View>
             </View>
             : ''

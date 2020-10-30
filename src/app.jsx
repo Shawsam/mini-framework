@@ -25,17 +25,31 @@ class App extends Component {
       'pages/mine/index',
       'pages/order/index',
       'pages/orderDetail/index',
-      'pages/coupon/index',
-      'pages/couponDetail/index',
-      'pages/couponFetch/index',
       'pages/pointsMall/index',
       'pages/pointsDetail/index',
       'pages/thirdBuy/index',
       'pages/userInfo/index',
-      'pages/actDetail/index',
-      'pages/actSign/index',
       'pages/webview/index',
       'pages/example/index',
+    ],
+    subPackages:[
+      {
+        root: 'packageCoupon',
+        name: 'packageCoupon',
+        pages: [
+          'pages/coupon/index',
+          'pages/couponDetail/index',
+          'pages/couponFetch/index'
+        ]
+      },
+      {
+        root: 'packageAct',
+        name: 'packageAct',
+        pages: [
+          'pages/actDetail/index',
+          'pages/actSign/index',
+        ]
+      }
     ],
     window: {
       backgroundTextStyle:'light',

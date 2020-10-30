@@ -1,7 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Image, Input } from '@tarojs/components'
 import './index.scss'
-import NavBar from '../../components/NavBar'
+import NavBar from '../../../components/NavBar'
 
 export default class Index extends Component {
   config = {
@@ -89,7 +89,7 @@ export default class Index extends Component {
             <NavBar id="fixed" title="" background='rgba(0,0,0,0)' color="#fff" showBack={true} m_page={true} back={this.Return.bind(this)} />
 
             <View className='wrapper'>
-              <Image className="membg" src={require('../../assets/act/vip.png')}>
+              <Image className="membg" src={require('../../assets/images/vip.png')}>
               </Image>
               <View className='date'>10.21-11.19</View>
               <View className='all-img'>
@@ -97,30 +97,30 @@ export default class Index extends Component {
                 <View className='date-sign-content'>
                   <View className='date-sign'>
                     <View>第7天</View>
-                    <Image className='date-tips-img' src={require('../../assets/act/vip-date.png')}></Image>
+                    <Image className='date-tips-img' src={require('../../assets/images/vip-date.png')}></Image>
                   </View>
-                  <Image className='date-round' src={require('../../assets/act/vip-round.png')}></Image>
+                  <Image className='date-round' src={require('../../assets/images/vip-round.png')}></Image>
                   <View className='date-sign'>
                     <View>第14天</View>
-                    <Image className='date-tips-img' src={require('../../assets/act/vip-date.png')}></Image>
+                    <Image className='date-tips-img' src={require('../../assets/images/vip-date.png')}></Image>
                   </View>
-                  <Image className='date-round' src={require('../../assets/act/vip-round.png')}></Image>
+                  <Image className='date-round' src={require('../../assets/images/vip-round.png')}></Image>
                   <View className='date-sign'>
                     <View>第21天</View>
-                    <Image className='date-tips-img' src={require('../../assets/act/vip-date.png')}></Image>
+                    <Image className='date-tips-img' src={require('../../assets/images/vip-date.png')}></Image>
                   </View>
-                  <Image className='date-round' src={require('../../assets/act/vip-round.png')}></Image>
+                  <Image className='date-round' src={require('../../assets/images/vip-round.png')}></Image>
                   <View className='date-sign'>
                     <View>第28天</View>
-                    <Image className='date-tips-img' src={require('../../assets/act/vip-date.png')}></Image>
+                    <Image className='date-tips-img' src={require('../../assets/images/vip-date.png')}></Image>
                   </View>
                 </View>
               </View>
               <View className='all-content'>
                 <View className='content-title'>
-                  <Image className='title-img' src={require('../../assets/act/round-left.png')}></Image>
+                  <Image className='title-img' src={require('../../assets/images/round-left.png')}></Image>
                   <View className='polite'>我的签到</View>
-                  <Image className='title-img' src={require('../../assets/act/round-right.png')}></Image>
+                  <Image className='title-img' src={require('../../assets/images/round-right.png')}></Image>
                 </View>
                 <View className='registered-all'>
                   <View className='all-date'>
@@ -140,7 +140,7 @@ export default class Index extends Component {
                         this.state.days.map((item, index) => {
                           return (
                             <View className='date2' key={item}>
-                              {/* <Image className='sign-img' src={require('../../assets/act/sign.png')}></Image> */}
+                              {/* <Image className='sign-img' src={require('../../assets/images/sign.png')}></Image> */}
                               <View className='sign-date'>{item.date}</View>
                             </View>
                           )
