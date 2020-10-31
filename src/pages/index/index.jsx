@@ -83,12 +83,12 @@ export default class Index extends Component {
           this.setState({beerNum:res.data.currentNumber});
       }).catch(err=>{
           console.log(err);
-          Taro.showModal({  content:err.msg,
-                            showCancel:false,
-                            success:()=>{
-                                this.getXlAct()
-                            }
-                         })
+          // Taro.showModal({  content:err.msg,
+          //                   showCancel:false,
+          //                   success:()=>{
+          //                       this.getXlAct()
+          //                   }
+          //                })
       });
   }
 
