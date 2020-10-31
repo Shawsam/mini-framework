@@ -307,7 +307,7 @@ export default class Index extends Component {
 
                 <View className='mhList'>
                   <View className='mhqMH'>
-                    <View className='myCouponPhoto' onClick={this.openPage.bind(this,'packageCoupon//pages/coupon/index')}>
+                    <View className='myCouponPhoto' onClick={this.openPage.bind(this,'/packageCoupon/pages/coupon/index')}>
                       <Text className='couponTextsp'>{couponCount}</Text>
                     </View>
                     {/* <Image src={require('../../assets/images/myCouponnull.png')} mode='aspectFill' className='myCouponPhoto'></Image> */}

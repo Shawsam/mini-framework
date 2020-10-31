@@ -62,7 +62,7 @@ export default class storeList extends Component {
           Api.fetchTransLog({ status, pageNo }).then(res=>{
               resolve(res);
               Taro.hideLoading();
-              let listData = [];
+              let listData = res.data;
               let noMore = listData.length==0;
               frameArry[frameIndex].listData = listData; 
               frameArry[frameIndex].noMore = noMore; 
@@ -110,8 +110,15 @@ export default class storeList extends Component {
       })
   }
 
+  transDate(str){
+      if(str){
+          return(str.substring(0,4)+'-'+str.substring(4,6)+'-'+str.substring(6,8))
+      }
+  }
+
   render() {
     const { isLoading, cates, listData, scrollTop, listInit, noMore  } = this.state;
+    console.log(listData)
     return (
       <View className='page'>
         { isLoading?<Loading/>:
@@ -136,10 +143,10 @@ export default class storeList extends Component {
                               return(
                                   <View className='orderimgAll' onClick={this.openPage.bind(this,'/pages/orderDetail/index')}>
                                     <View className='orderimgText'>
-                                        <Text className='orderAddress'>上海新天地广场店</Text>
-                                        <Text className='orderTime'>下单时间：2020.05.12 21:30:33</Text>
+                                        <Text className='orderAddress'>{item.shopAddress}</Text>
+                                        <Text className='orderTime'>下单时间：{this.transDate(item.transDate)}</Text>
                                         <View className='orderMoneyflex'>
-                                          <Text className='orderMoney'>实付：<Text className='orderMoneyRed'>￥103.00</Text></Text>
+                                          <Text className='orderMoney'>实付：<Text className='orderMoneyRed'>￥{item.transAmt}</Text></Text>
                       {/*                 <Text className='pinj'>评价</Text>
                                           <Text className='kfp'>开发票</Text>   */}
                                         </View>

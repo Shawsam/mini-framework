@@ -373,6 +373,14 @@ export const orderDetail = ({transLogSeq, orderNo, storeCode, transDate, transAm
     return httpPromise.get(url, param);  
 }
 
+export const crmOrderDetail = ({orderNo2})=>{
+    getStorage();
+    const url = preUrl+'/order/detail';
+    const param =  {  ..._param, token, openid, userId, cardNo, unionid, mobile, orderNo2, userName:nickName };
+    return httpPromise.get(url, param);  
+}
+
+
 export const getCurrentInvoiceUrl = ({ transAmt, storeCode, orderId, businessDay })=>{
     getStorage();
     const url = preUrl+'/oc/cuOrderGetInvoiceUrl';

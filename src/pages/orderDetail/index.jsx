@@ -5,10 +5,10 @@ import orderDetailImg from "../../assets/images/orderDetail.png";
 import wechatpay from "../../assets/images/wechatpay.png";
 import NavBar from '../../components/NavBar';
 import TabBar from '../../components/TabBar';
+import Api from '../../common/api';
 
 export default class storeList extends Component {
   config = {
-
     disableScroll: true
   }
 
@@ -17,7 +17,9 @@ export default class storeList extends Component {
   }
 
   componentDidMount() {
-
+      Api.crmOrderDetail({orderNo2:'1H1K12313131321221111131414231'}).then(res=>{
+          console.log(res);
+      })
   }
   componentWillMount() {
 

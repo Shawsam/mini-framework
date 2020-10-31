@@ -138,22 +138,27 @@ export default class storeList extends Component {
 
   goodsExChange(item){
      let { goodsId, points, goodsName } = item;
-     Api.goodsExChange(goodsId, points).then(res=>{
-       Taro.showModal({   content:'兑换成功',
-                          showCancel:false,
-                          success:()=>{
-                              this.listInit()
-                          }
-                      }) 
-    }).catch(err => {
-       console.log(err);
-       Taro.showModal({   content:err.msg,
-                          showCancel:false,
-                          success:()=>{
-                              this.listInit()
-                          }
-                      }) 
-    });
+     Taro.showModal({
+        title:`确定使用${points}拳力值兑换${goodsName}吗？`,
+        success:()=>{
+           Api.goodsExChange(goodsId, points).then(res=>{
+             Taro.showModal({   content:'兑换成功',
+                                showCancel:false,
+                                success:()=>{
+                                    this.listInit()
+                                }
+                            }) 
+          }).catch(err => {
+             console.log(err);
+             Taro.showModal({   content:err.msg,
+                                showCancel:false,
+                                success:()=>{
+                                    this.listInit()
+                                }
+                            }) 
+          });
+        }
+     })
   }
 
   openDetailPage(){

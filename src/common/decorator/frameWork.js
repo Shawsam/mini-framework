@@ -1,7 +1,7 @@
 import Taro, { Component } from '@tarojs/taro';
 import { inject, observer } from '@tarojs/mobx';
 import * as User from '../utils/user';
-const errMap = [-1000,-1001,100124,1001241,100130];
+const errMap = [-1000,-1001,'100124','1001241','100130'];
 let isIndex;
 
 //userInfoCached 是否从缓存中读取会员信息
