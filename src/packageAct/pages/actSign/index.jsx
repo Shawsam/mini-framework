@@ -1,7 +1,15 @@
-import Taro, { Component } from '@tarojs/taro'
-import { View, Text, Image, Input } from '@tarojs/components'
-import './index.scss'
-import NavBar from '../../../components/NavBar'
+import './index.scss';
+import classNames from 'classnames';
+import {Text, View, Swiper, SwiperItem, Image, ScrollView } from '@tarojs/components';
+import Taro, { Component } from '@tarojs/taro';
+import { inject, observer } from '@tarojs/mobx';
+import frameWork  from '../../common/decorator/frameWork';
+import Api from '../../../common/api';
+import Loading from '../../../components/Loading';
+import NavBar from '../../../components/NavBar';
+import TabBar from '../../../components/TabBar';
+import Authorize from '../../../components/Authorize';
+import Register from '../../../components/Register';
 
 export default class Index extends Component {
   config = {
@@ -10,78 +18,74 @@ export default class Index extends Component {
     navigationStyle: 'custom',
   }
   state = {
-    isLoading: false,
+    isLoading: true,
     showRule: false,
     showTips: false,
     date: ['日', '一', '二', '三', '四', '五', '六'],
-    days: [],
+    calendar: [],
     cur_year: 0,
-    cur_month: 0,
-    day7: 7,
+    cur_month: 0
   }
-  componentWillMount() {
+  componentWillMount() {    
+    let xlId = this.$router.params.xlId;
+    Api.signInfo(xlId).then(res=>{
+        let { signSet, xlEnd, xlStart} = res.data;
+        let signDays = signSet.length||0;
+        let dateRange = this.transDate(xlStart,xlEnd);
+        
+        let signDateArry = [];
+        for(let i in signSet){
+            signDateArry.push(signSet[i].substr(6,2));
+        }
+        this.setState({dateRange,signDays})
+        this.calendarRender(signDateArry);
+    }).catch(err=>{
+        console.log(err);
+    })
+  }
+
+  calendarRender(signDateArry){
     //获取当前年月  
     const date = new Date();
-    const cur_year = date.getFullYear();
-    const cur_month = date.getMonth() + 1;
-    this.calculateEmptyGrids(cur_year, cur_month);
-    this.calculateDays(cur_year, cur_month);
-  }
-  componentDidShow() {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const monthDays = date.getDate();
 
-  }
-  // 获取当月共多少天
-  getThisMonthDays(year, month) {
-    return new Date(year, month, 0).getDate()
-  }
-  // 获取当月第一天星期几
-  getFirstDayOfWeek(year, month) {
-    return new Date(Date.UTC(year, month - 1, 1)).getDay();
-  }
-  // 计算当月1号前空了几个格子，把它填充在days数组的前面
-  calculateEmptyGrids(year, month) {
-    var that = this;
-    //计算每个月时要清零
-    that.setState({ days: [] });
-    const firstDayOfWeek = this.getFirstDayOfWeek(year, month);
-    if (firstDayOfWeek > 0) {
-      for (let i = 0; i < firstDayOfWeek; i++) {
-        var obj = {
-          date: ' ',
-          isSign: false
-        }
-        that.state.days.push(obj);
-      }
-      this.setState({
-        days: that.state.days
-      });
-      //清空
-    } else {
-      this.setState({
-        days: []
-      });
+    const firstDay = new Date(Date.UTC(year, month - 1, 1)).getDay();
+    const endDay = new Date(Date.UTC(year, month - 1, monthDays)).getDay();
+    let calendar = [];
+    for (let i = 0; i < firstDay; i++) {
+      let obj = { date: '',isSign: false}
+      calendar.push(obj);
     }
-  }
-  // 绘制当月天数占的格子，并把它放到days数组中
-  calculateDays(year, month) {
-    var that = this;
-    const thisMonthDays = this.getThisMonthDays(year, month);
-    for (let i = 1; i <= thisMonthDays; i++) {
-      var obj = {
-        date: i,
-        isSign: false
+    for (let i = 1; i <= monthDays; i++) {
+      let obj = { date: i,isSign: false }
+      for(let j = 0; j<signDateArry.length; j++){
+          if(signDateArry[j]==i){
+             obj.isSign = true;
+          }
       }
-      that.state.days.push(obj);
+      calendar.push(obj);
     }
-    this.setState({
-      days: that.state.days
-    });
+    for (let i = 0; i < 6-endDay; i++) {
+      let obj = { date:'',isSign: false }
+      calendar.push(obj);
+    }
+    this.setState({calendar,isLoading:false});
+  }
+
+  transDate(start,end){
+      let startDate = new Date(start);
+      let endDate = new Date(end);
+      let str = parseInt(startDate.getMonth()+1)+'.'+startDate.getDate();
+      str = str + '-' +parseInt(endDate.getMonth()+1)+'.'+endDate.getDate();
+      return str;
   }
 
   Return = () => { Taro.navigateBack(); }
   render() {
-    const { isLoading, days,day7 } = this.state;
-    console.log('days', days)
+    const { isLoading, dateRange, signDays, date,  calendar } = this.state;
+    console.log('calendar', calendar)
     return (
       <View className='page'>
         {isLoading ? <Loading /> :
@@ -91,9 +95,9 @@ export default class Index extends Component {
             <View className='wrapper'>
               <Image className="membg" src={require('../../assets/images/vip.png')}>
               </Image>
-              <View className='date'>10.21-11.19</View>
+              <View className='date'>{dateRange}</View>
               <View className='all-img'>
-                <View className='date-tips'>您已累计签到 <Text className='date-num'>0</Text>天</View>
+                <View className='date-tips'>您已累计签到 <Text className='date-num'>{signDays}</Text>天</View>
                 <View className='date-sign-content'>
                   <View className='date-sign'>
                     <View>第7天</View>
@@ -126,7 +130,7 @@ export default class Index extends Component {
                   <View className='all-date'>
                     <View className='all-date-one'>
                       {
-                        this.state.date.map((item, index) => {
+                        date.map((item, index) => {
                           return (
                             <View className='date1' key={item}>
                               {item}
@@ -137,10 +141,10 @@ export default class Index extends Component {
                     </View>
                     <View className='all-date-two'>
                       {
-                        this.state.days.map((item, index) => {
+                        calendar.map((item, index) => {
                           return (
                             <View className='date2' key={item}>
-                              {/* <Image className='sign-img' src={require('../../assets/images/sign.png')}></Image> */}
+                              {item.isSign && <Image className='sign-img' src={require('../../assets/images/sign.png')}></Image> }
                               <View className='sign-date'>{item.date}</View>
                             </View>
                           )

@@ -80,11 +80,11 @@ export default class Index extends Component {
       });
   }
    
-  actSign(e,xlId){
+  actSign(xlId,e){
       e.stopPropagation();
       Api.actSign(xlId).then(res=>{
           Taro.navigateTo({
-            url: '/pages/actSign/index?xlId='+xlId
+            url: '/packageAct/pages/actSign/index?xlId='+xlId
           })
       }).catch(err=>{
           console.log(err);
@@ -96,7 +96,7 @@ export default class Index extends Component {
 
   openSign(xlId){
       Taro.navigateTo({
-        url: '/pages/actSign/index?xlId='+xlId
+        url: '/packageAct/pages/actSign/index?xlId='+xlId
       })
   }
 

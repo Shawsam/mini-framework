@@ -7,7 +7,7 @@
   border-top:1px solid #e8e8e8;
 }
 
-.tab-bar-border {
+/*.tab-bar-border {
   background-color: rgba(0, 0, 0, 0.2);
   position: absolute;
   left: 0;
@@ -15,7 +15,7 @@
   width: 100%;
   height: 1px;
   transform: scaleY(0.5);
-}
+}*/
 
 .tab-bar-item {
   flex: 1;
@@ -26,6 +26,14 @@
   flex-direction: column;
   font-size:20px;
   line-height:36px;
+}
+
+.tab-bar-item.center .icon{
+  height: 100px;
+  width: 100px;
+  margin-top: -50px;
+  position: relative;
+  z-index: 1000;
 }
 
 .tab-bar-item .icon{

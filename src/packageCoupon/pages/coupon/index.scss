@@ -1,4 +1,4 @@
-.wrapper{ background:#F4F5F6; }
+.container,.wrapper{ background:#F4F5F6; }
 .list{
     display: flex;
     justify-content: center;
@@ -10,7 +10,7 @@
     height: 200px;
 }
 .couponText{
-    font-size: 84px;
+    font-size: 74px;
     color: #FDC741;
     line-height: 48px;
     position: absolute;
