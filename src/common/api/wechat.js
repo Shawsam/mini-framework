@@ -283,7 +283,7 @@ export const fetchGoodsList = ({ categoryId, pageNo, pageSize=10 }) => {
 export const goodsExChange = (goodsId, points) => {
     getStorage();
     const url = preUrl + '/goods/exchange';
-    const param = { ..._param, goodsId, points, num:1,  merId, userId, cardNo, openid, token, mobile};
+    const param = { ..._param, goodsId, points, num:1,  merId, userId, cardNo, openid, token, mobile, amount:0};
     return httpPromise.post(url, param, true);
 }
 

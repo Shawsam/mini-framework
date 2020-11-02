@@ -76,7 +76,6 @@ const frameWork = ({userInfoCached=true,loadToAuthorize=false}) => (Component) =
                             }
                         })
                     }
-                    
                 })
             }
         }

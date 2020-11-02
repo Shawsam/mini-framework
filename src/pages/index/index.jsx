@@ -35,6 +35,15 @@ export default class Index extends Component {
     showQrPanel: false
   }
 
+  componentDidShow(){
+    if(isFirstShow) return;
+    this.componentDidMount();
+  }
+
+  componentDidHide(){
+    isFirstShow = false;
+  }
+
   PidReady(){
       //this.setState({isLoading:false});
       this.fetchBannerList();

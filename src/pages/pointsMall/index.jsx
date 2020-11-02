@@ -73,25 +73,6 @@ export default class storeList extends Component {
       });
   }
 
-  exchange({goodsId, points}){
-      Api.goodsExChange(goodsId, points).then(res=>{
-         Taro.showModal({   content:'兑换成功',
-                            showCancel:false,
-                            success:()=>{
-                                this.listInit()
-                            }
-                        }) 
-      }).catch(err => {
-         console.log(err);
-         Taro.showModal({   content:err.msg,
-                            showCancel:false,
-                            success:()=>{
-                                this.listInit()
-                            }
-                        }) 
-      });
-  }
-
   listInit() {
     if(cateEmpty){
         return Promise.resolve()
@@ -169,6 +150,15 @@ export default class storeList extends Component {
       this.listInit();
   }
 
+  updatePoints(){
+      Api.fetchUserInfoById().then(res=>{
+          let userInfo = res.data;
+          this.props.userStore.setUserInfo(userInfo);         //同步用户数据             
+      }).catch(err=>{
+          console.log(err);
+      })
+  }
+
   goodsExChange(item){
      let { goodsId, points, goodsName } = item;
      Taro.showModal({
@@ -178,6 +168,7 @@ export default class storeList extends Component {
              Taro.showModal({   content:'兑换成功',
                                 showCancel:false,
                                 success:()=>{
+                                    this.updatePoints();
                                     this.listInit()
                                 }
                             }) 
