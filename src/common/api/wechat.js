@@ -289,7 +289,7 @@ export const goodsExChange = (goodsId, points) => {
 
 export const fetchTransLog = ({ pageNo, pageSize=10 })=>{
     getStorage();
-    const url = preUrl + '/member/transLog';
+    const url = preUrl + '/order/list';
     const param = { ..._param, userId, pageNo, pageSize, originTransCode:'A015', openid, token };
     return httpPromise.get(url, param);
 }

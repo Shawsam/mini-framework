@@ -20,6 +20,7 @@ const frameOptions = {
 let disableOnshow = false, isFirstShow = true, pageData, shopId;
 let frameIndex, frameArry=[];
 let pageNo =1;
+let cateEmpty = false;
 
 @frameWork(frameOptions)
 export default class storeList extends Component {
@@ -35,65 +36,97 @@ export default class storeList extends Component {
   }
   
   userInfoReady(){
+      cateEmpty = false;
       frameIndex = 0;
       frameArry = [];
       Api.fetchShopCategory().then(res => {
           let cates = res.data;
           //cates.unshift({categoryId:0,categoryName:'全部'})
-          for(let i in cates){
-              const singleItem = cates[i];
-              singleItem.pageNo = 1;
-              singleItem.listData = [];
-              singleItem.noMore = false;
-              frameArry.push(singleItem);
+          if(cates.length){
+            for(let i in cates){
+                const singleItem = cates[i];
+                singleItem.pageNo = 1;
+                singleItem.listData = [];
+                singleItem.noMore = false;
+                frameArry.push(singleItem);
+            }
+            this.setState({cates})
+          }else{
+            return Promise.reject({msg:'暂无分类'})
           }
-          this.setState({cates})
       }).then((res) => {
           this.listInit()
       }).catch(err => {
           console.log(err);
-          if(err.msg=="暂无分类") return;
-          Taro.showModal({
-                          content:err.msg,
-                          showCancel:false,
-                          success:()=>{
-                              this.componentDidMount()
-                          }
-                      })
+          if(err.msg=="暂无分类"){
+            cateEmpty = true;
+            this.setState({isLoading:false})
+          }else{
+            Taro.showModal({
+                            content:err.msg,
+                            showCancel:false,
+                            success:()=>{
+                                this.componentDidMount()
+                            }
+                        })
+          }
+      });
+  }
+
+  exchange({goodsId, points}){
+      Api.goodsExChange(goodsId, points).then(res=>{
+         Taro.showModal({   content:'兑换成功',
+                            showCancel:false,
+                            success:()=>{
+                                this.listInit()
+                            }
+                        }) 
+      }).catch(err => {
+         console.log(err);
+         Taro.showModal({   content:err.msg,
+                            showCancel:false,
+                            success:()=>{
+                                this.listInit()
+                            }
+                        }) 
       });
   }
 
   listInit() {
-    pageNo = 1;
-    frameArry[frameIndex].pageNo = 1;
-    this.setState({listInit:true});
+    if(cateEmpty){
+        return Promise.resolve()
+    }else{
+      pageNo = 1;
+      frameArry[frameIndex].pageNo = 1;
+      this.setState({listInit:true});
 
-    let { isLoading } = this.state;
-    !isLoading && Taro.showLoading({title:'加载中...',mask:true});
+      let { isLoading } = this.state;
+      !isLoading && Taro.showLoading({title:'加载中...',mask:true});
 
-    let categoryId = frameArry[frameIndex].categoryId;
-    return new Promise((resolve,reject)=>{
-        Api.fetchGoodsList({ categoryId, pageNo }).then(res => {
-            resolve(res);
-            Taro.hideLoading();
-            let listData = res.data;
-            let noMore = listData.length!=10;
-            frameArry[frameIndex].listData = listData; 
-            frameArry[frameIndex].noMore = noMore; 
-            this.setState({isLoading:false, listInit:false, listData, noMore});
-        }).catch(err => {
-            resolve(err);
-            console.log(err);
-            Taro.hideLoading();
-            Taro.showModal({
-                              content:err.msg||'内部错误',
-                              showCancel:false,
-                              success:()=>{
-                                  this.listInit()
-                              }
-                          })
-        });
-    })
+      let categoryId = frameArry[frameIndex].categoryId;
+      return new Promise((resolve,reject)=>{
+          Api.fetchGoodsList({ categoryId, pageNo }).then(res => {
+              resolve(res);
+              Taro.hideLoading();
+              let listData = res.data;
+              let noMore = listData.length!=10;
+              frameArry[frameIndex].listData = listData; 
+              frameArry[frameIndex].noMore = noMore; 
+              this.setState({isLoading:false, listInit:false, listData, noMore});
+          }).catch(err => {
+              resolve(err);
+              console.log(err);
+              Taro.hideLoading();
+              Taro.showModal({
+                                content:err.msg||'内部错误',
+                                showCancel:false,
+                                success:()=>{
+                                    this.listInit()
+                                }
+                            })
+          });
+      })
+    }
   }
 
   loadMoreData() {
@@ -203,8 +236,8 @@ export default class storeList extends Component {
                     </View>:null
               }
             <View className="wrapper">
-                  <ScrollList emptyImg={require('../../assets/images/empty.png')} 
-                              emptyStr = "暂无优惠券" 
+                  <ScrollList emptyImg={require('../../assets/images/goodsEmpty.png')} 
+                              emptyStr = "暂无商品" 
                               scrollTop = { scrollTop } 
                               isInit = { listInit }  
                               dataLength={ listData.length } 

@@ -41,6 +41,8 @@ export default class Index extends Component {
   }
 
   userInfoReady(){
+      shopId = this.$router.params.shopId;
+      shopId && Taro.setStorageSync('shopId',shopId);
       // this.fetchNoticeMessage();
       this.fetchCouponCount();
       this.getXlAct();

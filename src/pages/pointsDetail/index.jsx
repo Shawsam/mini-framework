@@ -203,8 +203,8 @@ export default class storeList extends Component {
               }
 
               <View className="wrapper">
-                  <ScrollList emptyImg={require('../../assets/images/empty.png')} 
-                              emptyStr = "暂无记录" 
+                  <ScrollList emptyImg={require('../../assets/images/billEmpty.png')} 
+                              emptyStr = {frameIndex==0?"暂无新增记录":"暂无使用记录"} 
                               scrollTop = { scrollTop } 
                               isInit = { listInit }  
                               dataLength={ listData.length } 

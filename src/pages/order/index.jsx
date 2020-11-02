@@ -130,7 +130,7 @@ export default class storeList extends Component {
                  <Text className='orderText'>周边商品</Text>
             </View>*/  }
             <View className="wrapper">
-                  <ScrollList emptyImg={require('../../assets/images/empty.png')} 
+                  <ScrollList emptyImg={require('../../assets/images/billEmpty.png')} 
                               emptyStr = "暂无记录" 
                               scrollTop = { scrollTop } 
                               isInit = { listInit }  
@@ -141,7 +141,7 @@ export default class storeList extends Component {
                       {
                           listData.map((item,index)=>{
                               return(
-                                  <View className='orderimgAll' onClick={this.openPage.bind(this,'/pages/orderDetail/index')}>
+                                  <View className='orderimgAll' onClick={this.openPage.bind(this,'/pages/orderDetail/index?orderNo='+item.logSeq)}>
                                     <View className='orderimgText'>
                                         <Text className='orderAddress'>{item.shopAddress}</Text>
                                         <Text className='orderTime'>下单时间：{this.transDate(item.transDate)}</Text>

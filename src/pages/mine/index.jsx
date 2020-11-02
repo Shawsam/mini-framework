@@ -160,7 +160,7 @@ export default class storeList extends Component {
             
             <View className="tabCon">
               <View className='tab flexbox'>               
-                  <View className='flex-item' onClick={this.openPage.bind(this,'/pages/coupon/index')}><View className="txt">优惠券</View><View className="num">{couponCount}</View></View>
+                  <View className='flex-item' onClick={this.openPage.bind(this,'/packageCoupon/pages/coupon/index')}><View className="txt">优惠券</View><View className="num">{couponCount}</View></View>
                   <View className='flex-item' onClick={this.openPage.bind(this,'/pages/pointsMall/index')}><View className="txt">拳力值</View><View className="num">{userInfo.point>=0?userInfo.point:'--'}</View></View>
                   <View className='rect'></View>
               </View>

@@ -178,11 +178,11 @@ export default class Index extends Component {
           <NavBar id="fixed" title="我的优惠券" background='rgba(0,0,0,0)' color="#fff" showBack={true} m_page={true} back={this.Return.bind(this)} />
           <View className="wrapper">
             {
-              item.category==0 &&
+              item.category==2 &&
                 <View>
                   <Image src={require('../../assets/images/dk.png')} mode='aspectFill' className='eightzPhoto'></Image>
                   <View className='coupondetail'>
-                    <Text className='couponEightT'>8折消费折扣券</Text>
+                    <Text className='couponEightT'>{(100-item.discountValue)/10}折消费折扣券</Text>
                     <Text className='couponEightSy'>使用说明</Text>
                     <ScrollView
                       className='scrollview'
@@ -195,7 +195,7 @@ export default class Index extends Component {
                     
                     <View className="SYbtn">
                         <Text className="coLiJ">立即使用</Text>
-                        { isTransfer==1 && <Text className="ZHyou" onClick={this.addShare.bind(this)} >转赠好友</Text>}
+                        { /*isTransfer==1 && <Text className="ZHyou" onClick={this.addShare.bind(this)} >转赠好友</Text>*/}
                     </View>
                  
                     {/* <View className="SYbtn"><Text className="ZHyoustatus">转赠好友中...</Text></View> */}
@@ -209,7 +209,7 @@ export default class Index extends Component {
                 <View>
                   <Image src={require('../../assets/images/eightz.png')} mode='aspectFill' className='eightzPhoto'></Image>
                   <View className='coupondetail'>
-                    <Text className='couponEightT'>20元现金抵扣券</Text>
+                    <Text className='couponEightT'>{item.couponValue}元现金抵扣券</Text>
                     <Text className='couponEightSy'>使用说明</Text>
                     <ScrollView
                       className='scrollview'
@@ -221,7 +221,7 @@ export default class Index extends Component {
                     </ScrollView>
                     <View className="SYbtn">
                         <Text className="coLiJ">立即使用</Text>
-                        { isTransfer==1 && <Text className="ZHyou" onClick={this.addShare.bind(this)} >转赠好友</Text>}
+                        { /*isTransfer==1 && <Text className="ZHyou" onClick={this.addShare.bind(this)} >转赠好友</Text>*/ }
                     </View>
 
                   </View>
@@ -229,7 +229,7 @@ export default class Index extends Component {
             }
 
             {
-              item.category==2 &&
+              item.category==0 &&
                 <View>
                   <Image src={require('../../assets/images/xj.png')} mode='aspectFill' className='eightzPhoto'></Image>
                   <View className='coupondetail'>
@@ -245,7 +245,7 @@ export default class Index extends Component {
                     </ScrollView>
                     <View className="SYbtn">
                         <Text className="coLiJ">立即使用</Text>
-                        { isTransfer==1 && <Text className="ZHyou" onClick={this.addShare.bind(this)} >转赠好友</Text>}
+                        { /*isTransfer==1 && <Text className="ZHyou" onClick={this.addShare.bind(this)} >转赠好友</Text>*/}
                     </View>
 
                   </View>

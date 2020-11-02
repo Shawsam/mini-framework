@@ -28,10 +28,11 @@ export default class storeList extends Component {
   }
 
   userInfoReady() {
-      Api.crmOrderDetail({orderNo2:'1H1K12313131321221111131414231'}).then(res=>{
-          console.log(res);
-          this.setState({isLoading:false})
+      console.log(this.$router.params);
+      Api.crmOrderDetail({orderNo2:this.$router.params.orderNo}).then(res=>{
+          this.setState({isLoading:false,info:res.data});
       }).catch(err=>{
+          console.log(err)
           Taro.showModal({  content:err.msg,
                             showCancel:false,
                             success:()=>{
@@ -41,7 +42,7 @@ export default class storeList extends Component {
       })
   }
   render() {
-    let { isLoading } = this.state;
+    let { isLoading, info } = this.state;
     return (
       <View className='page'>
         { isLoading ? <Loading /> :
@@ -51,48 +52,38 @@ export default class storeList extends Component {
             <View className='detailAll'>
               <Text className='titleText'>仅显示最近30天内消费记录</Text>
               <View className='detailImg'>
-                <View className='detailtitleTextp'><Text className='detailtitleText'>上海新天地广场店</Text></View>
+                <View className='detailtitleTextp'><Text className='detailtitleText'>{info.shopName}</Text></View>
                 <View className='orderdata'>订单信息</View>
                 <View className='detailAllText'>
                   <ScrollView
                     className='scrollview'
                     scrollY
                     scrollWithAnimation
-                    style='height:150px;'>
-                    <View className='orderdataAll'>
-                    <View className='detailone'>精酿啤酒</View>
-                    <View className='detailTwo'>*1</View>
-                    <View className='detailThree'>￥38</View>
-                  </View>
-                  <View className='orderdataAll'>
-                    <View className='detailone'>拳击猫凯撒沙拉千岛酱</View>
-                    <View className='detailTwo'>*1</View>
-                    <View className='detailThree'>￥38</View>
-                  </View>
-                  <View className='orderdataAll'>
-                    <View className='detailone'>迷你芝士蛋糕</View>
-                    <View className='detailTwo'>*1</View>
-                    <View className='detailThree'>￥38</View>
-                  </View>
-                  <View className='orderdataAll'>
-                    <View className='detailone'>迷你芝士蛋糕</View>
-                    <View className='detailTwo'>*1</View>
-                    <View className='detailThree'>￥38</View>
-                  </View>
+                    style='max-height:150px;'>
+                    {
+                          info.orderGoodsList.map((item,index)=>{
+                            return(
+                                <View className='orderdataAll'>
+                                    <View className='detailone'>{item.goodsName}</View>
+                                    <View className='detailTwo'>*{item.goodsCount}</View>
+                                    <View className='detailThree'>￥{item.price}</View>
+                              </View>
+                            )
+                          })
+                    }
                   </ScrollView>
-                  
                 </View>
-
+                {/*
                 <View className='orderdataYouHui'>优惠信息</View>
                 <View className='orderdataAll'>
                   <View className='detailone'>指定饮品品尝券</View>
-
                   <View className='detailThree'>￥38</View>
                 </View>
+                */}
 
                 <View className='orderdataYouHui'>总计</View>
                 <View>
-                  <View className='detailHeJi'>共计4件 合计金额<Text className='detailHeJiMoneydata'>￥95</Text></View>
+                  <View className='detailHeJi'>共计{info.orderGoodsList.length}件 合计金额<Text className='detailHeJiMoneydata'>￥{info.transAmt}</Text></View>
                 </View>
 
 
@@ -102,15 +93,15 @@ export default class storeList extends Component {
 
 
               <View className='underText'>
-                <Text>订单编号：123456789</Text>
-                <Text>交易编号：123456789</Text>
-                <Text>下单时间：2020.05.12 21:30:33</Text>
-                <Text>下单门店：上海新天地广场店</Text>
+                <Text>订单编号：{info.orderNo}</Text>
+                <Text>交易编号：{info.logSeq}</Text>
+                <Text>下单时间：{info.orderDate}</Text>
+                <Text>下单门店：{info.shopName}</Text>
               </View>
 
               <View className='twobtn'>
-                <View className='pinjbig'>评价</View>
-                <View className='kaifap'>开发票</View>
+{/*              <View className='pinjbig'>评价</View>
+                <View className='kaifap'>开发票</View>  */}
               </View>
 
             </View>
