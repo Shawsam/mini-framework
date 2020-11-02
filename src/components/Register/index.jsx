@@ -213,21 +213,24 @@ export default class Register extends Component {
                 <View className="panel panelYzm">
                     <View className="shadow"></View>
                     <View className="panelContent" catchTouchMove="ture">
-                        <Image className="closeBtn" onClick={this.closeYzmPanel.bind(this)} src={require('./images/close.png')} />
+                        { /* <Image className="closeBtn" onClick={this.closeYzmPanel.bind(this)} src={require('./images/close.png')} /> */}
+                        <View className="title">手机号注册</View>
                         <View className="content">
-                            <View className="title">请绑定手机号</View>
-                            <View className="tit">欢迎注册拳击猫会员</View> */}
+                           {/* <View className="tit">欢迎注册拳击猫会员</View> */}
                             <View className="fmGroup hasBtn">
                                 <Input className="input" type="text" maxlength="11" onInput={this.phoneInput.bind(this)} value={phoneInput} placeholder="请输入手机号" enableNative={true} controlled={true} />
                             </View>
                             <View className="fmGroup hasBtn">
-                                <Input className="input" type="text" maxlength="4" onInput={this.codeInput.bind(this)} value={codeInput} placeholder="请输入图形验证码" enableNative={true} controlled={true} />
+                                <Input className="input" type="text" maxlength="4" onInput={this.codeInput.bind(this)} value={codeInput} placeholder="请输入验证码" enableNative={true} controlled={true} />
                                 <Image className="captcha" src={codeImg} onClick={this.getCaptcha} /></View>
                             <View className="fmGroup hasBtn">
                                 <Input className="input" type="text" maxlength="6" onInput={this.yzmInput.bind(this)} value={yzmInput} placeholder="请输入短信验证码" enableNative={true} controlled={true} />
                                 <View className={`sendBtn ${phoneInput.length == 11 ? 'active' : ''}`} onClick={this.sendCode}>{sendSuccess ? counter + '秒后重试' : '获取验证码'}</View>
                             </View>
-                            <View className="confirmbtn" onClick={this.subimitFun}>确定</View>
+                            <View className="btnCon flexbox">
+                                <View className="flex-item cancelbtn" onClick={this.closeYzmPanel.bind(this)}>取消</View>
+                                <View className="flex-item confirmbtn" onClick={this.subimitFun}>确定</View>
+                            </View>
                         </View>
                     </View>
                 </View>

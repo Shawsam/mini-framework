@@ -10,6 +10,7 @@
 }
 
 .registerPanel{ 
+	font-family:'qjm';
 	position:fixed; display:block; z-index:1000; width:100%; height:100%; top:0; left:0;
 	.shadow{ position:absolute; display:block; width:100%; height:100%; background:rgba(0,0,0,0.6); top:0; left:0; z-index:999; }
 	.panelContent{ z-index:1000; font-size:0; position:absolute; width:100%; height:100%;  box-sizing:border-box;  color:#333; text-align:center; background:#fff; padding-top:100px; }
@@ -21,7 +22,7 @@
 			.yes{ height:26px; width:26px; display:inline-block; margin-right:12px; margin-top:-4px; vertical-align:middle; }
 			.link{ color:#911414; }
 		}
-	    .btn{ background:#fff; color:#911414; border:2px solid #911414; line-height:100px; border-radius:50px; margin-top:50px; }
+	    .btn{ background:#fff; color:#911414; border:2px solid #911414; line-height:90px; border-radius:45px; margin-top:50px; }
 		.btn.authorizeBtn{ background:#911414; color:#fff;
 	        .wx{ height:30px; width:36px; display:inline-block; margin-right:16px; vertical-align:middle;  }
 		 }
@@ -44,33 +45,49 @@
 
 
 .panelYzm{
+	 font-family:'qjm';
      position: fixed; display: block; z-index: 1000; width: 100%; height: 100%; top: 0; left: 0;
     .shadow { position: absolute; display: block; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); top: 0; left: 0; z-index: 999;}
-	.panelContent { z-index: 1001; font-size: 0; position: absolute; width:670px; box-sizing: border-box; left: 50%; top: 50%; transform: translate(-50%, -50%); color: #333; text-align: center; background: #fff; border-radius: 40px; /* overflow:hidden; */
-		.closeBtn { position: absolute; top: 10px; right: 10px;  width: 40px; height: 40px; padding: 20px;}
-	    .centerImg {width: 100%;height: auto; }
-	    .content { padding: 80px 60px 60px 60px;}
+	.panelContent { overflow:hidden; z-index: 1001; font-size: 0; position: absolute; width:670px; box-sizing: border-box; left: 50%; top: 50%; transform: translate(-50%, -50%); color: #333; text-align: center; background: #fff; border-radius: 40px; /* overflow:hidden; */
 		.title {
 		  text-align: center;
 		  font-size: 40px;
+		  height:120px;
+		  line-height:120px;
+		  background:#911414;
 		  padding: 0;
-		  font-weight: normal;
-		  color: #342c2a;
-		  margin-bottom: 10px;
+		  color: #fff;
 		}
+		.closeBtn { position: absolute; top: 10px; right: 10px;  width: 40px; height: 40px; padding: 20px;}
+	    .centerImg {width: 100%;height: auto; }
+	    .content { padding: 60px 40px;}
 		.tit {
 		  color: #bab6b6;
 		  font-size: 24px;
 		  margin-bottom: 50px;
 		}
+		.btnCon{ margin:0 -20px; margin-top:60px; }
 		.confirmbtn {
 		  background: #911414;
 		  color: #fff;
-		  height: 100px;
-		  line-height: 100px;
+		  height: 80px;
+		  line-height: 80px;
 		  margin-top: 40px;
-		  border-radius: 50px;
+		  border-radius: 45px;
 		  font-size: 35px;
+		  border:2px solid  #911414;
+		  margin:0 20px;
+		}
+		.cancelbtn {
+		  background: #fff;
+		  color: #B8B8B8;
+		  height: 80px;
+		  line-height: 80px;
+		  margin-top: 40px;
+		  border-radius: 45px;
+		  font-size: 35px;
+		  border:2px solid  #B8B8B8;
+		  margin:0 20px;
 		}
 	 }	
 	.fmGroup {
