@@ -279,8 +279,8 @@ export default class Index extends Component {
                     <Text className='userQdata'>{userInfo.point>=0?userInfo.point:'--'}</Text>
                   </View>
                   <View className='avaDJ'>
-                    <Text className='userD'>{userInfo.levelName}</Text>
-                    <Text className='userDdata'>{userInfo.accScore}/{userInfo.accScoreGift}</Text>
+                    <Text className='userD'>{userInfo.level}</Text>
+                    <Text className='userDdata'>{userInfo.exp}/999</Text>
                   </View>
                 </View>
                 <View className='qrdata' onClick={this.showQrPanel.bind(this)}>

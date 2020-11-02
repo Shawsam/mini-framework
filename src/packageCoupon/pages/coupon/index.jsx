@@ -176,14 +176,14 @@ export default class storeList extends Component {
                                         <Text className='couponDate'>有效期：{this.transDate(item.startDate,item.endDate)}</Text>
                                       </View>                          
                                     }
-                                    {  item.category==1 &&
+                                    {  item.category==0 &&
                                       <View className='couponit' onClick={this.openDetail.bind(this,item)}>
                                         <Image src={require('../../assets/images/xjcoupon.png')} mode='aspectFill' className='centerImg'></Image>
                                         <Text className='couponText'><Text className='couponTextr'>￥</Text>{item.couponValue}</Text>
                                         <Text className='couponDate'>有效期：{this.transDate(item.startDate,item.endDate)}</Text>
                                       </View>
                                     }
-                                    {  item.category==0 &&
+                                    {  item.category==1 &&
                                       <View className='couponit' onClick={this.openDetail.bind(this,item)}>
                                         <Image src={require('../../assets/images/zdcoupon.png')} mode='aspectFill' className='centerImg'></Image>
                                         <Text className='couponDate'>有效期：{this.transDate(item.startDate,item.endDate)}</Text>
@@ -199,7 +199,7 @@ export default class storeList extends Component {
                                           <Text className='couponStatus'>已转赠</Text>
                                         </View>
                                       }
-                                      {  item.category==1 &&
+                                      {  item.category==0 &&
                                         <View className='couponit invalid' onClick={this.openDetail}>
                                           <Image src={require('../../assets/images/xjcoupon.png')} mode='aspectFill' className='centerImg'></Image>
                                           <Text className='couponText'><Text className='couponTextr'>￥</Text>{item.couponValue}</Text>
@@ -207,7 +207,7 @@ export default class storeList extends Component {
                                           <Text className='couponStatus'>已使用</Text>
                                         </View>
                                       }
-                                      {  item.category==0 &&
+                                      {  item.category==1 &&
                                          <View className='couponit invalid'>
                                             <Image src={require('../../assets/images/zdcoupon.png')} mode='aspectFill' className='centerImg'></Image>
                                             <Text className='couponDate'>有效期：{this.transDate(item.startDate,item.endDate)}</Text>

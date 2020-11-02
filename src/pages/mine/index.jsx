@@ -68,57 +68,92 @@ export default class storeList extends Component {
               <Swiper className='scrollview'  circular previous-margin="30rpx" next-margin="30rpx" onChange={this.swipeChange.bind(this)}>
                 <SwiperItem className='item'>
                   <Image src={require('../../assets/images/card1.png')} className='imgscroll' />
-                  <View className="Con">
-                  <View className="tips">{clevelIndex==0?'当前等级':''}</View>
-                  <View className="levelName">{level[levelIndex].name}会员</View>
-                  <View className="txt">0/999</View>
-                  <View className="txt">还需999经验值</View>
-                  <View className="txt">可升级{level[levelIndex+1].name}</View>
-                  </View>
+                  { clevelIndex==0?
+                    <View className="Con">
+                      <View className="tips">当前等级</View>
+                      <View className="levelName">{level[levelIndex].name}会员</View>
+                      <View className="txt">{userInfo.exp}/999</View>
+                      <View className="txt">还需{999-userInfo.exp}经验值</View>
+                      <View className="txt">可升级{level[levelIndex+1].name}</View>
+                    </View>:
+                    <View className="Con">
+                      <View className="tips"></View>
+                      <View className="levelName">{level[levelIndex].name}会员</View>
+                      <View className="txt">0-999</View>
+                    </View>
+                  }
                 </SwiperItem>
                 <SwiperItem className='item'>
                   <Image src={require('../../assets/images/card2.png')} className='imgscroll' />
-                  <View className="Con">
-                  <View className="tips">{clevelIndex==1?'当前等级':''}</View>
-                  <View className="levelName">{level[levelIndex].name}会员</View>
-                  <View className="txt">0/999</View>
-                  <View className="txt">还需999经验值</View>
-                  <View className="txt">可升级{level[levelIndex+1].name}</View>
-                  </View>
+                  { clevelIndex==1?
+                    <View className="Con">
+                      <View className="tips">{clevelIndex==1?'当前等级':''}</View>
+                      <View className="levelName">{level[levelIndex].name}会员</View>
+                      <View className="txt">{userInfo.exp}/1999</View>
+                      <View className="txt">还需{1999-userInfo.exp}经验值</View>
+                      <View className="txt">可升级{level[levelIndex+1].name}</View>
+                    </View>:
+                    <View className="Con">
+                      <View className="tips"></View>
+                      <View className="levelName">{level[levelIndex].name}会员</View>
+                      <View className="txt">1000-1999</View>
+                    </View>
+                  }
                 </SwiperItem>
                 <SwiperItem className='item'>
                   <Image src={require('../../assets/images/card3.png')} className='imgscroll' />
-                  <View className="Con">
-                  <View className="tips">{clevelIndex==2?'当前等级':''}</View>
-                  <View className="levelName">{level[levelIndex].name}会员</View>
-                  <View className="txt">0/999</View>
-                  <View className="txt">还需999经验值</View>
-                  <View className="txt">可升级{level[levelIndex+1].name}</View>
-                  </View>
+                  { clevelIndex==2?
+                    <View className="Con">
+                      <View className="tips">{clevelIndex==2?'当前等级':''}</View>
+                      <View className="levelName">{level[levelIndex].name}会员</View>
+                      <View className="txt">{userInfo.exp}/3999</View>
+                      <View className="txt">还需{3999-userInfo.exp}经验值</View>
+                      <View className="txt">可升级{level[levelIndex+1].name}</View>
+                    </View>:
+                    <View className="Con">
+                        <View className="tips"></View>
+                        <View className="levelName">{level[levelIndex].name}会员</View>
+                        <View className="txt">2000-3999</View>
+                    </View>
+                  }
                 </SwiperItem>
                 <SwiperItem className='item'>
                   <Image src={require('../../assets/images/card4.png')} className='imgscroll' />
-                  <View className="Con">
-                  <View className="tips">{clevelIndex==3?'当前等级':''}</View>
-                  <View className="levelName">{level[levelIndex].name}会员</View>
-                  <View className="txt">0/999</View>
-                  <View className="txt">还需999经验值</View>
-                  <View className="txt">可升级{level[levelIndex+1].name}</View>
-                  </View>
+                  { clevelIndex==2?
+                    <View className="Con">
+                      <View className="tips">{clevelIndex==3?'当前等级':''}</View>
+                      <View className="levelName">{level[levelIndex].name}会员</View>
+                      <View className="txt">{userInfo.exp}/6999</View>
+                      <View className="txt">还需{6999-userInfo.exp}经验值</View>
+                      <View className="txt">可升级{level[levelIndex+1].name}</View>
+                    </View>:
+                    <View className="Con">
+                        <View className="tips"></View>
+                        <View className="levelName">{level[levelIndex].name}会员</View>
+                        <View className="txt">4000-6999</View>
+                    </View>
+                  }
                 </SwiperItem>
                 <SwiperItem className='item'>
                   <Image src={require('../../assets/images/card5.png')} className='imgscroll' />
-                  <View className="Con">
-                  <View className="tips">{clevelIndex==4?'当前等级':''}</View>
-                  <View className="levelName">{level[levelIndex].name}会员</View>
-                  <View className="txt">0/999</View>
-                  { clevelIndex==4?<View className="txt">已达最高级别</View>
-                    :<View>
-                      <View className="txt">还需999经验值</View>
-                      <View className="txt">可升级{level[levelIndex+1].name}</View>
+                  { clevelIndex==2?
+                    <View className="Con">
+                    <View className="tips">{clevelIndex==4?'当前等级':''}</View>
+                    <View className="levelName">{level[levelIndex].name}会员</View>
+                    <View className="txt">{userInfo.exp}/>=7000</View>
+                    { clevelIndex==4?<View className="txt">已达最高级别</View>:'' }
+                    {/*  :<View>
+                        <View className="txt">还需999经验值</View>
+                        <View className="txt">可升级{level[levelIndex+1].name}</View>
+                      </View>*/}
+                    }                  
+                    </View>:
+                    <View className="Con">
+                        <View className="tips"></View>
+                        <View className="levelName">{level[levelIndex].name}会员</View>
+                        <View className="txt">>=7000</View>
                     </View>
-                  }                  
-                  </View>
+                  }
                 </SwiperItem>
               </Swiper>
               </View>
@@ -180,7 +215,7 @@ export default class storeList extends Component {
                 <Text className='naText'>个人资料</Text>
                 <Image src={require('../../assets/images/to.png')} className='naImg'></Image>
               </View>
-              <View className='naAll'>
+              <View className='naAll' onClick={this.openPage.bind(this,'/pages/story/index')}>
                 <Text className='naText'>品牌故事</Text>
                 <Image src={require('../../assets/images/to.png')} className='naImg'></Image>
               </View>

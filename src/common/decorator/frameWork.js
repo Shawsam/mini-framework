@@ -11,8 +11,8 @@ const frameWork = ({userInfoCached=true,loadToAuthorize=false}) => (Component) =
     class frameWorkComponent extends Component {
         //注入componentDidMount
         componentDidMount(){
-            console.error('页面加载完毕');
-            console.log('====执行函数componentDidMount====');
+            //console.error('页面加载完毕');
+            //console.log('====执行函数componentDidMount====');
             isIndex = Taro.getCurrentPages().length == 1;
             let Pid = Taro.getStorageSync('Pid');
             let authInfo = Taro.getStorageSync('authInfo');
@@ -21,19 +21,19 @@ const frameWork = ({userInfoCached=true,loadToAuthorize=false}) => (Component) =
                 if(authInfo){
                     this.props.userStore.setUserInfo(authInfo);                //同步用户数据
                     if(isIndex){
-                        console.error('当前页面为入口页-获取用户信息后渲染页面')
+                        //console.error('当前页面为入口页-获取用户信息后渲染页面')
                         this.fetchUserInfoById();
                     }else{
-                        console.error('当前页面非入口页-直接渲染页面')
+                        //console.error('当前页面非入口页-直接渲染页面')
                         this.userInfoReady();
                     }
                 }else{
-                    console.error('用户未授权');
+                    //console.error('用户未授权');
                     this.setState({isLoading:false}); 
                     loadToAuthorize && this.props.userStore.setAuthorizeShow(true);                         
                 }
             }else{
-                console.error('缓存中无Pid');
+                //console.error('缓存中无Pid');
                 User.getToken().then(res=>{
                     this.componentDidMount();      
                 }).catch(err=>{
@@ -59,6 +59,10 @@ const frameWork = ({userInfoCached=true,loadToAuthorize=false}) => (Component) =
                     let { avatarUrl, nickName } = Taro.getStorageSync('authInfo');
                     userInfo.avatarUrl = pic?pic:avatarUrl;
                     userInfo.nickName = name?name:nickName;
+                    if(userInfo.dataHabInfo.membership){
+                        userInfo.exp = userInfo.dataHabInfo.membership.exp;
+                        userInfo.level = userInfo.dataHabInfo.membership.level.name;
+                    }
                     Taro.setStorageSync('userInfo', userInfo);
                     Taro.setStorageSync('cardNo', userInfo.cardNo);
                     this.props.userStore.setAuthorizeShow(false);       //关闭用户授权
@@ -82,11 +86,11 @@ const frameWork = ({userInfoCached=true,loadToAuthorize=false}) => (Component) =
 
         //未获取到会员信息（请求用户信息完毕，用户未注册-未登录-禁用）
         userInfoUnReady(code){
-            console.log('====执行函数userInfoUnReady====');
+            //console.log('====执行函数userInfoUnReady====');
             if(super.userInfoUnReady){
                 super.userInfoUnReady(code);
             }else{
-                console.warn('页面未定义方法处理未获取到会员信息--userInfoUnReady');
+                //console.warn('页面未定义方法处理未获取到会员信息--userInfoUnReady');
                 this.setState({isLoading:false}); 
                 switch(true){
                     case code == -1000:  this.props.userStore.setAuthorizeShow(true); break;
@@ -97,16 +101,16 @@ const frameWork = ({userInfoCached=true,loadToAuthorize=false}) => (Component) =
 
         //已经获取到用户信息（页面渲染）
         userInfoReady(){
-            console.log('====执行函数userInfoReady====');
+            //console.log('====执行函数userInfoReady====');
             User.updateToken().then(res=>{
                 if(super.userInfoReady){
                     super.userInfoReady();
                 }else{
-                    console.warn('页面未定义方法-userInfoReady');
+                    //console.warn('页面未定义方法-userInfoReady');
                     this.setState({isLoading:false});
                 }            
             }).catch(err=>{
-                console.log(err);
+                //console.log(err);
                 Taro.showModal({  content:err.msg||'内部错误',
                                   showCancel:false,
                                   success:()=>{
@@ -124,7 +128,7 @@ const frameWork = ({userInfoCached=true,loadToAuthorize=false}) => (Component) =
             this.interceptShowAuthorize().then(()=>{
               Taro.navigateTo({url})
             }).catch(err=>{
-              console.log(err);
+              //console.log(err);
             })
         }
         
@@ -160,7 +164,7 @@ const frameWork = ({userInfoCached=true,loadToAuthorize=false}) => (Component) =
                     }
                 })
             }catch(err){
-                console.log(err)
+                //console.log(err)
             }
         }
         

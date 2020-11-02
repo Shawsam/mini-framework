@@ -205,7 +205,7 @@ export default class Index extends Component {
             }
 
             {
-              item.category==1 &&
+              item.category==0&&
                 <View>
                   <Image src={require('../../assets/images/eightz.png')} mode='aspectFill' className='eightzPhoto'></Image>
                   <View className='coupondetail'>
@@ -229,7 +229,7 @@ export default class Index extends Component {
             }
 
             {
-              item.category==0 &&
+              item.category==1 &&
                 <View>
                   <Image src={require('../../assets/images/xj.png')} mode='aspectFill' className='eightzPhoto'></Image>
                   <View className='coupondetail'>

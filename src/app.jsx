@@ -29,6 +29,7 @@ class App extends Component {
       'pages/pointsDetail/index',
       'pages/thirdBuy/index',
       'pages/userInfo/index',
+      'pages/story/index',
       'pages/webview/index',
       'pages/example/index',
     ],

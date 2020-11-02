@@ -9,86 +9,43 @@ export default class Index extends Component {
     navigationBarTitleText: '第三方购买',
     navigationStyle: 'custom',
   }
+
   state = {
-    isLoading: false,
-    userInfos: {},
-    userInfo: {},
-    sex: 1,
-    thisname: '',
-    mobiles: ''
-  }
-  componentWillMount() {
-
-  }
-  componentDidShow() {
-
-  }
-  updateUserInfo() {
-
-  }
-  touchend() {
-
-  }
-  birthChoose(e) {
-    let userInfos = this.state.userInfos;
-    userInfos.birth = e.detail.value
-    this.setState({ userInfos })
-  }
-  formatTime() {
-
-  }
-  touchend() {
-
-  }
-  onInput() {
-
-  }
-  onInput1() {
-
-  }
-  sexCho(type) {
-    this.setState({ sex: type });
+      bannerList:[
+          {imgUrl:'https://mj-obs.obs.myhwclouds.com/160431063417420201030_BCB_CRM_ProductPage_750x1200_CTD.png'},
+          {imgUrl:'https://mj-obs.obs.myhwclouds.com/160431063751320201030_BCB_CRM_ProductPage_750x1200_FB.png'},
+          {imgUrl:'https://mj-obs.obs.myhwclouds.com/160431064068520201030_BCB_CRM_ProductPage_750x1200_FM.png'},
+          {imgUrl:'https://mj-obs.obs.myhwclouds.com/160431064407920201030_BCB_CRM_ProductPage_750x1200_TKO.png'}
+      ]
   }
 
-  Return = () => { Taro.navigateBack(); }
+  Return = () => { 
+    Taro.navigateBack(); 
+  }
+
   render() {
-    const { isLoading, mobiles, sex, username, userInfos, thisname, userInfo } = this.state;
+    const { isLoading, bannerList } = this.state;
+    console.log(bannerList);
     return (
       <View className='page'>
         {isLoading ? <Loading /> :
           <View className='container'>
-            <NavBar id="fixed" title="" background='rgba(0,0,0,0)' color="#fff" showBack={true} m_page={true} back={this.Return.bind(this)} />
-
+            <NavBar title="第三方购买" background='#fff' showBack={true} m_page={true} back={this.Return.bind(this)} />
             <View className='wrapper'>
-              <View className="membg">
-
-              </View>
-              <View className='all-content'>
-                <View className='content-left'>
-                  <Image className='content-left-img' src={require('../../assets/img/go-buy-img.png')}></Image>
-                </View>
-                <View className='all-content-right'>
-                  <View className='all-content-name'>拳击猫(Boxing cat)芒翻
-                  了 芒果味浑浊IPA啤酒
-                  500ml*6听</View>
-                  <View className='information'> 
-                    <View className='information-content'>中国大陆</View>
-                    <View className='information-content'>精酿</View>
-                    <View className='information-content'>13.4°p</View>
-                  </View>
-                  <View>
-                    <Text className='pirce'>￥</Text>
-                    <Text className='pirce-content'>159</Text>
-                  </View>
-                </View>
-              </View>
-
-
-
+                  <View className='swiper-banner'>
+                      <Swiper autoplay circular className='banner'>
+                        {
+                            bannerList.map((item,index)=>{
+                                 return (
+                                      <SwiperItem key={index} className='swiperItem'>
+                                          <Image className='bannerImg' src={item.imgUrl} />
+                                      </SwiperItem>
+                                 )
+                            })
+                        }
+                      </Swiper>
+                    </View>
             </View>
-
-
-
           </View>
         }
       </View>

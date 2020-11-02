@@ -49,7 +49,7 @@ export default class Index extends Component {
     const date = new Date();
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
-    const monthDays = date.getDate();
+    const monthDays = new Date(year, month, 0).getDate();
 
     const firstDay = new Date(Date.UTC(year, month - 1, 1)).getDay();
     const endDay = new Date(Date.UTC(year, month - 1, monthDays)).getDay();
@@ -97,7 +97,7 @@ export default class Index extends Component {
               </Image>
               <View className='date'>{dateRange}</View>
               <View className='all-img'>
-                <View className='date-tips'>您已累计签到 <Text className='date-num'>{signDays}</Text>天</View>
+                <View className='date-tips'>您已累计签到<Text className='date-num'>{signDays}</Text>天</View>
                 <View className='date-sign-content'>
                   <View className='date-sign'>
                     <View>第7天</View>

@@ -112,8 +112,8 @@ export default class Index extends Component {
                 <View className='li'>
                   <View className='left'>性别</View>
                   <View className='right'>
-                    <View onClick={this.genderChange.bind(this, '1')} className={`sex sex10  ${userInfo.gender == 1 ? 'act' : ''}`}><View></View>先生</View>
-                    <View onClick={this.genderChange.bind(this, '0')} className={`sex  ${userInfo.gender == 0 ? 'act' : ''}`}><View></View>女士</View>
+                    <View onClick={this.genderChange.bind(this, '0')} className={`sex sex10  ${userInfo.gender == 0 ? 'act' : ''}`}><View></View>先生</View>
+                    <View onClick={this.genderChange.bind(this, '1')} className={`sex  ${userInfo.gender == 1 ? 'act' : ''}`}><View></View>女士</View>
                   </View>
                 </View>
                 <View className='li'>

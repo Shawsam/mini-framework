@@ -163,24 +163,35 @@ export default class storeList extends Component {
      let { goodsId, points, goodsName } = item;
      Taro.showModal({
         title:`确定使用${points}拳力值兑换${goodsName}吗？`,
-        success:()=>{
-           Api.goodsExChange(goodsId, points).then(res=>{
-             Taro.showModal({   content:'兑换成功',
-                                showCancel:false,
-                                success:()=>{
-                                    this.updatePoints();
-                                    this.listInit()
-                                }
-                            }) 
-          }).catch(err => {
-             console.log(err);
-             Taro.showModal({   content:err.msg,
-                                showCancel:false,
-                                success:()=>{
-                                    this.listInit()
-                                }
-                            }) 
-          });
+        success:(res)=>{
+           if(res.confirm){
+               Api.goodsExChange(goodsId, points).then(res=>{
+                 Taro.showModal({   content:'兑换成功',
+                                    showCancel:false,
+                                    success:()=>{
+                                        this.updatePoints();
+                                        this.listInit()
+                                    }
+                                }) 
+              }).catch(err => {
+                 console.log(err);
+                 if(err.errcode=="200001"){
+                      Taro.showModal({    content:"该商品已售罄",
+                                          showCancel:false,
+                                          success:()=>{
+                                              this.listInit()
+                                          }
+                                      }) 
+                  }else{
+                      Taro.showModal({  content:err.msg,
+                                        showCancel:false,
+                                        success:()=>{
+                                            this.listInit()
+                                        }
+                                    }) 
+                  }
+              });
+          }
         }
      })
   }
@@ -241,7 +252,7 @@ export default class storeList extends Component {
                                   <View className='itemCon' onClick={this.goodsExChange.bind(this,item)}>
                                     <View className="item">
                                         <View className='typedataimgk'>
-                                            <Image src={item.attachImgUrl?item.attachImgUrl:require('../../assets/images/beer.png')} className='typedataimg' mode='aspectFill'></Image>
+                                            <Image src={item.masterImgUrl?item.masterImgUrl:require('../../assets/images/beer.png')} className='typedataimg' mode='aspectFill'></Image>
                                         </View>
                                         <View className='typetwotext'>
                                           <Text className='typet text-ellipsis'>{item.goodsName}</Text>

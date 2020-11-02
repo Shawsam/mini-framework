@@ -4,8 +4,10 @@ const userStore = observable({
 	authorizeShow:false,
     registerShow:false,
     userInfo:{
+        gender:0,
     	point:'--',
-        levelName:'普通会员',
+        level:'蝇量级',
+        exp:0,
         avatarUrl:require('../../assets/images/avatar.png')
     },
 	setUserInfo(userInfo){

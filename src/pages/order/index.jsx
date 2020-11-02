@@ -144,7 +144,7 @@ export default class storeList extends Component {
                                   <View className='orderimgAll' onClick={this.openPage.bind(this,'/pages/orderDetail/index?orderNo='+item.logSeq)}>
                                     <View className='orderimgText'>
                                         <Text className='orderAddress'>{item.shopAddress}</Text>
-                                        <Text className='orderTime'>下单时间：{this.transDate(item.transDate)}</Text>
+                                        <Text className='orderTime'>下单时间：{item.orderDate}</Text>
                                         <View className='orderMoneyflex'>
                                           <Text className='orderMoney'>实付：<Text className='orderMoneyRed'>￥{item.transAmt}</Text></Text>
                       {/*                 <Text className='pinj'>评价</Text>

@@ -15,8 +15,8 @@ export default class storeList extends Component {
   
 
   state = {
-    storeNearList: [1, 2],
-    storeMoreList: [1, 2]
+    storeNearList: [1],
+    storeMoreList: [1]
   }
 
   componentDidMount() {
@@ -42,7 +42,7 @@ export default class storeList extends Component {
           <View className="wrapper">
             <View className='storeList'>
               <View className='storeListText'>
-                <Text>我附近的门店(30Km)</Text>
+                <Text>我附近的门店</Text>
                 <View><Image src={location} className='locationImg'></Image>
                   <Text>上海</Text></View>
               </View>
