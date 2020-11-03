@@ -29,7 +29,7 @@ export default class Index extends Component {
   state = {
     isLoading:false,
     bannerList:[],
-    noticeMessage:[{content:'指定精酿啤酒 限时特惠 买一送一',hrefUrl:'pages/thirdBuy/index'},{content:'指定精酿啤酒 限时特惠 买一送一',hrefUrl:'pages/thirdBuy/index'}],
+    noticeMessage:[{content:'每日欢乐时光，天天都有精彩特惠',hrefUrl:'pages/story/index?imgIndex=1'}],
     couponCount:'00',
     beerNum: 0,
     showQrPanel: false
@@ -157,6 +157,8 @@ export default class Index extends Component {
                               break;
         case appid && !isSelf: Taro.navigateToMiniProgram({appId:appid,path:page})
                                break;
+        case !appid && !isSelf: this.setState({adShow:true,adImg:page});
+                               break;
         default:Taro.navigateTo({url:'/pages/webview/index?url='+page});
       }
   }
@@ -183,6 +185,10 @@ export default class Index extends Component {
       clearInterval(Timer);
       this.setState({showQrPanel:false});
   } 
+
+  closeAdpanel(){
+      this.setState({adShow:false});
+  }
 
   cardNoToQrcode(){
     Api.getQrcode().then(res=>{
@@ -241,7 +247,7 @@ export default class Index extends Component {
   }
 
   render() {
-    const { isLoading, couponCount, beerNum, bannerList, noticeMessage, imagePath } = this.state;
+    const { isLoading, couponCount, beerNum, bannerList, noticeMessage, imagePath, adShow, adImg } = this.state;
     const { userInfo } = this.props.userStore;
     return (
       <View className='page'>
@@ -261,6 +267,16 @@ export default class Index extends Component {
                     <View className='closeAll'>
                       <View className='closeText'><View>门店消费时请出示给店员进行扫码，</View><View>获取您的积分权益。</View></View>
                       <Image src={require('../../assets/images/closetc.png')} mode='aspectFill' onClick={this.closeQrpanel} className='closetcPhoto'></Image>
+                    </View>
+                  </View>
+              }
+
+              {
+                adShow &&
+                  <View className='qrAll'>
+                    <Image src={adImg} mode='widthFix'></Image>
+                    <View className='closeAll'>
+                      <Image src={require('../../assets/images/closetc.png')} mode='aspectFill' onClick={this.closeAdpanel} className='closetcPhoto'></Image>
                     </View>
                   </View>
               }
@@ -301,7 +317,7 @@ export default class Index extends Component {
                                 <View className='gundongPhotoText' onClick={this.openPage.bind(this,'/'+item.hrefUrl)}>
                                   <Text className='gundongText'>{item.content}</Text>
                                   <View className='gundongQG'>
-                                    <Text className='gundongTextQG'>立即抢购</Text>
+                                    <Text className='gundongTextQG'>立即查看</Text>
                                     <Image src={require('../../assets/images/liji.png')} mode='aspectFill' className='lijiPhoto'></Image>
                                   </View>
                                 </View>

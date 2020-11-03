@@ -18,7 +18,7 @@
 	.panelContent .closeBtn .innerImg{ height:100%; width:100%; }
 	.panelContent .centerImg{ width:100%; }
 	.panelContent .content{ padding:50px 50px 70px 50px;
-		.protocol{  font-size:24px;vertical-align:middle; color:#969AA1; 
+		.protocol{  font-size:24px;vertical-align:middle; color:#969AA1; margin-top:50px; line-height:40px; padding:0 40px;
 			.yes{ height:26px; width:26px; display:inline-block; margin-right:12px; margin-top:-4px; vertical-align:middle; }
 			.link{ color:#911414; }
 		}
@@ -40,7 +40,7 @@
 	.panelContent .title {font-size: 36px; font-weight: bold; margin-bottom: 20px; }
 	.panelContent .txt { font-size: 22px; color: #999; line-height: 35px; }
 	.panelContent .btnCon { padding: 60px 0 0 0; }
-	.panelContent .btn { font-size: 32px; line-height: 90px; background: #c8102e; color: #fff; width: 280px; border-radius: 45px; }
+	.panelContent .btn { font-size: 32px; line-height: 80px; background: #911414; color: #fff; width: 280px; border-radius: 45px; }
 }
 
 

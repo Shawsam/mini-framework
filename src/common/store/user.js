@@ -7,6 +7,7 @@ const userStore = observable({
         gender:0,
     	point:'--',
         level:'蝇量级',
+        levelId:1,
         exp:0,
         avatarUrl:require('../../assets/images/avatar.png')
     },

@@ -35,7 +35,7 @@ export default class Register extends Component {
   
   phoneAuthorized(res){
       if(!this.state.agree){
-          this.setState({panelTipShow:true,tipMsg:'请阅读并同意用户协议'})
+          this.setState({panelTipShow:true,tipMsg:'请阅读并同意隐私条款'})
           return;
       }
       const { encryptedData, iv } = res.detail;
@@ -187,6 +187,11 @@ export default class Register extends Component {
       this.setState({panelTipShow:false, panelWelcomeShow:false })
   }
 
+  openProtocol(e){
+     e.stopPropagation();
+     Taro.navigateTo({url:'/pages/story/index?imgIndex=-1'})
+  }
+
   render() {
     const { showCancel } = this.props;
     const { userStore:{ registerShow } } = this.props;
@@ -200,10 +205,10 @@ export default class Register extends Component {
                     { showCancel && <Image className="closeBtn" onClick={ this.cancelPhoneAuthorize } src={require('./images/close.png')} /> }
                     <Image mode="widthFix" className="centerImg" src={require('./images/authorize.jpg')} />
                     <View className="content">
-                        {/*<View className="protocol" onClick={this.checkAgree.bind(this)}>{agree ? <Image className="yes" src={require('./images/yes2.png')} /> : <Image className="yes" src={require('./images/select.png')} />}我已阅读并同意<Text onClick={this.openProtocol.bind(this)} className="link">《用户协议》</Text></View> */}
                         { Env == 'WEAPP' && <Button className="btn authorizeBtn" openType="getPhoneNumber" onGetPhoneNumber={this.phoneAuthorized.bind(this)}>{/*<Image className="wx" src={require('./images/wx2.png')} />*/}微信快速注册</Button> }
                         { Env == 'ALIPAY' && <Button className="btn authorizeBtn" openType="getAuthorize" scope='phoneNumber'  onGetAuthorize={ this.phoneAuthorized.bind(this) }>授权手机号注册</Button> }
                         <Button className="btn" onClick={this.openYzmRegister.bind(this)}>输入手机号注册</Button>
+                        <View className="protocol" onClick={this.checkAgree.bind(this)}>{agree ? <Image className="yes" src={require('./images/selected.png')} /> : <Image className="yes" src={require('./images/select.png')} />}您是否已满18岁Are You Legal To Drink?同意拳击猫<Text onClick={this.openProtocol.bind(this)} className="link">隐私条款</Text></View>
                     </View>
                 </View>
             </View>

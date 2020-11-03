@@ -6,7 +6,7 @@ import NavBar from '../../components/NavBar'
 export default class Index extends Component {
   config = {
     disableScroll: true,
-    navigationBarTitleText: '第三方购买',
+    navigationBarTitleText: '拳击猫精酿系列',
     navigationStyle: 'custom',
   }
 
@@ -30,7 +30,7 @@ export default class Index extends Component {
       <View className='page'>
         {isLoading ? <Loading /> :
           <View className='container'>
-            <NavBar title="第三方购买" background='#fff' showBack={true} m_page={true} back={this.Return.bind(this)} />
+            <NavBar title="拳击猫精酿系列" background='#fff' showBack={true} m_page={true} back={this.Return.bind(this)} />
             <View className='wrapper'>
                   <View className='swiper-banner'>
                       <Swiper autoplay circular className='banner'>

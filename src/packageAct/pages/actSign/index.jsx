@@ -35,7 +35,7 @@ export default class Index extends Component {
         
         let signDateArry = [];
         for(let i in signSet){
-            signDateArry.push(signSet[i].substr(6,2));
+            signDateArry.push(signSet[i].substr(4,4));
         }
         this.setState({dateRange,signDays})
         this.calendarRender(signDateArry);
@@ -43,6 +43,8 @@ export default class Index extends Component {
         console.log(err);
     })
   }
+
+  formatNumber(n){  n = n.toString();  return n[1] ? n : '0' + n  };
 
   calendarRender(signDateArry){
     //获取当前年月  
@@ -59,9 +61,11 @@ export default class Index extends Component {
       calendar.push(obj);
     }
     for (let i = 1; i <= monthDays; i++) {
-      let obj = { date: i,isSign: false }
+      let dateStr = month+this.formatNumber(i);
+      console.log(dateStr);
+      let obj = { date: i, isSign: false }
       for(let j = 0; j<signDateArry.length; j++){
-          if(signDateArry[j]==i){
+          if(signDateArry[j]==dateStr){
              obj.isSign = true;
           }
       }

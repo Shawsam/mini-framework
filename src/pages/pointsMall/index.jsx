@@ -223,7 +223,7 @@ export default class storeList extends Component {
 
               <View className='pointmallyellow'>
                 <View className='xcqcssAll'> <Image src={require('../../assets/images/xcq.png')} className='xcqcss'></Image>
-                  <Text className='xcqtext'>积分促销活动即将开始，部分商品积分减半兑换</Text></View>
+                  <Text className='xcqtext'>拳击猫搏击者周边系列全新上线 ， 等你兑换</Text></View>
               </View>
               
               {  cates.length?

@@ -185,9 +185,7 @@ export default class Index extends Component {
                       </View>
                     </View>
                   </View>
-                  { info.orderMark?<View className='registered-btn disabled'>已完成</View>
-                    :<View className='registered-btn'>去完成</View>
-                  }
+                  <View className='registered-btn'>去完成</View>
                 </View>
                 <View className='registered-bottom'>
                   {/*  <View className='my-task flex'>我的任务</View>  */}
@@ -203,19 +201,18 @@ export default class Index extends Component {
                     <View className='content'>
                       <View className="title">蓄力有礼活动规则</View>
                       <View className="instruct">
-                        <View className="txt">1. 用户注册之日起每30个自然日一个循环；</View>
-                        <View className="txt">2.循环内积满5个杯子，即可获得奖励，活动不会自动进入进的一轮（即用户10月1日注册，10月15日完成5个杯子的蓄力，那么下次活动是10月31日开始，杯子从0开始计算）；</View>
-                        <View className="txt">3. 蓄力方式 ：</View>
-                        <View className="txt">a. 注册送1杯（第二个轮次开始无此福利）</View>
-                        <View className="txt">b. 累计签到7天送1杯（单活动周期内循环，即一个活动周期内上限通过签到获取4杯的蓄力）</View>
-                        <View className="txt">c. 产生订单，这点明确目前CRM只能获取到门店POS发起的订单，商城/外卖的无法获取</View>
+                        <View className="txt">1.用户注册之日起，每30个自然日为一个循环</View>
+                        <View className="txt">2.循环内集齐5枚拳头杯徽章，即可获得奖励。系统默认活动不会自动进入新的一轮，直到30天循环结束。（即若用户10月1日注册，10月15日集齐5枚拳头杯徽章，新的一轮将会在10月31日重新开启，拳头杯徽章将会从零开始计算）</View>
+                        <View className="txt">3.拳头杯徽章获取方式：</View>
+                        <View className="txt">a.注册会员，即 className="txt"可获得1枚徽章（每个用户仅可享受1次此福利）</View>
+                        <View className="txt">b.连续累计7天签到，即可获得1枚徽章（仅限单活动周期内循环，即1轮活动周期内，完成连续签到任务上限可获取4枚徽章</View>
+                        <View className="txt">c.每次消费，即可获得一枚徽章 （注明：仅限拳击猫线下门店消费获取）</View>
                       </View>
                     </View>
                     <Image className="closeBtn2" onClick={this.closeRule.bind(this)} src={require('../../assets/images/close.png')} />
                   </View>
                 </View>
                 : ''
-
             }  
             {
               showTips ?

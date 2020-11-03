@@ -172,19 +172,23 @@ export default class storeList extends Component {
                                     {  item.category==2 &&
                                       <View className='couponit' onClick={this.openDetail.bind(this,item)}>
                                         <Image src={require('../../assets/images/xfcoupon.png')} mode='aspectFill' className='centerImg'></Image>
-                                        <Text className='couponTextxf'><Text className='couponTextrxf'>{(100-item.discountValue)/10}</Text>折</Text>
+                                        <View className="name"><Text className='couponText'><Text className='couponTextrxf'>{(item.discountValue)/10}</Text>折</Text>{item.typeName}</View>
+                                        <View className="desp"></View>
                                         <Text className='couponDate'>有效期：{this.transDate(item.startDate,item.endDate)}</Text>
                                       </View>                          
                                     }
                                     {  item.category==0 &&
                                       <View className='couponit' onClick={this.openDetail.bind(this,item)}>
                                         <Image src={require('../../assets/images/xjcoupon.png')} mode='aspectFill' className='centerImg'></Image>
-                                        <Text className='couponText'><Text className='couponTextr'>￥</Text>{item.couponValue}</Text>
+                                        <View className="name"><Text className='couponText'><Text className='couponTextr'>￥</Text>{item.couponValue}</Text>{item.typeName}</View>
+                                        <View className="desp"></View>
                                         <Text className='couponDate'>有效期：{this.transDate(item.startDate,item.endDate)}</Text>
                                       </View>
                                     }
                                     {  item.category==1 &&
                                       <View className='couponit' onClick={this.openDetail.bind(this,item)}>
+                                        <View className="name">{item.typeName}</View>
+                                        <View className="desp">指定产品兑换券</View>
                                         <Image src={require('../../assets/images/zdcoupon.png')} mode='aspectFill' className='centerImg'></Image>
                                         <Text className='couponDate'>有效期：{this.transDate(item.startDate,item.endDate)}</Text>
                                       </View>
@@ -194,9 +198,9 @@ export default class storeList extends Component {
                                       {  item.category==2 &&
                                         <View className='couponit invalid'>
                                           <Image src={require('../../assets/images/xfcoupon.png')} mode='aspectFill' className='centerImg'></Image>
-                                          <Text className='couponTextxf'><Text className='couponTextrxf'>{(100-item.discountValue)/10}</Text>折</Text>
+                                          <Text className='couponTextxf'><Text className='couponText'>{(item.discountValue)/10}</Text>折</Text>
                                           <Text className='couponDate'>有效期：{this.transDate(item.startDate,item.endDate)}</Text>
-                                          <Text className='couponStatus'>已转赠</Text>
+                                         {/* <Text className='couponStatus'>已转赠</Text>  */ }
                                         </View>
                                       }
                                       {  item.category==0 &&
@@ -204,14 +208,14 @@ export default class storeList extends Component {
                                           <Image src={require('../../assets/images/xjcoupon.png')} mode='aspectFill' className='centerImg'></Image>
                                           <Text className='couponText'><Text className='couponTextr'>￥</Text>{item.couponValue}</Text>
                                           <Text className='couponDate'>有效期：{this.transDate(item.startDate,item.endDate)}</Text>
-                                          <Text className='couponStatus'>已使用</Text>
+                                          { /*<Text className='couponStatus'>已使用</Text>  */}
                                         </View>
                                       }
                                       {  item.category==1 &&
                                          <View className='couponit invalid'>
                                             <Image src={require('../../assets/images/zdcoupon.png')} mode='aspectFill' className='centerImg'></Image>
                                             <Text className='couponDate'>有效期：{this.transDate(item.startDate,item.endDate)}</Text>
-                                            <Text className='couponStatus'>已过期</Text>
+                                            { /*  <Text className='couponStatus'>已过期</Text>  */}
                                           </View>
                                       }
                                   </View>

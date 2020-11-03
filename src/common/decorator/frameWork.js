@@ -59,9 +59,10 @@ const frameWork = ({userInfoCached=true,loadToAuthorize=false}) => (Component) =
                     let { avatarUrl, nickName } = Taro.getStorageSync('authInfo');
                     userInfo.avatarUrl = pic?pic:avatarUrl;
                     userInfo.nickName = name?name:nickName;
-                    if(userInfo.dataHabInfo.membership){
+                    if(userInfo.dataHabInfo && userInfo.dataHabInfo.membership){
                         userInfo.exp = userInfo.dataHabInfo.membership.exp;
                         userInfo.level = userInfo.dataHabInfo.membership.level.name;
+                        userInfo.levelId = userInfo.dataHabInfo.membership.level.id
                     }
                     Taro.setStorageSync('userInfo', userInfo);
                     Taro.setStorageSync('cardNo', userInfo.cardNo);
