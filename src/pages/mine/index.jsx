@@ -67,90 +67,136 @@ export default class storeList extends Component {
               <Swiper className='scrollview'  circular previous-margin="30rpx" next-margin="30rpx" onChange={this.swipeChange.bind(this)}>
                 <SwiperItem className='item'>
                   <Image src={require('../../assets/images/card1.png')} className='imgscroll' />
-                  { userInfo.levelId==1?
+                  { userInfo.levelId==1 && 
                     <View className="Con">
                       <View className="tips">当前等级</View>
                       <View className="levelName">{level[levelIndex].name}会员</View>
                       <View className="txt">{userInfo.exp}/999</View>
                       <View className="txt">还需{999-userInfo.exp}经验值</View>
                       <View className="txt">可升级{level[levelIndex+1].name}</View>
-                    </View>:
+                    </View>
+                  }
+                  { userInfo.levelId>1 && 
                     <View className="Con">
                       <View className="tips"></View>
                       <View className="levelName">{level[levelIndex].name}会员</View>
-                      <View className="txt">0-999</View>
+                      <View className="txt">无需拳力值</View>
+                      <View className="txt">您已经超越该级别</View>
                     </View>
                   }
                 </SwiperItem>
                 <SwiperItem className='item'>
                   <Image src={require('../../assets/images/card2.png')} className='imgscroll' />
-                  { userInfo.levelId==2?
+                  { userInfo.levelId<2 && 
+                    <View className="Con">
+                      <View className="tips"></View>
+                      <View className="levelName">{level[levelIndex].name}会员</View>
+                      <View className="txt">拳力值达1000</View>
+                      <View className="txt">可升级{level[levelIndex+1].name}</View>
+                      <View className="txt">享【双倍积分生日礼】</View>
+                    </View>
+                  }
+                  { userInfo.levelId==2 && 
                     <View className="Con">
                       <View className="tips">当前等级</View>
                       <View className="levelName">{level[levelIndex].name}会员</View>
                       <View className="txt">{userInfo.exp}/1999</View>
                       <View className="txt">还需{1999-userInfo.exp}经验值</View>
                       <View className="txt">可升级{level[levelIndex+1].name}</View>
-                    </View>:
+                    </View>
+                  }
+                  { userInfo.levelId>2 && 
                     <View className="Con">
                       <View className="tips"></View>
                       <View className="levelName">{level[levelIndex].name}会员</View>
-                      <View className="txt">1000-1999</View>
+                      <View className="txt">无需拳力值</View>
+                      <View className="txt">您已经超越该级别</View>
                     </View>
                   }
                 </SwiperItem>
                 <SwiperItem className='item'>
                   <Image src={require('../../assets/images/card3.png')} className='imgscroll' />
-                  { userInfo.levelId==3?
+                   { userInfo.levelId<3 && 
+                    <View className="Con">
+                      <View className="tips"></View>
+                      <View className="levelName">{level[levelIndex].name}会员</View>
+                      <View className="txt">拳力值达2000</View>
+                      <View className="txt">可升级{level[levelIndex+1].name}</View>
+                      <View className="txt">享【特别升级大礼包】</View>
+                    </View>
+                  }
+                  { userInfo.levelId==3 &&
                     <View className="Con">
                       <View className="tips">当前等级</View>
                       <View className="levelName">{level[levelIndex].name}会员</View>
                       <View className="txt">{userInfo.exp}/3999</View>
                       <View className="txt">还需{3999-userInfo.exp}经验值</View>
                       <View className="txt">可升级{level[levelIndex+1].name}</View>
-                    </View>:
+                    </View>
+                  }
+                  { userInfo.levelId>3 &&
                     <View className="Con">
-                        <View className="tips"></View>
-                        <View className="levelName">{level[levelIndex].name}会员</View>
-                        <View className="txt">2000-3999</View>
+                      <View className="tips"></View>
+                      <View className="levelName">{level[levelIndex].name}会员</View>
+                      <View className="txt">无需拳力值</View>
+                      <View className="txt">您已经超越该级别</View>
                     </View>
                   }
                 </SwiperItem>
                 <SwiperItem className='item'>
                   <Image src={require('../../assets/images/card4.png')} className='imgscroll' />
-                  { userInfo.levelId==4?
+                   { userInfo.levelId<4 && 
+                    <View className="Con">
+                      <View className="tips"></View>
+                      <View className="levelName">{level[levelIndex].name}会员</View>
+                      <View className="txt">拳力值达4000</View>
+                      <View className="txt">可升级{level[levelIndex+1].name}</View>
+                      <View className="txt">享【啤酒巡游礼遇】</View>
+                    </View>
+                  }
+                  { userInfo.levelId==4 &&
                     <View className="Con">
                       <View className="tips">当前等级</View>
                       <View className="levelName">{level[levelIndex].name}会员</View>
                       <View className="txt">{userInfo.exp}/6999</View>
                       <View className="txt">还需{6999-userInfo.exp}经验值</View>
                       <View className="txt">可升级{level[levelIndex+1].name}</View>
-                    </View>:
+                    </View>
+                  }
+                  { userInfo.levelId>4 &&
                     <View className="Con">
-                        <View className="tips"></View>
-                        <View className="levelName">{level[levelIndex].name}会员</View>
-                        <View className="txt">4000-6999</View>
+                      <View className="tips"></View>
+                      <View className="levelName">{level[levelIndex].name}会员</View>
+                      <View className="txt">无需拳力值</View>
+                      <View className="txt">您已经超越该级别</View>
                     </View>
                   }
                 </SwiperItem>
                 <SwiperItem className='item'>
                   <Image src={require('../../assets/images/card5.png')} className='imgscroll' />
-                  { userInfo.levelId==5?
+                   { userInfo.levelId<5 && 
                     <View className="Con">
-                    <View className="tips">当前等级</View>
-                    <View className="levelName">{level[levelIndex].name}会员</View>
-                    <View className="txt">{userInfo.exp}/>=7000</View>
-                    <View className="txt">已达最高级别</View>
-                    {/*  :<View>
-                        <View className="txt">还需999经验值</View>
-                        <View className="txt">可升级{level[levelIndex+1].name}</View>
-                      </View>*/}
-                    }                  
-                    </View>:
+                      <View className="tips"></View>
+                      <View className="levelName">{level[levelIndex].name}会员</View>
+                      <View className="txt">拳力值达7000</View>
+                      <View className="txt">可升级重量级</View>
+                      <View className="txt">享【线下活动礼遇】</View>
+                    </View>
+                  }
+                  { userInfo.levelId==5 && 
                     <View className="Con">
-                        <View className="tips"></View>
-                        <View className="levelName">{level[levelIndex].name}会员</View>
-                        <View className="txt">>=7000</View>
+                      <View className="tips">当前等级</View>
+                      <View className="levelName">{level[levelIndex].name}会员</View>
+                      <View className="txt">当前拳力值{userInfo.exp}</View>
+                      <View className="txt">已达最高级别</View>              
+                    </View>
+                  }
+                  { userInfo.levelId>5 &&
+                    <View className="Con">
+                      <View className="tips"></View>
+                      <View className="levelName">{level[levelIndex].name}会员</View>
+                      <View className="txt">无需拳力值</View>
+                      <View className="txt">您已经超越该级别</View>
                     </View>
                   }
                 </SwiperItem>
@@ -223,8 +269,9 @@ export default class storeList extends Component {
 
           </View>
           <TabBar selected={2} />
-
         </View>
+        <Authorize authorizeSuccess={this.fetchUserInfoById.bind(this)} />
+        <Register registerSuccess={this.fetchUserInfoById.bind(this)} />
 
       </View>
     )

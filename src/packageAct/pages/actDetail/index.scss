@@ -239,6 +239,7 @@
 }
 
 .instruct{
-  max-height:600px; 
+  max-height:700px; 
   overflow-y:scroll;
+  -webkit-overflow-scrolling:touch;
 }

@@ -204,7 +204,7 @@ export default class Index extends Component {
                         <View className="txt">1.用户注册之日起，每30个自然日为一个循环</View>
                         <View className="txt">2.循环内集齐5枚拳头杯徽章，即可获得奖励。系统默认活动不会自动进入新的一轮，直到30天循环结束。（即若用户10月1日注册，10月15日集齐5枚拳头杯徽章，新的一轮将会在10月31日重新开启，拳头杯徽章将会从零开始计算）</View>
                         <View className="txt">3.拳头杯徽章获取方式：</View>
-                        <View className="txt">a.注册会员，即 className="txt"可获得1枚徽章（每个用户仅可享受1次此福利）</View>
+                        <View className="txt">a.注册会员，即可获得1枚徽章（每个用户仅可享受1次此福利）</View>
                         <View className="txt">b.连续累计7天签到，即可获得1枚徽章（仅限单活动周期内循环，即1轮活动周期内，完成连续签到任务上限可获取4枚徽章</View>
                         <View className="txt">c.每次消费，即可获得一枚徽章 （注明：仅限拳击猫线下门店消费获取）</View>
                       </View>

@@ -66,7 +66,6 @@ export default class Authorize extends Component {
             <View className="panel authorizePanel">
                 <View className="shadow"></View>
                 <View className="panelContent" catchTouchMove="ture">
-                    { showCancel && <View className="closeBtn"><Image className="innerImg" onClick={ this.cancelAuthorize.bind(this) } src={require('./images/close.png')} /></View> }
                     <Image mode="widthFix" className="centerImg" src={require('./images/authorize.jpg')} />
                     <View class="content">
                         <View class="title">{Env == 'WEAPP'?'微信':'支付宝'}授权</View>

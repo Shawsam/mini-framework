@@ -44,8 +44,8 @@ export default class Register extends Component {
               const mobile = res.data.purePhoneNumber;
               this.mobileNext(mobile);
           }).catch((err)=>{
-              console.log(err)
-              Taro.showModal({content:err.msg,showCancel:false})
+              console.log(err);
+              this.props.userStore.setAuthorizeShow(true);
           })
      }
   }
@@ -218,7 +218,6 @@ export default class Register extends Component {
                 <View className="panel panelYzm">
                     <View className="shadow"></View>
                     <View className="panelContent" catchTouchMove="ture">
-                        { /* <Image className="closeBtn" onClick={this.closeYzmPanel.bind(this)} src={require('./images/close.png')} /> */}
                         <View className="title">手机号注册</View>
                         <View className="content">
                            {/* <View className="tit">欢迎注册拳击猫会员</View> */}

@@ -44,6 +44,7 @@
     "@tarojs/taro-weapp": "2.0.7",
     "babel-runtime": "^6.26.0",
     "classnames": "latest",
+    "mini-html-parser2": "^0.2.0",
     "mobx": "4.8.0",
     "nerv-devtools": "^1.5.5",
     "nervjs": "^1.5.5",

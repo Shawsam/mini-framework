@@ -90,7 +90,7 @@ export default class storeList extends Component {
                           <Text className='storeTime storeTime-padding'>{v.time}</Text>
                         </View>
                       </View>
-                      <View className='xcqAll'><Image src={xcqImg} className='xcq'></Image><View className='xcqText'>指定精酿啤酒 限时特惠 买一送一</View></View>
+                      <View className='xcqAll'><Image src={xcqImg} className='xcq'></Image><View className='xcqText'>11月门店新酿 南瓜粉碎机艾尔 全新上线</View></View>
 
                     </View>
 
